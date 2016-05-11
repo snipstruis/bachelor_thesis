@@ -6,8 +6,8 @@ Primarily the lambda and function defenitions, and the data declarations.
 \begin{code}
 type Interface = {
   datas      : List<Id*Data>
-  funcs      : Map<Id,List<rule>>
-  lambdas    : Map<LambdaId,rule>
+  funcs      : List<Id*List<rule>>
+  lambdas    : List<LambdaId*rule>
   main       : rule
   assemblies : List<string> 
   flags      : CompilerFlags
@@ -17,6 +17,10 @@ type Interface = {
 The design principles for this interface were simplicity and minimalism.
 There should be as few ways as possible to represent the same program.
 This makes testing easier and minimizes bugs that appear only in certain representations of the same program.
+
+The reason that datas, funcs and lambdas are defined as a list of key-value pairs instead of as a Map, is that the keys are not guaranteed to be unique.
+Since MC allows polymorphic types, one indentifier may be defined multiple times: once for each type.
+There is no performance penalty, as no lookups by identifier are performed.
 
 \subsection{Data declarations}
 The data declarations are grouped with the identifier of 
@@ -34,13 +38,14 @@ type Data = {
 }
 \end{code}
 
-Where \verb|Type| represents a monomorphic type in MC.
+Where \verb|Type| represents a monomorphic MC type.
 
 %\begin{code}
-%type Type = DotNetType      of TypeId
-%          | McType          of TypeId
-%          | TypeApplication of Type*List<Type>
-%          | Arrow           of Type*Type
+%type Type 
+%  = DotNetType      of TypeId
+%  | McType          of TypeId
+%  | TypeApplication of Type*List<Type>
+%  | Arrow           of Type*Type
 %\end{code}
 
 To illustrate, let's define a tuple an a union in MC.
@@ -60,22 +65,42 @@ This will appear as the following list in the interface:
     \verb:"snd": & \verb:string:             & \verb:int | string: \\
 \end{tabular}
 
-The reason that datas are defined as \verb|List<Id,Data>| and not as \verb|Map<Id,Data>| is that the identifier is not guaranteed to be unique.
-Since MC allows polymorphic types, one indentifier may be defined multiple times: once for each type.
-There is no performance penalty, as no lookups by identifier are performed.
 
 \subsection{Rule containers}
 
+Function and lambda definitions, aswell as the main function contain rules.
+
+\begin{code}
+  funcs   : List<Id*List<rule>>
+  lambdas : List<LambdaId*rule>
+  main    : rule
+\end{code}
+
+Functions in MC can contain multiple rules that implement them.
+
+The entry-point of the program is defined by a single rule, here called \verb|main|.
+It is not a full function since full functions can have multiple rules.
+This was done to make the entry-point as simple as possible.
+
+\subsection{Rules}
+
+Rules rules rules.
+
 \begin{code}
 type rule = {
+  premises    : List<premise*linenr>
   input       : List<local_id>
   output      : local_id
-  premis      : List<premisse*int>
   typemap     : Map<local_id,Type>
   declaration : Position
   definition  : Position
 }
 \end{code}
+
+At the heart of the rule is the list of premises.
+These premises are a simple and orthogonal instructions in SSA form.
+
+--- design of premises here ---
 
 \subsection{Metadata}
 
