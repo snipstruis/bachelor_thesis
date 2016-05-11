@@ -1,0 +1,87 @@
+\section{The front-end interface}
+The front-end interface is the interface between the front-end and the back-end.
+It contains all the information the backend needs.
+Primarily the lambda and function defenitions, and the data declarations.
+
+\begin{code}
+type Interface = {
+  datas      : List<Id*Data>
+  funcs      : Map<Id,List<rule>>
+  lambdas    : Map<LambdaId,rule>
+  main       : rule
+  assemblies : List<string> 
+  flags      : CompilerFlags
+}
+\end{code}
+
+The design principles for this interface were simplicity and minimalism.
+There should be as few ways as possible to represent the same program.
+This makes testing easier and minimizes bugs that appear only in certain representations of the same program.
+
+\subsection{Data declarations}
+The data declarations are grouped with the identifier of 
+
+\begin{code}
+datas : List<Id*Data>
+\end{code}
+
+Where \verb|Data| is simply a list of input types and output types.
+
+\begin{code}
+type Data = {
+  args       : List<Type>
+  outputType : Type
+}
+\end{code}
+
+Where \verb|Type| represents a monomorphic type in MC.
+
+%\begin{code}
+%type Type = DotNetType      of TypeId
+%          | McType          of TypeId
+%          | TypeApplication of Type*List<Type>
+%          | Arrow           of Type*Type
+%\end{code}
+
+To illustrate, let's define a tuple an a union in MC.
+
+\begin{code}
+Data int -> "," -> string -> int * string
+Data "fst" -> int    -> int | string
+Data "snd" -> string -> int | string
+\end{code}
+
+This will appear as the following list in the interface:
+
+\begin{tabular}{lll}
+    \textbf{identifier} & \textbf{arguments} & \textbf{type}\\
+    \verb:",":   & \verb:int:; \verb:string: & \verb:int * string: \\
+    \verb:"fst": & \verb:int:                & \verb:int | string: \\
+    \verb:"snd": & \verb:string:             & \verb:int | string: \\
+\end{tabular}
+
+The reason that datas are defined as \verb|List<Id,Data>| and not as \verb|Map<Id,Data>| is that the identifier is not guaranteed to be unique.
+Since MC allows polymorphic types, one indentifier may be defined multiple times: once for each type.
+There is no performance penalty, as no lookups by identifier are performed.
+
+\subsection{Rule containers}
+
+\begin{code}
+type rule = {
+  input       : List<local_id>
+  output      : local_id
+  premis      : List<premisse*int>
+  typemap     : Map<local_id,Type>
+  declaration : Position
+  definition  : Position
+}
+\end{code}
+
+\subsection{Metadata}
+
+All the symbols in the descriptions are provided with monomorphic types by the front-end.
+Functions with generic types are made concrete by the front-end.
+
+Rules are represented wi
+
+The AST was developed in co-operation with the front-end developer.

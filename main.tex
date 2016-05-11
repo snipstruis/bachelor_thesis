@@ -1,0 +1,92 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[driver=xetex,a4paper]{geometry} % propper margins on a4 paper
+\usepackage{pdfpages} % to include cover
+\usepackage{url}
+\usepackage[hidelinks]{hyperref} % make contents and references clickable in pdf
+\usepackage{multicol} % allows multiple colums
+\usepackage{titlesec} % adjust whitespace around headings and improves placing
+\usepackage{microtype} % adjusts kerning and letterspacing
+\usepackage{soul} %striketrough
+\usepackage{parskip} % newline instead of indenting
+
+\usepackage{fontspec} % allows custom fonts
+\setmainfont[BoldFont=Source Sans Pro Bold,AutoFakeSlant=0.3]{Source Serif Pro}
+\setmonofont{Source Code Pro}
+
+\usepackage{listings} % allows code listings
+\usepackage{lstautogobble}
+\lstset{basicstyle=\footnotesize\ttfamily,
+        breaklines=true,
+        keepspaces=true,
+        xleftmargin=6pt,
+        %gobble=2, % ignore first 2 spaces indents in code listings
+        autogobble,
+        captionpos=b,
+        morekeywords={Func,Data,TypeFunc,Module,TypeAlias,Inherit,is},
+        keywordstyle=\bfseries,
+        escapeinside=\#\# } % non ASCII-characters won't render properly. Use #\verb|contents|#
+
+\lstnewenvironment{code}[1][]{% make code unsplittable
+   \noindent
+   \minipage{\linewidth} 
+   \lstset{#1}}
+   {\endminipage}
+
+\usepackage[sorting=none,backend=biber]{biblatex} %citations
+\addbibresource{references.bib}
+\renewcommand*{\bibfont}{\small} % small references at the end
+
+\usepackage{draftwatermark}
+\SetWatermarkFontSize{40pt}
+\SetWatermarkLightness{0.8}
+\SetWatermarkAngle{0}
+\SetWatermarkVerCenter{5em}
+
+\begin{document}
+% disable page numbers
+\pagestyle{empty} 
+
+% cover page
+\includepdf[pages=1]{cover.pdf}
+\newpage
+
+% start page numbers
+\setcounter{page}{1}
+\pagenumbering{arabic}
+\pagestyle{plain}
+
+% actual document
+\begin{multicols}{2}
+
+\tableofcontents
+\columnbreak
+
+\input{intro}
+\input{language}
+\input{metacasanova}
+\input{interface}
+\input{codegen}
+
+\section{Mangler}
+\subsection{unicode}
+\subsection{types}
+\subsection{reserved words}
+
+\section{Interpreter}
+\subsection{validation}
+
+\section{Debugger}
+\subsection{breakpoints}
+\subsection{program tree}
+
+\section{Conclusion}
+
+% appendix
+\setcounter{section}{0}
+\renewcommand\thesection{\Alph{section}}
+\section{Glossary}
+
+\end{multicols}
+
+\printbibliography
+\end{document}

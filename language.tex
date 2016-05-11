@@ -1,0 +1,51 @@
+\section{Output language}
+The first decision had the most impact on the project, and was one that was difficult to change later on.
+
+\textit{In what programming language does the code-generator produce its output?}
+
+This may be different than the language the code-generator is written in.
+The code-generator is written in F\#, like the rest of the compiler.
+
+
+\subsection{Unmanaged}
+Since speed was one of the requirements, I first looked at solutions with unmanaged parts.
+Unmanaged code is code that is not interpreted by a runtime, but is instead executed directly.
+It is also much less restrictive than the .Net runtime because the .Net bytecode is strongly typed.%\cite{source_me}
+
+Another advantage of unmanaged code is that the fast LLVM C/C++ code generator can be used.
+--- explanation LLVM here ---
+This would mean we get all the optimisations of LLVM with very little effort.
+
+.Net compatibility is also required.
+There are a few systems that allow for managed and unmanaged code to communicate.
+
+\subsubsection*{P/invoke}
+Platform Invocation Services (P/invoke) allows managed code to call unmanaged functions that are implemented in a DLL.\cite{msdn_pinvoke}
+
+large overhead because of marshalling \cite{msdn_interop_performance}
+
+\subsubsection*{C++/CLI interop}
+C++ for the Common Language Infrastructure (C++/CLI) is a programming language designed for interoperability with unmanaged code.%\cite{msdn_c++cli}
+
+compiler windows-only\cite{mono_c++cli}
+
+not typesafe(not allowed in safe-mode) pure CIL windows only\cite{mono_c++cli}
+
+only on x86\cite{mono_c++cli}
+
+\subsubsection*{Hosted runtime}
+large overhead
+
+\subsubsection*{conclusion}
+none are good enough.
+
+
+\subsection{.Net}
+Because of the problems go with .Net.
+\subsubsection*{F\#}
+\subsubsection*{C\#}
+\subsubsection*{CIL}
+
+
+\subsection{Conclusion}
+C\# is the best solution in this case.

@@ -1,0 +1,92 @@
+\end{multicols}
+figure 1: \textit{an overview of instruction generation.}\\
+\begin{tabular}{lll}
+    \hline
+    \textbf{instruction} & \textbf{MC} & \textbf{C\#}\\
+
+    \hline
+    literal & \begin{lstlisting}
+        42 -> x
+    \end{lstlisting} & \begin{lstlisting}
+        var x = 42;
+    \end{lstlisting} \\
+
+    \hline
+    conditional & \begin{lstlisting}
+        x > 40  
+    \end{lstlisting} & \begin{lstlisting}
+        if(!(x>40)){goto skip0;}
+    \end{lstlisting} \\
+
+    \hline
+    destructor & \begin{lstlisting}
+        lst -> x::xs 
+    \end{lstlisting} & \begin{lstlisting}
+        var _tmp0 = lst as _colon_colon;
+        if(_tmp0==null){goto _skip0;}
+        var x  = _tmp0.arg0;
+        var xs = _tmp0.arg1;
+    \end{lstlisting} \\
+
+    \hline
+    closure & \begin{lstlisting}
+        (+) -> add
+    \end{lstlisting} & \begin{lstlisting}
+        var add = new _plus();
+    \end{lstlisting} \\
+
+    \hline
+    application & \begin{lstlisting}
+        add a -> inc
+    \end{lstlisting} & \begin{lstlisting}
+        var inc = add;
+        inc._arg0 = a;
+    \end{lstlisting} \\
+
+    \hline
+    call & \begin{lstlisting}
+        inc b -> c
+    \end{lstlisting} & \begin{lstlisting}
+        var c = inc;
+        inc.arg1 = b.run();
+    \end{lstlisting} \\
+
+    \hline
+    .Net constructor & \begin{lstlisting}
+        System.DateTime d m y -> date
+    \end{lstlisting} & \begin{lstlisting}
+        var date = System.DateTime(d,m,y);
+    \end{lstlisting} \\
+
+    \hline
+    .Net call & \begin{lstlisting}
+        date.toString format -> str
+    \end{lstlisting} & \begin{lstlisting}
+        var str = date.toString(format);
+    \end{lstlisting} \\
+
+    \hline
+    .Net static call & \begin{lstlisting}
+        System.DateTime.parse str -> date
+    \end{lstlisting} & \begin{lstlisting}
+        var date = System.DateTime.parse(str);
+    \end{lstlisting} \\
+
+    \hline
+    .Net get & \begin{lstlisting}
+        date.DayOfWeek -> day
+    \end{lstlisting} & \begin{lstlisting}
+        var day = date.DayOfWeek;
+    \end{lstlisting} \\
+
+    \hline
+    .Net set & \begin{lstlisting}
+        hr -> System.DateTime.hour
+    \end{lstlisting} & \begin{lstlisting}
+        System.DateTime.hour = hr;
+    \end{lstlisting} \\
+
+    \hline
+\end{tabular}
+\pagebreak
+\begin{multicols}{2}
