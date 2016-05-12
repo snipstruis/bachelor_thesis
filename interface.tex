@@ -112,11 +112,11 @@ So the early testing was done by writing the interface datastructure by hand.
 Because that was error-prone, I implemented an automatic checker for the interface to check the invariants.
 
 The validator asserts the following:
-\begin{enumeration}
+\begin{itemize}
 \item Each local identifier is defined only once.
 \item Each local identifier has a type in the typemap.
 \item Each function has at least one rule.
-\end{enumeration}
+\end{itemize}
 
 The validator was initially only for testing hand-written interfaces,
 but it proved to be very good in catching errors that slipped through the front-end.
