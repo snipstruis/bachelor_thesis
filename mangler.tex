@@ -1,0 +1,49 @@
+\section{Mangler}
+The mangler is responsible for generating a unique C\# identifier for every instance of an MC identifier.
+The mangler is designed to be simple, and produce readable output.
+Readable output makes it easy to verify both the mangler and the generated code.
+
+There are two kinds of identifier: global identifiers and local identifiers.
+Global identifiers have a fully-qualified name with type information, where as local identifiers only have the simple name.
+
+\subsection{C\# identifiers}
+Since there are more valid MC identifier names than C\# identifier names, some characters have to be escaped.
+
+Valid C\# identifiers are \verb|[_A-Za-z][_A-Za-z0-9]*| [source].
+The only valid non-alphanumeric character is an underscore, so that is used to escape with.
+
+The first iteration of the code mangler just replaced all non-numeric characters with an underscore followed with the two-digit hexadecimal number.
+This generated correct identifiers but was very unreadable, \verb|>>=| would translate to \verb|_3E_3E_3D|.
+To remedy this, every ascii symbol gets a readable label.
+
+\begin{tabular}{ll|ll|ll}
+\verb0!0 & \verb0_bang0  & \verb0-0 & \verb0_dash0  & \verb0=0 & \verb0_equal0 \\
+\verb0#0 & \verb0_hash0  & \verb0.0 & \verb0_dot0   & \verb0?0 & \verb0_quest0 \\
+\verb0$0 & \verb0_cash0  & \verb0/0 & \verb0_slash0 & \verb0@0 & \verb0_at0    \\ %$
+\verb0%0 & \verb0_perc0  & \verb0\0 & \verb0_back0  & \verb0^0 & \verb0_caret0 \\
+\verb0&0 & \verb0_amp0   & \verb0:0 & \verb0_colon0 & \verb0_0 & \verb0_under0 \\
+\verb0'0 & \verb0_prime0 & \verb0;0 & \verb0_semi0  & \verb0`0 & \verb0_tick0  \\
+\verb0*0 & \verb0_amp0   & \verb0<0 & \verb0_less0  & \verb0|0 & \verb0_pipe0  \\
+\verb0+0 & \verb0_plus0  & \verb0>0 & \verb0_great0 & \verb0~0 & \verb0_tilde0 \\
+\verb0,0 & \verb0_comma0 \\
+\end{tabular}
+
+\subsection{reserved words}
+C\# allows reserved words to be used as valid identifiers if prefixed with an \verb|@|.[source]
+
+\subsection{types}
+Global identifiers need type information embedded in the name since the name alone does uniquely identify it (see thingy).
+Types can be recursive (see types), so the system for embedding types must be able to represent tree structures.
+The simplest way to represent tree structures with text is the way Lisp did it: S-expressions.
+
+The reason this differs from the syntax of types is partly historical.
+
+\begin{tabular}{ll}
+\textbf{type}          & \textbf{mangled} \\
+\verb|array<int,3>|    & \verb|array_Tint_T3| \\
+\verb|list<list<int>>| & \verb|list_Llist_Tint_R| \\
+\end{tabular}
+
+The symbols used are: \verb|_T| as seperator, \verb|_L| for the left parenthesis, and \verb|_R| for the right parenthesis.
+
+

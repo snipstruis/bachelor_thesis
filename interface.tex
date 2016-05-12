@@ -1,6 +1,7 @@
 \section{The front-end interface}
 The front-end interface is the interface between the front-end and the back-end.
-It contains all the information the backend needs.
+All the inputs for the back-end are in this datastructure.
+
 Primarily the lambda and function defenitions, and the data declarations.
 
 \begin{code}
@@ -18,12 +19,15 @@ The design principles for this interface were simplicity and minimalism.
 There should be as few ways as possible to represent the same program.
 This makes testing easier and minimizes bugs that appear only in certain representations of the same program.
 
+All the symbols in the descriptions are provided with monomorphic types by the front-end.
+Functions with generic types are made concrete by the front-end.
+
 The reason that datas, funcs and lambdas are defined as a list of key-value pairs instead of as a Map, is that the keys are not guaranteed to be unique.
 Since MC allows polymorphic types, one indentifier may be defined multiple times: once for each type.
 There is no performance penalty, as no lookups by identifier are performed.
 
 \subsection{Data declarations}
-The data declarations are grouped with the identifier of 
+The data declarations are grouped with the identifier of ---
 
 \begin{code}
 datas : List<Id*Data>
@@ -97,16 +101,24 @@ type rule = {
 }
 \end{code}
 
-At the heart of the rule is the list of premises.
-These premises are a simple and orthogonal instructions in SSA form.
+input and output.
+premises contain instructions, explained in next section.
+typemap.
+debug info.
 
---- design of premises here ---
+\subsection{Validator}
+The first versions of the backend had no working front-end to test with.
+So the early testing was done by writing the interface datastructure by hand.
+Because that was error-prone, I implemented an automatic checker for the interface to check the invariants.
 
-\subsection{Metadata}
+The validator asserts the following:
+\begin{enumeration}
+\item Each local identifier is defined only once.
+\item Each local identifier has a type in the typemap.
+\item Each function has at least one rule.
+\end{enumeration}
 
-All the symbols in the descriptions are provided with monomorphic types by the front-end.
-Functions with generic types are made concrete by the front-end.
+The validator was initially only for testing hand-written interfaces,
+but it proved to be very good in catching errors that slipped through the front-end.
+The validator now always checks the interface before it is handed to the codegen.
 
-Rules are represented wi
-
-The AST was developed in co-operation with the front-end developer.

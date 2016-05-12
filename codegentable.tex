@@ -24,8 +24,8 @@ figure 1: \textit{an overview of instruction generation.}\\
     \end{lstlisting} & \begin{lstlisting}
         var _tmp0 = lst as _colon_colon;
         if(_tmp0==null){goto _skip0;}
-        var x  = _tmp0.arg0;
-        var xs = _tmp0.arg1;
+        var x  = _tmp0._arg0;
+        var xs = _tmp0._arg1;
     \end{lstlisting} \\
 
     \hline
@@ -48,7 +48,7 @@ figure 1: \textit{an overview of instruction generation.}\\
         inc b -> c
     \end{lstlisting} & \begin{lstlisting}
         var c = inc;
-        inc.arg1 = b.run();
+        inc._arg1 = b.run();
     \end{lstlisting} \\
 
     \hline

@@ -1,0 +1,48 @@
+\section{IR}
+At the heart of the rule is the list of instructions: the premises.
+
+\subsection{base instructions}
+The instruction set was designed to minimize the number of representations of the same program.
+This happens to coincide with a small orthogonal instruction set.
+
+\begin{tabular}{ll}
+    \textbf{instruction} & \textbf{MC example}\\
+    closure       & \verb|(+) -> add| \\
+    application   & \verb|add a -> inc| \\
+    call          & \verb|inc b -> c| \\
+    literal       & \verb|42 -> x|\\
+    deconstructor & \verb|lst -> x::xs| \\
+    conditional   & \verb|x < y| \\
+\end{tabular}
+
+Most instructions operate only on identifiers local to the rule.
+
+The instruction set is also in \textit{static single assignment} (SSA) form.
+This means identifiers are constant and can not be redefined.
+
+\subsection{.Net extentions}
+
+\begin{tabular}{ll}
+    \textbf{instruction} & \textbf{MC example}\\
+    constructor & \begin{lstlisting}
+        System.DateTime d m y -> date
+    \end{lstlisting}\\
+    call & \begin{lstlisting}
+        System.DateTime d m y -> date
+    \end{lstlisting}\\
+    static call & \begin{lstlisting}
+        System.DateTime d m y -> date
+    \end{lstlisting}\\
+    get & \begin{lstlisting}
+        System.DateTime d m y -> date
+    \end{lstlisting}\\
+    static get & \begin{lstlisting}
+        System.DateTime d m y -> date
+    \end{lstlisting}\\
+    set & \begin{lstlisting}
+        System.DateTime d m y -> date
+    \end{lstlisting}\\
+    static set & \begin{lstlisting}
+        System.DateTime d m y -> date
+    \end{lstlisting}\\
+\end{tabular}
