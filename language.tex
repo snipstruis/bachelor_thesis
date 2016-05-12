@@ -10,7 +10,7 @@ The code-generator is written in F\#, like the rest of the compiler.
 \subsection{Unmanaged}
 Since speed was one of the requirements, I first looked at solutions with unmanaged parts.
 Unmanaged code is code that is not interpreted by a runtime, but is instead executed directly.
-It is also much less restrictive than the .Net runtime because the .Net bytecode is strongly typed.%\cite{source_me}
+It is also much less restrictive than the .Net runtime because the .Net bytecode is strongly typed.\cite{ecma335}
 
 Another advantage of unmanaged code is that the fast LLVM C/C++ code generator can be used.
 --- explanation LLVM here ---
@@ -18,6 +18,7 @@ This would mean we get all the optimisations of LLVM with very little effort.
 
 .Net compatibility is also required.
 There are a few systems that allow for managed and unmanaged code to communicate.
+The most viable are P/invoke, C++/CLI interop, and a hosted runtime.
 
 \subsubsection*{P/invoke}
 Platform Invocation Services (P/invoke) allows managed code to call unmanaged functions that are implemented in a DLL.\cite{msdn_pinvoke}
@@ -29,12 +30,12 @@ C++ for the Common Language Infrastructure (C++/CLI) is a programming language d
 
 compiler windows-only\cite{mono_c++cli}
 
-not typesafe(not allowed in safe-mode) pure CIL windows only\cite{mono_c++cli}
+not typesafe(not allowed in safe-mode) pure CIL is windows only\cite{mono_c++cli}
 
 only on x86\cite{mono_c++cli}
 
 \subsubsection*{Hosted runtime}
-large overhead
+large overhead, no fast jit.
 
 \subsubsection*{conclusion}
 none are good enough.
@@ -42,6 +43,9 @@ none are good enough.
 
 \subsection{.Net}
 Because of the problems go with .Net.
+A big advantage is stability because everything happends inside the .Net runtime.
+This has a higher chance of working on non-native platforms than the hybrid unmanaged solutions.
+
 \subsubsection*{F\#}
 \subsubsection*{C\#}
 \subsubsection*{CIL}
