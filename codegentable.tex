@@ -19,7 +19,7 @@ figure 1: \textit{an overview of instruction generation.}\\
     \end{lstlisting} \\
 
     \hline
-    destructor & \begin{lstlisting}
+    deconstructor & \begin{lstlisting}
         lst -> x::xs 
     \end{lstlisting} & \begin{lstlisting}
         var _tmp0 = lst as _colon_colon;
@@ -47,45 +47,60 @@ figure 1: \textit{an overview of instruction generation.}\\
     call & \begin{lstlisting}
         inc b -> c
     \end{lstlisting} & \begin{lstlisting}
-        var c = inc;
-        inc._arg1 = b.run();
+        var c = inc.run(b);
     \end{lstlisting} \\
 
     \hline
-    .Net constructor & \begin{lstlisting}
+    \textbf{.NET instr.} & \textbf{MC} & \textbf{C\#}\\
+
+    \hline
+    constructor & \begin{lstlisting}
         System.DateTime d m y -> date
     \end{lstlisting} & \begin{lstlisting}
         var date = System.DateTime(d,m,y);
     \end{lstlisting} \\
 
     \hline
-    .Net call & \begin{lstlisting}
+    call & \begin{lstlisting}
         date.toString format -> str
     \end{lstlisting} & \begin{lstlisting}
         var str = date.toString(format);
     \end{lstlisting} \\
 
     \hline
-    .Net static call & \begin{lstlisting}
+    static call & \begin{lstlisting}
         System.DateTime.parse str -> date
     \end{lstlisting} & \begin{lstlisting}
         var date = System.DateTime.parse(str);
     \end{lstlisting} \\
 
     \hline
-    .Net get & \begin{lstlisting}
+    get & \begin{lstlisting}
         date.DayOfWeek -> day
     \end{lstlisting} & \begin{lstlisting}
         var day = date.DayOfWeek;
     \end{lstlisting} \\
 
     \hline
-    .Net set & \begin{lstlisting}
+    static get & \begin{lstlisting}
+        date.DayOfWeek -> day
+    \end{lstlisting} & \begin{lstlisting}
+        var day = date.DayOfWeek;
+    \end{lstlisting} \\
+
+    \hline
+    set & \begin{lstlisting}
         hr -> System.DateTime.hour
     \end{lstlisting} & \begin{lstlisting}
         System.DateTime.hour = hr;
     \end{lstlisting} \\
 
+    \hline
+    static set & \begin{lstlisting}
+        hr -> System.DateTime.hour
+    \end{lstlisting} & \begin{lstlisting}
+        System.DateTime.hour = hr;
+    \end{lstlisting} \\
     \hline
 \end{tabular}
 \pagebreak

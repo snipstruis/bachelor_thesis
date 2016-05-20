@@ -1,8 +1,153 @@
-\section{Code Generator}
-The codegen sure is something.
-\subsection{Funcs}
-\subsection{Datas}
+\section{Code generator}
+The codegen is the heart of the back end.
+It is responsible for generating the C\# code.
+
+\subsection{Function declarations}
+Function
+
+\begin{code}
+class #\textit{<function name>}# {
+    #\textit{<function arguments>}#
+    public #\textit{<return type>}# run(#\textit{<last argument>}#) {
+        {
+            #\textit{<rule 1 implementation>}#
+            return #\textit{<local>}#;
+        }
+      skip1:
+        {
+            #\textit{<rule 2 implementation>}#
+            return #\textit{<local>}#;
+        }
+      skip2:
+        #\vdots#
+        {
+            #\textit{<rule n implementation>}#
+            return #\textit{<local>}#;
+        }
+      skip#\textit{n}#:
+        throw new #\textit{<exception>}#;
+    }
+};
+\end{code}
+
+\subsection{Data declarations}
+Data declarations are implemented with inheritance.
+The declared type is represented by an empty baseclass and all the constructors inherit from it.
+
+It is easy to see the pattern with an example.
+
+\begin{code}
+Data string -> "," -> int -> string * int
+
+Data "Left"  -> string -> string | float
+Data "Right" -> float  -> string | float
+\end{code}
+
+Transforms into this.
+
+\begin{code}
+class _star {};
+class _comma { string _arg0; int _arg1;}
+
+class _pipe {};
+class _Left :_pipe {string _arg0;};
+class _Right:_pipe {float  _arg0;};
+\end{code}
+
 \subsection{Rules}
-see table for overview.
+
+Each rule defines its own name for each input argument.
+These names do not have to be the same, for example:
+
+\begin{code}
+    Func "evenOrOdd" -> int -> string
+    
+    a%2 = 1
+    -----------------
+    evenOrOdd a -> "odd!"
+
+    b%2 = 0
+    ------------------
+    evenOrOdd b -> "even!"
+\end{code}
+
+Of course, by the time the code has arived by the codegen, it would already have been normalized.
+So the rules actually look more like this:
+
+\begin{code}
+    (%) -> _tmp0         #\textit{(closure)}#
+    _tmp0 a -> _tmp1     #\textit{(application)}#
+    2 -> _tmp2           #\textit{(literal)}#
+    _tmp1 _tmp2 -> _tmp3 #\textit{(call)}#
+    0 -> _tmp4           #\textit{(literal)}#
+    tmp4 = tmp0          #\textit{(conditional)}#
+    "even" -> _tmp5      #\textit{(literal)}#
+    --------------------
+    evenOrOdd a -> _tmp5
+\end{code}
+
+\begin{code}
+    (%) -> _tmp0         #\textit{(closure)}#
+    _tmp0 a -> _tmp1     #\textit{(application)}#
+    2 -> _tmp2           #\textit{(literal)}#
+    _tmp1 _tmp2 -> _tmp3 #\textit{(call)}#
+    1 -> _tmp4           #\textit{(literal)}#
+    tmp4 = tmp0          #\textit{(conditional)}#
+    "odd" -> _tmp5       #\textit{(literal)}#
+    --------------------
+    evenOrOdd a -> _tmp5
+\end{code}
+
+The first job of the rule is to translate the input arguments to their name and return the output.
+
+\begin{code}
+    {
+        var a = _arg0; 
+        ...
+        return _tmp5;
+    }
+    _skip0:
+    {
+        var b = _arg0;
+        ...
+        return _tmp5;
+    }
+    _skip1:
+\end{code}
+
+Then each instruction is generated.
+
+\begin{code}
+    {
+        var a = _arg0; 
+        // closure
+        var _tmp0 = new _plus(); 
+        // application
+        var _tmp1 = add;
+        _tmp1._arg0 = a;
+        // literal
+        var _tmp2 = 2;
+        // call
+        var _tmp3 = _tmp1.run(_tmp2);
+        // literal     
+        var _tmp4 = 1;
+        // conditional
+        if(!(_tmp3=_tmp4)){goto _skip0;}
+        // literal
+        "odd!" -> _tmp5;
+        return _tmp5;
+    }
+    _skip0:
+    {
+        var b = _arg0;
+        ...
+        return _tmp5;
+    }
+    _skip1:
+\end{code}
 
 \input{codegentable} % double width and page-breaking
+
+\subsection{Evolution}
+C\# unions only work with value-types.
+

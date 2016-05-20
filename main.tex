@@ -8,6 +8,7 @@
 \usepackage{microtype} % adjusts kerning and letterspacing
 \usepackage{soul} %striketrough
 \usepackage{parskip} % newline instead of indenting
+\usepackage{graphicx} % include images
 
 \usepackage{fontspec} % allows custom fonts
 \setmainfont[BoldFont=Source Sans Pro Bold,AutoFakeSlant=0.3]{Source Serif Pro}
@@ -65,17 +66,14 @@
 \input{language}
 \input{metacasanova}
 TODO: metacasanova type syntax
+TODO: metacasanova no longer matches multiple statements
 \input{interface}
 \input{ir}
 \input{codegen}
 \input{mangler}
 \input{interpreter}
-
-\section{Debugger(TODO)}
-\subsection{breakpoints}
-\subsection{program tree}
-
-\section{Conclusion(TODO)}
+\input{debugger}
+\input{conclusion}
 
 % appendix
 \setcounter{section}{0}

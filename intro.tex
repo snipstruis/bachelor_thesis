@@ -2,7 +2,21 @@
 --- abstract here ---
 This thesis also aims to be useful to the developers of the MC compiler.
 
-\subsection{rationale (why)}
+\subsection{Rationale}
+Writing compilers is a difficult task.
+
+Compilers are complex programs that have to operate on a wide range of inputs.
+Since compilers have such a large input-space, the chance of a bug hiding somewhere is substantial. 
+But compilers also have to be bug-free, since every program can only be as bug-free as its compiler.
+
+Abstractions can help in this regard.
+The limits of which were observed when implementing the compiler for the Casanova language in F\#.
+
+Since F\# has no higher-order type operators, it is not possible to write monad-transformers.
+
+The F\# compiler was 0000 lines long, and became unmaintainable.
+After a rewrite in MC it was 000 lines[source].
+
 \begin{itemize}
     \item Casanova needed for multiplayer games.
     \item Compiler proved too difficult in F\#
@@ -11,6 +25,8 @@ This thesis also aims to be useful to the developers of the MC compiler.
     \item the compiler required a back-end
     \item Back-end is responsible for creating executable
 \end{itemize}
+
+\subsection{Organization}
 
 \subsection{Goals}
 \begin{itemize}
@@ -22,7 +38,7 @@ This thesis also aims to be useful to the developers of the MC compiler.
 \subsection{Requirements}
 \begin{itemize}
     \item Correct
-    \item .Net Compatible
+    \item .NET Compatible
     \item Multi-platform
     \item fast
 \end{itemize}

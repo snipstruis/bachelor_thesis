@@ -10,13 +10,13 @@ The code-generator is written in F\#, like the rest of the compiler.
 \subsection{Unmanaged}
 Since speed was one of the requirements, I first looked at solutions with unmanaged parts.
 Unmanaged code is code that is not interpreted by a runtime, but is instead executed directly.
-It is also much less restrictive than the .Net runtime because the .Net bytecode is strongly typed.\cite{ecma335}
+It is also much less restrictive than the .NET runtime because the .NET bytecode is strongly typed.\cite{ecma335}
 
 Another advantage of unmanaged code is that the fast LLVM C/C++ code generator can be used.
 --- explanation LLVM here ---
 This would mean we get all the optimisations of LLVM with very little effort.
 
-.Net compatibility is also required.
+.NET compatibility is also required.
 There are a few systems that allow for managed and unmanaged code to communicate.
 The most viable are P/invoke, C++/CLI interop, and a hosted runtime.
 
@@ -41,15 +41,24 @@ large overhead, no fast jit.
 none are good enough.
 
 
-\subsection{.Net}
-Because of the problems go with .Net.
-A big advantage is stability because everything happends inside the .Net runtime.
+\subsection{.NET}
+Because of the problems go with .NET.
+A big advantage is stability because everything happends inside the .NET runtime.
 This has a higher chance of working on non-native platforms than the hybrid unmanaged solutions.
 
 \subsubsection*{F\#}
-\subsubsection*{C\#}
-\subsubsection*{CIL}
+F\# would be a natural choice, since the compiler is written in it.
+However, it is quite slow[source] and resists the imperative style of the generated code.
 
+\subsubsection*{C\#}
+C\# has more advantages.
+It is the most popular .NET language, and the compiler gets the most attention by Microsoft.
+It is also easy to debug, as it has the most mature debug tools.
+
+\subsubsection*{CIL}
+CIL (Common Intermediate Language) is the bytecode that all the languages are compiled to.
+Since it is typed, it has the same restrictions as C\#.[source]
+So it makes debugging and verification harder, with little to no gain.
 
 \subsection{Conclusion}
-C\# is the best solution in this case.
+The debugability together with a lot of controll make C\# the best choice in this case.

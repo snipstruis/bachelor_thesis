@@ -5,28 +5,44 @@ At the heart of the rule is the list of instructions: the premises.
 The instruction set was designed to minimize the number of representations of the same program.
 This happens to coincide with a small orthogonal instruction set.
 
-\begin{tabular}{ll}
-    \textbf{instruction} & \textbf{MC example}\\
-    closure       & \verb|(+) -> add| \\
-    application   & \verb|add a -> inc| \\
-    call          & \verb|inc b -> c| \\
-    literal       & \verb|42 -> x|\\
-    deconstructor & \verb|lst -> x::xs| \\
-    conditional   & \verb|x < y| \\
-\end{tabular}
+%\begin{tabular}{ll}
+%    \textbf{instruction} & \textbf{MC example}\\
+%    closure       & \verb|(+) -> add| \\
+%    application   & \verb|add a -> inc| \\
+%    call          & \verb|inc b -> c| \\
+%    literal       & \verb|42 -> x|\\
+%    deconstructor & \verb|lst -> x::xs| \\
+%    conditional   & \verb|x < y| \\
+%\end{tabular}
 
 Most instructions operate only on identifiers local to the rule.
 
 The instruction set is also in \textit{static single assignment} (SSA) form.
-This means identifiers are constant and can not be redefined.
+This means the local identifiers are constant and can not be redefined.
 
-\subsection{.Net extentions}
+\begin{description}
+\item[Literal] (\verb|42 -> x|) assigns a string-, integer- or floating-point literal to a local identifier.
+\item[Conditional] (\verb|x < y|) asserts that a comparison between local identifiers is true.
+    If the assertion fails, the rule fails and the next rule in the function is attempted.
+\item[Deconstructor] (\verb|lst -> x::xs|) disassembles a local identifier constructed by a data declaration.
+\item[Closure] (\verb|(+) -> add|) assigns a closure of a global function to a local identifier.
+    The closure can hold a function, lambda or data-constructor.
+\item[Application] (\verb|add a -> inc|) applies a local identifier to a closure in another local identifier.
+\item[Call] (\verb|inc b -> c|) applies a local identifier and calls the closure.
+    All closures need to be called eventually to be usefull.
+    The exception is data-constructors. 
+    They do not have to be called as they insert their elements in the datastructure as they are applied.
+\end{description}
+
+\subsection{.NET extentions}
+A seperate set of instructions are needed to inter-operate with .NET.
+This is because unlike MC, .NET objects are mutable, and the functions can be overloaded on the number and types of arguments.
 
 \begin{tabular}{ll}
     \textbf{instruction} & \textbf{MC example}\\
-    constructor & \begin{lstlisting}
-        System.DateTime d m y -> date
-    \end{lstlisting}\\
+%    constructor & \begin{lstlisting}
+%        System.DateTime d m y -> date
+%    \end{lstlisting}\\
     call & \begin{lstlisting}
         System.DateTime d m y -> date
     \end{lstlisting}\\
@@ -47,5 +63,15 @@ This means identifiers are constant and can not be redefined.
     \end{lstlisting}\\
 \end{tabular}
 
-\subsection{history}
-It was also considered to have the CIL code be the intermediate-representation, but it would mean over 100 instructions and the front-end would do most of the work.
+\subsection{Evolution}
+It was briefly considered to have the CIL code be the intermediate-representation, but it would mean over 100 instructions and the front-end would do most of the work.
+It would also mean the front-end needed its own codegen to generate the CIL instructions.
+
+Call did not used to apply an argument, but it caused inconsistencies.
+There would be not difference in the type of the uncalled closure and the called closure.
+This made type-analysis of the program nearly impossible, so it was decided that call also applies the last argument.
+
+Application used to also take the position of the argument that was applied.
+This was because the backend did not care in what order the closures were applied.
+But since the MC language only allows for in-order closure application, the decision was made to make the position of the argument implicit.
+
