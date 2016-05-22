@@ -57,10 +57,13 @@
 \pagestyle{plain}
 
 % actual document
-\begin{multicols}{2}
 
+\begin{multicols}{2}
 \tableofcontents
-\columnbreak
+\end{multicols}
+\pagebreak
+
+\begin{multicols}{2}
 
 \input{intro}
 \input{language}
@@ -79,6 +82,8 @@ TODO: metacasanova no longer matches multiple statements
 \setcounter{section}{0}
 \renewcommand\thesection{\Alph{section}}
 \section{Glossary}
+boilerplate code
+
 --- difficult words here ---
 
 \end{multicols}

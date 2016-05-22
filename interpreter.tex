@@ -1,6 +1,23 @@
 \section{Interpreter}
-The interpreter was built to automaticly validate the codegen and later allow constant-folding.
+The interpreter was built to automaticly validate the codegen and later allow constant-folding as an compiler optimization.
 
 The automatic validation would be done by comparing the results of test programs between the interpreter and the compiler.
 If they mismatch, there is either a bug in the interpreter or more likely a bug in the codegen.
 
+\subsection{Structure}
+The interpreter is structured in the simplest possible way to minimize the possibility of bugs.
+
+At the heart of the interpreter is a function that evaluates a single instruction.
+This function is defined to be used in a fold.
+
+Fold is a standard function in F\# and other functional languages that behaves like an accumulator.
+example: fold (+) 0 [1 2 3 4] evaluates to 10.
+fold (*) 1 [1 2 3 4] evaluates to 24.
+
+\begin{code}
+    fold : (s->a->a) -> s -> [a] -> [a]
+\end{code}
+
+\subsection{Evolution}
+Considered continuation monad.
+Turned out to complicated.
