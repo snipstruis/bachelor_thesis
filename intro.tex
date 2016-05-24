@@ -17,9 +17,6 @@ This made abstractions such as monad-transformers impossible, hampering modulari
 In this document, we will walk through the backend and examine the various parts and their design decisions.
 In this way, this document aims to be useful to the future developers of the MC compiler.
 
-\subsection{Organization}
---- todo: describe organization ---
-
 \subsection{Goals}
 
 The main goal was to develop a backend so typechecked Meta-Casanova(MC) could be transformed into executable code.
@@ -46,9 +43,21 @@ To translate all the identifiers, the mangler is needed.
 The debugger is optionally embedded in the executable, depending on compiler flags.
 
 \subsection{Requirements}
-\begin{itemize}
-    \item Correct
-    \item .NET Compatible
-    \item Multi-platform
-    \item fast
-\end{itemize}
+
+The project had 3 requiremens.
+\begin{enumerate}
+    \item The backend must in no case produce an incorrect program.
+    \item The executable must be able to inter-operate with .NET.
+    \item The generated code must run on all the platforms .NET runs on.
+\end{enumerate}
+An additional soft requirement was that faster was better.
+
+The first requirement  because the compiler must be reliable.
+Any program can at most be as reliable as the compiler used to generate it.
+
+The second requirement existed because of inter-operability with Unity game engine.
+
+
+\subsection{Organization}
+--- todo: describe organization ---
+

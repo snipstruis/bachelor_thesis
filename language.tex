@@ -6,11 +6,10 @@ The first decision had the most impact on the project, and was one that was diff
 This may be different than the language the code-generator is written in.
 The code-generator is written in F\#, like the rest of the compiler.
 
-
 \subsection{Unmanaged}
 Since speed was one of the requirements, I first looked at solutions with unmanaged parts.
 Unmanaged code is code that is not interpreted by a runtime, but is instead executed directly.
-It is also much less restrictive than the .NET runtime because the .NET bytecode is strongly typed.\cite{ecma335}
+%It is also much less restrictive than the .NET runtime because the .NET bytecode is strongly typed.\cite{ecma335}
 
 Another advantage of unmanaged code is that the fast LLVM C/C++ code generator can be used.
 --- explanation LLVM here ---

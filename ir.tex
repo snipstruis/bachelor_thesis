@@ -1,27 +1,25 @@
 \section[Intermediate Representation]{Intermediate\\Representation}
-At the heart of the rule is the list of instructions: the premises.
+Each rule contains a list of Premises.
+These premises are normalized to one or more instructions.
+These instructions are still valid MC.
+
+The instruction set exists in two parts: the base instrucions and the .NET extentions.
 
 \subsection{base instructions}
 The instruction set was designed to minimize the number of representations of the same program.
 This happens to coincide with a small orthogonal instruction set.
 
-%\begin{tabular}{ll}
-%    \textbf{instruction} & \textbf{MC example}\\
-%    closure       & \verb|(+) -> add| \\
-%    application   & \verb|add a -> inc| \\
-%    call          & \verb|inc b -> c| \\
-%    literal       & \verb|42 -> x|\\
-%    deconstructor & \verb|lst -> x::xs| \\
-%    conditional   & \verb|x < y| \\
-%\end{tabular}
-
-Most instructions operate only on identifiers local to the rule.
-
-The instruction set is also in \textit{static single assignment} (SSA) form.
+The instruction set is in \textit{static single assignment} (SSA) form.
 This means the local identifiers are constant and can not be redefined.
 
+Base instructions fall in one of two groups.
+The first maps a global identifier to a local identifier.
+This are the Literal and Closure instructions.
+The second operates on local identifiers.
+The Conditional, Deconstructor, Application and Call instructions belong to this group.
+
 \begin{description}
-\item[Literal] (\verb|42 -> x|) assigns a string-, integer- or floating-point literal to a local identifier.
+\item[Literal] (\verb|42 -> x|) assigns a string-, boolean-, integer- or floating-point literal to a local identifier.
 \item[Conditional] (\verb|x < y|) asserts that a comparison between local identifiers is true.
     If the assertion fails, the rule fails and the next rule in the function is attempted.
 \item[Deconstructor] (\verb|lst -> x::xs|) disassembles a local identifier constructed by a data declaration.
@@ -40,9 +38,6 @@ This is because unlike MC, .NET objects are mutable, and the functions can be ov
 
 \begin{tabular}{ll}
     \textbf{instruction} & \textbf{MC example}\\
-%    constructor & \begin{lstlisting}
-%        System.DateTime d m y -> date
-%    \end{lstlisting}\\
     call & \begin{lstlisting}
         System.DateTime d m y -> date
     \end{lstlisting}\\
