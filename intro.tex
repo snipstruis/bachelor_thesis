@@ -1,8 +1,4 @@
 \section{Intro}
---- abstract here ---
-This thesis also aims to be useful to the future developers of the MC compiler.
-
-\subsection{Rationale}
 Writing compilers is a difficult task.
 
 Compilers are complex programs that have to operate on a wide range of inputs.
@@ -12,7 +8,8 @@ But compilers also have to be bug-free, since every program can only be as bug-f
 Abstractions can help in this regard.
 The limits of which were observed when implementing the compiler for the Casanova language in F\#.
 
-Since F\# has no higher-order type operators, it is not possible to write monad-transformers.
+The functional aproach to parsers are parser monads.
+But since F\# has no higher-order type operators, it is not possible to write monad-transformers.
 This hampers modularity and resulted in a lot of boilerplate code.
 
 The Casanova compiler written in F\# was 0000 lines long, and became unmaintainable.
@@ -21,18 +18,14 @@ After a rewrite in MC it was 000 lines[Maggiore].
 This project is about the back-end of the bootstrap compiler voor Meta-Casanova 3, written in F\#.
 The back-end is responsible for generating an executable after receiving the type-checked information from the front-end.
 
-%\begin{itemize}
-%    \item Casanova needed for multiplayer games.
-%    \item Compiler proved too difficult in F\#
-%    \item Stronger abstractions needed
-%    \item MC has those abstractions
-%    \item the compiler required a back-end
-%    \item Back-end is responsible for creating executable
-%\end{itemize}
+In this document, we will walk through the backend and examine the various parts and their design decisions.
+In this way, this document aims to be useful to the future developers of the MC compiler.
 
 \subsection{Organization}
+--- todo: describe organization ---
 
 \subsection{Goals}
+
 \begin{itemize}
     \item decided on an output language
     \item designed front-end interface
