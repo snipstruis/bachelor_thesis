@@ -11,16 +11,22 @@ The limits of which were observed when implementing the compiler for the Casanov
 The compiler was 0000 lines long, and became unmaintainable.
 After a rewrite in MC it was 000 lines[Maggiore].
 
+EXAMPLE HERE (compare with slow language)
+
 The primary reason for this was the lack of higher-order type operators.
 This made abstractions such as monad-transformers impossible, hampering modularity and resulted in a lot of boilerplate code.
 
 In this document, we will walk through the backend and examine the various parts and their design decisions.
 In this way, this document aims to be useful to the future developers of the MC compiler.
 
-\subsection{Goals}
+\subsection{Research questions}
 
-The main goal was to develop a backend so typechecked Meta-Casanova(MC) could be transformed into executable code.
+The main research question is: ``What is the best way to implement a backend''  was to develop a backend so typechecked Meta-Casanova(MC) could be transformed into executable code.
 In order to do this, several sub-goals were set.
+
+TODO: Convert to questions.
+
+What is the best way to implement the backend?
 
 \begin{enumerate}
     \item decide on the output language.
@@ -42,6 +48,8 @@ In case it goed to the codegen, it is translated to the output language.
 To translate all the identifiers, the mangler is needed.
 The debugger is optionally embedded in the executable, depending on compiler flags.
 
+The sections 3 through 9 go into more detail regarding these subgoals.
+
 \subsection{Requirements}
 
 The project had 3 requiremens.
@@ -55,7 +63,9 @@ An additional soft requirement was that faster was better.
 The first requirement  because the compiler must be reliable.
 Any program can at most be as reliable as the compiler used to generate it.
 
-The second requirement existed because of inter-operability with Unity game engine.
+\label{whydotnet}
+The second requirement existed because of the need for a large library and inter-operability with Unity game engine.
+This is because the main area of research of the organization is game-related.
 
 
 \subsection{Organization}

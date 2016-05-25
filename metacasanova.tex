@@ -1,25 +1,20 @@
 \section{Meta-Casanova}
   Meta-Casanova is a functional, declarative language.
   It allows for multiple implementations of functions called \textit{rules}.
-  Rules may fail and the program will continue with the successful ones.
-
-  Multiple rules may match at any given time.
-  If this happens, the program execution splits into multiple branches; each branch following one rule.
-  If none of the rules match, the branch dies off. 
-
-  This mechanism effectively implements lookahead-behavior in programs, and is therefore useful for writing parsers.
+  Rules may fail, in that case the next rule will be attempted.
+  This will continue until a rule succeeds, or no rule matches in which case the program throws an exception.
   
   \subsection{Data}
   \texttt{Data} declarations declare a two-way \mbox{many-to-1} relation between types.
   This two-way relationships makes \texttt{Data} an \textit{alias}.
 
   \begin{code}
-  Data "nil" → list 'a
-  Data 'a → "::" → list 'a → list 'a
+  Data "nil" -> list<'a>
+  Data 'a -> "::" -> list<'a> -> list<'a>
   \end{code}
 
   In this example, the list type is declared with two constructors.
-  They specify that a lists can be constructed in two ways: with \verb|nil| and with \verb|::| surrounded with a term of type \verb|'a|, and a term of type \verb|list 'a|.
+  They specify that a lists can be constructed in two ways: with \verb|nil| and with \verb|::| surrounded with a term of type \verb|'a|, and a term of type \verb|list<'a>|.
 
   Conversely, they also specify that an list can be destructed in two ways.
   The programmer will assert which destructor is expected, and the rule fails if the destructor does not match.
@@ -32,8 +27,8 @@
   Polymorphic data structures are supported with the \textbf{\texttt{is}} keyword.
 
   \begin{code}
-  Data "error" → string → failableList 'a
-  failableList 'a is list 'a
+  Data "error" -> string -> failableList<'a>
+  failableList 'a is list<'a>
   \end{code}
 
   \noindent
@@ -43,7 +38,7 @@
   Func declarations specify a new function and its type.
 
   \begin{code}
-  Func "length" → list 'a → int
+  Func "length" -> list<'a> -> int
   \end{code}
 
   As with constructors, functions may be freely manipulated and partially applied, and have the restriction that their name must be unique in their namespace.
@@ -53,11 +48,11 @@
   For each Func declaration, there are one or more rules that define it.
 
   \begin{code}
-  #\verb|───────────────|#
+  ---------------
   length nil -> 0
 
   length xs -> res
-  #\verb|─────────────────────|#
+  ---------------------
   length x::xs -> 1+res
   \end{code}
   
@@ -78,10 +73,10 @@
   \begin{code}
   length 1::(2::nil)
       #\st{nil}#
-      x::xs → 1+(length 2::nil)
+      x::xs -> 1+(length 2::nil)
           #\st{nil}#
-          x::xs → 1+(length nil)
-              nil → 0
+          x::xs -> 1+(length nil)
+              nil -> 0
               #\st{x::xs}#
   \end{code}
 
@@ -89,8 +84,8 @@
   After which the function stops calling itself and starts accumulating the result on the way down.
   
   \begin{code}
-         1+0 → 1
-     1+1 → 2
+         1+0 -> 1
+     1+1 -> 2
   2
   \end{code}
 
