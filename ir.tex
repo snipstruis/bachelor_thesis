@@ -25,6 +25,7 @@ The Conditional, Deconstructor, Application and Call instructions belong to this
 \begin{description}
 \item[Literal] (\verb|42 -> x|) assigns a string-, boolean-, integer- or floating-point literal to a local identifier.
 \item[Conditional] (\verb|x < y|) asserts that a comparison between local identifiers is true.
+    The comparisons can be \verb|<|,\verb|<=|,\verb|==|,\verb|>=|,\verb|>| or \verb|!=|.
     If the assertion fails, the rule fails and the next rule in the function is attempted.
 \item[Deconstructor] (\verb|lst -> x::xs|) disassembles a local identifier constructed by a data declaration.
 \item[Closure] (\verb|(+) -> add|) assigns a closure of a global function to a local identifier.
@@ -74,3 +75,7 @@ Application used to also take the position of the argument that was applied.
 This was because the backend did not care in what order the closures were applied.
 But since the MC language only allows for in-order closure application, the decision was made to make the position of the argument implicit.
 
+Comparisons could first only take a boolean local identifier.
+It was changed to a predefined set of comparisons because of two reasons.
+Firstly, it makes the language-agnostic base instructions depend on .NET Booleans.
+Secondly, by restricting the inputs to only a predefined set of comparisons, we restrict the number of representations for the same program.

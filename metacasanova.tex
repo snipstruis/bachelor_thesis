@@ -1,16 +1,24 @@
-\section{Meta-Casanova}
-  Meta-Casanova is a functional, declarative language.
+\section{Meta Casanova}
+  Meta Casanova is a functional, declarative language.
+  This section will cover the subset of the language that is relevant for code-generation.
+
   It allows for multiple implementations of functions called \textit{rules}.
   Rules may fail, in that case the next rule will be attempted.
   This will continue until a rule succeeds, or no rule matches in which case the program throws an exception.
   
   \subsection{Data}
-  \texttt{Data} declarations declare a two-way \mbox{many-to-1} relation between types.
-  This two-way relationships makes \texttt{Data} an \textit{alias}.
+  \texttt{Data} declarations declare an algebraic union\cite{algenraic_datastructures}.
 
   \begin{code}
   Data "nil" -> list<'a>
   Data 'a -> "::" -> list<'a> -> list<'a>
+  \end{code}
+
+  defines the same structure as this F\#-like pseudocode.
+
+  \begin{code}
+  List<'a> = nil 
+           | 'a :: List<'a>
   \end{code}
 
   In this example, the list type is declared with two constructors.

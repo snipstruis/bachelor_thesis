@@ -64,12 +64,14 @@ Data "snd" -> string -> Union<int string>
 
 This will appear as the following list in the interface:
 
+{\footnotesize
 \begin{tabular}{lll}
-    \textbf{identifier} & \textbf{arguments} & \textbf{type}\\
-    \verb:",":   & \verb:int:; \verb:string: & \verb:int * string: \\
-    \verb:"fst": & \verb:int:                & \verb:int | string: \\
-    \verb:"snd": & \verb:string:             & \verb:int | string: \\
+    \textbf{\normalsize identifier} & \textbf{\normalsize arguments} & \textbf{\normalsize type}\\
+    \verb:",":   & \verb:int:; \verb:string: & \verb:Tuple<int string>: \\
+    \verb:"fst": & \verb:int:                & \verb:Union<int string>: \\
+    \verb:"snd": & \verb:string:             & \verb:Union<int string>: \\
 \end{tabular}
+}
 
 
 \subsubsection{Rule containers}

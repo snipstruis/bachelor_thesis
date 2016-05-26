@@ -150,8 +150,12 @@ Then each instruction is generated.
     _skip1:
 \end{code}
 
-\input{codegentable} % double width and page-breaking
 
 \subsubsection{Evolution}
-C\# unions only work with value-types.
+Before using inheritance, the plan was to use overlapping memory like C unions. 
+Using \verb|System.|\verb|Runtime.|\verb|InteropServices|, it was possible to set the specific offset of struct members.
+While this was multiplatform and worked well, it only worked with structs.
+This was a major limitation, because structs can only hold value-types.
+And the only value types are integers, floats, booleans and other structs.
 
+\input{codegentable} % double width and page-breaking
