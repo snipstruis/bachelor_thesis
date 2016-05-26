@@ -1,8 +1,8 @@
-\section{Code generator}
+\subsection{Code generator}
 The codegen is the heart of the back end.
 It is responsible for generating the C\# code.
 
-\subsection{Function declarations}
+\subsubsection{Function declarations}
 Function
 
 \begin{code}
@@ -31,7 +31,7 @@ class #\textit{<function name>}# {
 };
 \end{code}
 
-\subsection{Data declarations}
+\subsubsection{Data declarations}
 Data declarations are implemented with inheritance.
 The declared type is represented by an empty baseclass and all the constructors inherit from it.
 
@@ -55,7 +55,7 @@ class _Left :_pipe {string _arg0;};
 class _Right:_pipe {float  _arg0;};
 \end{code}
 
-\subsection{Rules}
+\subsubsection{Rules}
 
 Each rule defines its own name for each input argument.
 These names do not have to be the same, for example:
@@ -149,6 +149,6 @@ Then each instruction is generated.
 
 \input{codegentable} % double width and page-breaking
 
-\subsection{Evolution}
+\subsubsection{Evolution}
 C\# unions only work with value-types.
 

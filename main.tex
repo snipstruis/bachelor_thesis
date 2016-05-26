@@ -45,6 +45,7 @@
 \SetWatermarkVerCenter{5em}
 
 \begin{document}
+
 % disable page numbers
 \pagestyle{empty} 
 
@@ -52,24 +53,22 @@
 \includepdf[pages=1]{cover.pdf}
 \newpage
 
+% make subsubsections unnumbered and not show up in the TOC
+\setcounter{secnumdepth}{2} 
+\setcounter{tocdepth}{2}
+
 % start page numbers
 \setcounter{page}{1}
 \pagenumbering{arabic}
 \pagestyle{plain}
 
-% actual document
-
 \begin{multicols}{2}
 \tableofcontents
-\end{multicols}
-\pagebreak
 
-\begin{multicols}{2}
-
-%\part{front-matter}
 \input{intro}
 \input{metacasanova}
-%\part{sub-goals}
+
+\section{Research questions}
 \input{language}
 \input{interface}
 \input{ir}
@@ -77,7 +76,6 @@
 \input{mangler}
 \input{interpreter}
 \input{debugger}
-%\part{conclusions}
 \input{conclusion}
 
 % appendix

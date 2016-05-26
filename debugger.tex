@@ -1,4 +1,4 @@
-\section{Debugger}
+\subsection{Debugger}
 \fbox{\includegraphics[width=\columnwidth-7pt]{debugger}}
 
 The backend can also embed an interactive debugger in the codegen.
@@ -10,7 +10,7 @@ On the left pane is a 4-level deep tree which sorts the program on file name, fu
 
 On the right pane shows a table with the name and value of the local identifiers defined up to the current breakpoint.
 
-\subsection{debug class}
+\subsubsection{debug class}
 
 A seperate file, \verb|_DBUG.cs| contains the class \verb|_DBUG|.
 This class contains only the following public static items.
@@ -21,7 +21,7 @@ This class contains only the following public static items.
     \item a breakpoint function
 \end{enumerate}
 
-\subsection{Usage}
+\subsubsection{Usage}
 %This class contains a static method \verb|breakpoint| that will pause the execution of the program and present the GUI.
 %When the user presses `continue' or `abort', the GUI will close and the \verb|breakpoint| method will return control back to the program.
 
@@ -62,7 +62,7 @@ The third argument is the symboltable that has been accumulated so far.
 After each assignment to a named local identifier, the named identifier and the value are recorded in a key-value collection. 
 This key-value collection will be passed to the debugger when a breakpoint is hit.
 
-\subsection{Initialization}
+\subsubsection{Initialization}
 The \verb|_DBUG| class is initialized in the main function.
 This is done to keep the program-specific code out of \verb|_DBUG.cs|.
 The program tree is a public field of the \verb|_DBUG| class, and is initialized by the main function.

@@ -1,10 +1,10 @@
-\section{Interpreter}
+\subsection{Interpreter}
 The interpreter was built to automaticly validate the codegen and later allow constant-folding as an compiler optimization.
 
 The automatic validation would be done by comparing the results of test programs between the interpreter and the compiler.
 If they mismatch, there is either a bug in the interpreter or more likely a bug in the codegen.
 
-\subsection{Structure}
+\subsubsection{Structure}
 The interpreter is structured in the simplest possible way to minimize the possibility of bugs.
 
 At the heart of the interpreter is a function that evaluates a single instruction.
@@ -18,6 +18,6 @@ fold (*) 1 [1 2 3 4] evaluates to 24.
     fold : (s->a->a) -> s -> [a] -> [a]
 \end{code}
 
-\subsection{Evolution}
+\subsubsection{Evolution}
 Considered continuation monad.
 Turned out to complicated.

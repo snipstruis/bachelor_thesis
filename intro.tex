@@ -24,17 +24,16 @@ In this way, this document aims to be useful to the future developers of the MC 
 The main research question is: ``What is the best way to implement a backend''  was to develop a backend so typechecked Meta-Casanova(MC) could be transformed into executable code.
 In order to do this, several sub-goals were set.
 
-TODO: Convert to questions.
-
 What is the best way to implement the backend?
 
 \begin{enumerate}
-    \item decide on the output language.
-    \item design a front-end interface and an intermediate representation(IR).
-    \item Implement a program to validate the front-end interface and IR.
-    \item Implement a Code generator with code mangler.
-    \item Implement an interpreter to validate the code generator.
-    \item Implement an embedded debugger to help debug the compiler.
+    \item In what language should the code generator produce its output?
+    \item What should the interface be between the front-end and the back-end?
+    \item What should the intermediate representation be?
+    \item How does the intermediate representation map to the output language?
+    \item How to make sure that the generated names comply with the output language?
+    \item How to validate the code-generator?
+    \item How to enable debugging of the programs?
 \end{enumerate}
 
 To illustrate how the goals relate to each other, here is a diagram of the dataflow through the backend.

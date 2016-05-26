@@ -1,4 +1,4 @@
-\section{Mangler}
+\subsection{Mangler}
 The mangler is responsible for generating a unique C\# identifier for every instance of an MC identifier.
 The mangler is designed to be simple, and produce readable output.
 Readable output makes it easy to verify both the mangler and the generated code.
@@ -6,7 +6,7 @@ Readable output makes it easy to verify both the mangler and the generated code.
 There are two kinds of identifier: global identifiers and local identifiers.
 Global identifiers have a fully-qualified name with type information, where as local identifiers only have the simple name.
 
-\subsection{C\# identifiers}
+\subsubsection{C\# identifiers}
 Since there are more valid MC identifier names than C\# identifier names, some characters have to be escaped.
 
 Valid C\# identifiers are \verb|[_A-Za-z][_A-Za-z0-9]*| \cite{msdn_identifiers}.
@@ -28,10 +28,10 @@ To remedy this, every ascii symbol gets a readable label.
 \verb0,0 & \verb0_comma0 \\
 \end{tabular}
 
-\subsection{reserved words}
+\subsubsection{reserved words}
 C\# allows reserved words to be used as valid identifiers if prefixed with an `\verb|@|'\cite{msdn_identifiers}.
 
-\subsection{types}
+\subsubsection{types}
 Global identifiers need type information embedded in the name since the name alone does uniquely identify it (see thingy).
 Types can be recursive (see types), so the system for embedding types must be able to represent tree structures.
 We use the same syntax as the front-end but with \verb|_S| as seperator, \verb|_L| for the left angle bracket and \verb|_R| for the right angle bracket.

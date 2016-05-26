@@ -1,4 +1,4 @@
-\section{The front-end interface}
+\subsection{The front-end interface}
 The front-end interface is the interface between the front-end and the back-end.
 All the inputs for the back-end are in this datastructure.
 
@@ -23,10 +23,10 @@ All the symbols in the descriptions are provided with monomorphic types by the f
 Functions with generic types are made concrete by the front-end.
 
 The reason that datas, funcs and lambdas are defined as a list of key-value pairs instead of as a Map, is that the keys are not guaranteed to be unique.
-Since MC allows polymorphic types, one indentifier may be defined multiple times: once for each type.
+uSince MC allows polymorphic types, one indentifier may be defined multiple times: once for each type.
 There is no performance penalty, as no lookups by identifier are performed.
 
-\subsection{Data declarations}
+\subsubsection{Data declarations}
 The data declarations are grouped with the identifier of ---
 
 \begin{code}
@@ -55,9 +55,9 @@ Where \verb|Type| represents a monomorphic MC type.
 To illustrate, let's define a tuple an a union in MC.
 
 \begin{code}
-Data int -> "," -> string -> int * string
-Data "fst" -> int    -> int | string
-Data "snd" -> string -> int | string
+Data int -> "," -> string -> Tupple<int string>
+Data "fst" -> int    -> Union<int string>
+Data "snd" -> string -> Union<int string>
 \end{code}
 
 This will appear as the following list in the interface:
@@ -70,7 +70,7 @@ This will appear as the following list in the interface:
 \end{tabular}
 
 
-\subsection{Rule containers}
+\subsubsection{Rule containers}
 
 Function and lambda definitions, aswell as the main function contain rules.
 
@@ -86,9 +86,9 @@ The entry-point of the program is defined by a single rule, here called \verb|ma
 It is not a full function since full functions can have multiple rules.
 This was done to make the entry-point as simple as possible.
 
-\subsection{Rules}
+\subsubsection{Rules}
 
-Rules rules rules.
+The rules are the function definitions of MC and functions can have multiple of them.
 
 \begin{code}
 type rule = {
@@ -106,7 +106,7 @@ premises contain instructions, explained in next section.
 typemap.
 debug info.
 
-\subsection{Validator}
+\subsubsection{Validator}
 The first versions of the backend had no working front-end to test with.
 So the early testing was done by writing the interface datastructure by hand.
 Because that was error-prone, I implemented an automatic checker for the interface to check the invariants.
