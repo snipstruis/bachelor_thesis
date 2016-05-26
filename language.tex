@@ -1,7 +1,7 @@
 \subsection{Output language}
-The first decision had the most impact on the project, and was one that was difficult to change later on.
+The first research question had the most impact on the project, and was one that was difficult to change later on.
 
-\textit{In what programming language does the code-generator produce its output?}
+\textit{In what programming language should the code-generator produce its output?}
 
 This may be different than the language the code-generator is written in.
 The code-generator is written in F\#, like the rest of the compiler.
@@ -56,7 +56,7 @@ However it still has two drawbacks.
 The mono runtime has a different interface than the microsoft .NET api, leading to incompatible programs \cite{mono_embedding}.
 The same large serialization overhead as P/Invoke is present\cite{msdn_hosted}.
 
-\paragraph{conclusion}
+\paragraph{Unmanaged language conclusion}
 None of the inter-op methods offer a satisfactory solution.
 They all have downsides that outweigh the benefits.
 It was decided to let go of the LLVM code-generation in favor of a more portable and reliable system.
@@ -91,6 +91,6 @@ Since it is typed, it has the same restrictions as C\#.[source]
 As a result, it makes debugging and verification harder, with little to no gain.
 It also ommits the optimizations of the C\# compiler, such as dead-code elimination and stuff\cite{csharp_optimizations}.
 
-\paragraph{Conclusion}
+\paragraph{Managed language conclusion}
 The debugability together with a lot of control make C\# the best choice in this case.
 

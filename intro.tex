@@ -11,32 +11,51 @@ The limits of which were observed when implementing the compiler for the Casanov
 The compiler was 0000 lines long, and became unmaintainable.
 After a rewrite in MC it was 000 lines[Maggiore].
 
-EXAMPLE HERE (compare with slow language)
-
 The primary reason for this was the lack of higher-order type operators.
 This made abstractions such as monad-transformers impossible, hampering modularity and resulted in a lot of boilerplate code.
 
 In this document, we will walk through the backend and examine the various parts and their design decisions.
 In this way, this document aims to be useful to the future developers of the MC compiler.
 
-\subsection{Research questions}
+\subsection{Research question}
 
-The main research question is: ``What is the best way to implement a backend''  was to develop a backend so typechecked Meta-Casanova(MC) could be transformed into executable code.
-In order to do this, several sub-goals were set.
 
-What is the best way to implement the backend?
+
+\textit{How to transform typechecked Meta-Casanova(MC) into executable code?}
+
+Where the transformation must satisfy these requirements:
+\begin{enumerate}
+    \item The backend must in no case produce an incorrect program.
+    \item The executable must be able to inter-operate with .NET.
+    \item The generated code must run on all the platforms .NET runs on.
+\end{enumerate}
+
+An additional soft requirement was that the performance of the generated program should be as high as possible.
+
+The first requirement  because the compiler must be reliable.
+Any program can at most be as reliable as the compiler used to generate it.
+
+\label{whydotnet}
+The second requirement existed because of the need for a large library and inter-operability with Unity game engine.
+This is because the main area of research of the organization is game-related.
+
+In order to answer the research question, seven subquestions were formulated.
 
 \begin{enumerate}
     \item In what language should the code generator produce its output?
     \item What should the interface be between the front-end and the back-end?
-    \item What should the intermediate representation be?
+    \item What should the intermediate representation of the functions be?
     \item How does the intermediate representation map to the output language?
     \item How to make sure that the generated names comply with the output language?
     \item How to validate the code-generator?
-    \item How to enable debugging of the programs?
+    \item How to validate the test programs?
 \end{enumerate}
 
-To illustrate how the goals relate to each other, here is a diagram of the dataflow through the backend.
+These subquestions will be answered in their respective subsections in section 3.
+
+\subsection{Overview}
+
+To illustrate how the different parts of the back-end relate to each other, here is a diagram of the dataflow through the backend.
 
 \includegraphics[width=\columnwidth]{overview}
 
@@ -46,26 +65,6 @@ In case it goes to the interpreter, the program is directly executed.
 In case it goed to the codegen, it is translated to the output language.
 To translate all the identifiers, the mangler is needed.
 The debugger is optionally embedded in the executable, depending on compiler flags.
-
-The sections 3 through 9 go into more detail regarding these subgoals.
-
-\subsection{Requirements}
-
-The project had 3 requiremens.
-\begin{enumerate}
-    \item The backend must in no case produce an incorrect program.
-    \item The executable must be able to inter-operate with .NET.
-    \item The generated code must run on all the platforms .NET runs on.
-\end{enumerate}
-An additional soft requirement was that faster was better.
-
-The first requirement  because the compiler must be reliable.
-Any program can at most be as reliable as the compiler used to generate it.
-
-\label{whydotnet}
-The second requirement existed because of the need for a large library and inter-operability with Unity game engine.
-This is because the main area of research of the organization is game-related.
-
 
 \subsection{Organization}
 --- todo: describe organization ---

@@ -73,19 +73,19 @@
   \begin{code}
   length 1::(2::nil)
       #\st{nil}#
-      x::xs -> 1+(length 2::nil)
+      x::xs → 1+(length 2::nil)
           #\st{nil}#
-          x::xs -> 1+(length nil)
-              nil -> 0
+          x::xs → 1+(length nil)
+              nil → 0
               #\st{x::xs}#
   \end{code}
 
   \noindent
   After which the function stops calling itself and starts accumulating the result on the way down.
   
-  \begin{code}
-         1+0 -> 1
-     1+1 -> 2
+  \begin{code}[gobble=2]
+          1 ← 1+0
+      2 ← 1+1
   2
   \end{code}
 

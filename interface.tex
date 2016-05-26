@@ -1,8 +1,10 @@
 \subsection{The front-end interface}
-The front-end interface is the interface between the front-end and the back-end.
-All the inputs for the back-end are in this datastructure.
+The second research question is about the specification of the front-end interface.
 
-Primarily the lambda and function defenitions, and the data declarations.
+\textit{What should the interface between the front-end and the back-end be?}
+
+The front-end interface contains all the input for the backend.
+This makes testing very easy, as the rest of the backend only relies on its input.
 
 \begin{code}
 type Interface = {
