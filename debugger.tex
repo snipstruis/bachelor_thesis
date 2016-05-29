@@ -1,12 +1,17 @@
 \subsection{Debugger}\label{debugger}
 The validation of the codegen lead to another validation-issue.
+If a test program is not behaving as expected, is there a bug in the test program or in the compiler?
+
+In other words:
 
 \textit{How to validate the test programs?}
+
+The answer to this is an embedded debugger in the target executable.
 
 \fbox{\includegraphics[width=\columnwidth-7pt]{debugger}}
 
 The backend can also embed an interactive debugger in the codegen.
-The program will then break on the first instruction and launch the debugger GUI.
+The program will then trigger a breakpoint on the first instruction and launch the debugger GUI.
 From the GUI, more breakpoints can be set with the check-boxes.
 When the user presses `continue' or `abort', the gui will close and appear again on the next breakpoint.
 
@@ -14,7 +19,7 @@ On the left pane is a 4-level deep tree which sorts the program on file name, fu
 
 On the right pane shows a table with the name and value of the local identifiers defined up to the current breakpoint.
 
-\subsubsection{debug class}
+\subsubsection{Debug class}
 
 A seperate file, \verb|_DBUG.cs| contains the class \verb|_DBUG|.
 This class contains only the following public static items.
@@ -70,5 +75,4 @@ This key-value collection will be passed to the debugger when a breakpoint is hi
 The \verb|_DBUG| class is initialized in the main function.
 This is done to keep the program-specific code out of \verb|_DBUG.cs|.
 The program tree is a public field of the \verb|_DBUG| class, and is initialized by the main function.
-
 

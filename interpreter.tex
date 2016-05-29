@@ -12,16 +12,27 @@ If they mismatch, there is either a bug in the interpreter or more likely a bug 
 The interpreter is structured in the simplest possible way to minimize the possibility of bugs.
 
 At the heart of the interpreter is a function that evaluates a single instruction.
-This function is defined to be used in a fold.
+This function is designed so it can be used in a fold.
 
-Fold is a standard function in F\# and other functional languages that behaves like an accumulator.
-example: fold (+) 0 [1 2 3 4] evaluates to 10.
-fold (*) 1 [1 2 3 4] evaluates to 24.
+\verb|fold| (or \verb|reduce|) is a standard function in F\# and other functional languages with the following type signature.
 
 \begin{code}
-    fold : (s->a->a) -> s -> [a] -> [a]
+    fold : (s->a->a) -> s -> [a] -> a
 \end{code}
 
+It applies a function for each element that takes the element and accumulator and produces a new accumulator.
+The first argument is that function, the second argument is the starting state and the last is the array.
+\cite{realworldhaskellch4}.
+
+example: \texttt{fold (+) 0 [1 2 3 4]} evaluates to 10 and \texttt{fold (*) 1 [1 2 3 4]} evaluates to 24.
+
+Using a fold radically simplifies the function, as all the explicit recursion becomes implicit.
+The function now only takes the state of the program and an instruction, and produces the new state of the program.
+
+\subsubsection{.NET instructions}
+.NET interop here.
+
 \subsubsection{Evolution}
+The first 
 Considered continuation monad.
 Turned out to complicated.
