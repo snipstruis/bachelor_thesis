@@ -6,16 +6,20 @@ The second research question is about the specification of the front-end interfa
 The front-end interface contains all the input for the backend.
 This makes testing very easy, as the rest of the backend only relies on its input.
 
+\subsubsection{Interface}
+
 \begin{code}
 type Interface = {
   datas      : List<Id*Data>
   funcs      : List<Id*List<rule>>
   lambdas    : List<LambdaId*rule>
   main       : rule
-  assemblies : List<string> 
   flags      : CompilerFlags
+  assemblies : List<string> 
 }
 \end{code}
+
+As you can see, the interface contains the data declarations, function definitions, lambda definitions and a main function.
 
 The design principles for this interface were simplicity and minimalism.
 There should be as few ways as possible to represent the same program.
@@ -25,11 +29,11 @@ All the symbols in the descriptions are provided with monomorphic types by the f
 Functions with generic types are made concrete by the front-end.
 
 The reason that datas, funcs and lambdas are defined as a list of key-value pairs instead of as a Map, is that the keys are not guaranteed to be unique.
-uSince MC allows polymorphic types, one indentifier may be defined multiple times: once for each type.
-There is no performance penalty, as no lookups by identifier are performed.
+Since MC allows polymorphic types, one indentifier may be defined multiple times: once for each type.
+There is no performance penalty for the back-end, as no lookups by identifier are performed.
 
 \subsubsection{Data declarations}
-The data declarations are grouped with the identifier of ---
+The data declarations are grouped with the identifier of the constructor.
 
 \begin{code}
 datas : List<Id*Data>
@@ -76,7 +80,7 @@ This will appear as the following list in the interface:
 
 \subsubsection{Rule containers}
 
-Function and lambda definitions, aswell as the main function contain rules.
+Function and lambda definitions, as well as the main function contain rules.
 
 \begin{code}
   funcs   : List<Id*List<rule>>
@@ -86,13 +90,14 @@ Function and lambda definitions, aswell as the main function contain rules.
 
 Functions in MC can contain multiple rules that implement them.
 
-The entry-point of the program is defined by a single rule, here called \verb|main|.
+The entry point of the program is defined by a single rule, here called \verb|main|.
 It is not a full function since full functions can have multiple rules.
 This was done to make the entry-point as simple as possible.
 
 \subsubsection{Rules}
 
-The rules are the function definitions of MC and functions can have multiple of them.
+Functions are defined with of one or more \textit{rules}.
+This is how they are represented in the interface.
 
 \begin{code}
 type rule = {
@@ -105,14 +110,31 @@ type rule = {
 }
 \end{code}
 
-input and output.
-premises contain instructions, explained in next section.
-typemap.
-debug info.
+The main component of rules are their premises.
+They are the instructions that make up the rule.
+The instruction set is described in section \ref{ir}.
+
+The premise list also contains line numbers for each premisse.
+This is debug information, that is used by the embedded debugger (section~\ref{debugger}).
+
+Next are the inputs and output of the rule.
+Input and outputs consist only of local identifiers.
+This is because of \textit{normalization}.
+
+In the case that a rule-input or output has an expression instead of a local identifer,
+ the expression is assigned to a new local identifier and the local identifier is substituted.
+More on normalization in section~\ref{normalization}.
+
+The typemap contains a map from the local identifiers in a rule to their types.
+This gives the back-end all the information that the typechecker has accumulated.
+
+The last two members are \verb|declartion| and \verb|definition|.
+These represent the position that the function was declared and the position that it was defined.
+This information is used by the debugger.
 
 \subsubsection{Validator}
 The first versions of the backend had no working front-end to test with.
-So the early testing was done by writing the interface datastructure by hand.
+Early testing was done by writing the interface datastructure by hand.
 Because that was error-prone, I implemented an automatic checker for the interface to check the invariants.
 
 The validator asserts the following:

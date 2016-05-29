@@ -1,101 +1,105 @@
 \section{Meta Casanova}
-  Meta Casanova is a functional, declarative language.
-  This section will cover the subset of the language that is relevant for code-generation.
+Meta Casanova is a functional, declarative language.
+This section will cover the subset of the language that is relevant for code-generation.
 
-  It allows for multiple implementations of functions called \textit{rules}.
-  Rules may fail, in that case the next rule will be attempted.
-  This will continue until a rule succeeds, or no rule matches in which case the program throws an exception.
-  
-  \subsection{Data}
-  \texttt{Data} declarations declare an algebraic union\cite{algenraic_datastructures}.
+It allows for multiple implementations of functions called \textit{rules}.
+Rules may fail, in that case the next rule will be attempted.
+This will continue until a rule succeeds, or no rule matches in which case the program throws an exception.
 
-  \begin{code}
-  Data "nil" -> list<'a>
-  Data 'a -> "::" -> list<'a> -> list<'a>
-  \end{code}
+\subsection{Data}
+\texttt{Data} declarations declare an algebraic union\cite{algebraic_datastructures}.
 
-  defines the same structure as this F\#-like pseudocode.
+\begin{code}
+Data "nil" -> list<'a>
+Data 'a -> "::" -> list<'a> -> list<'a>
+\end{code}
 
-  \begin{code}
-  List<'a> = nil 
-           | 'a :: List<'a>
-  \end{code}
+defines the same structure as this F\#-like pseudocode.
 
-  In this example, the list type is declared with two constructors.
-  They specify that a lists can be constructed in two ways: with \verb|nil| and with \verb|::| surrounded with a term of type \verb|'a|, and a term of type \verb|list<'a>|.
+\begin{code}
+List<'a> = nil 
+         | 'a :: List<'a>
+\end{code}
 
-  Conversely, they also specify that an list can be destructed in two ways.
-  The programmer will assert which destructor is expected, and the rule fails if the destructor does not match.
-  An example of this is shown later, in subsection ``Funcs''.
+In this example, the list type is declared with two constructors.
+They specify that a lists can be constructed in two ways: with \verb|nil| and with \verb|::| surrounded with a term of type \verb|'a|, and a term of type \verb|list<'a>|.
 
-  Additionally, constructors may be manipulated and partially applied like functions.
-  This allows for greater flexibility at the cost that function and constructor names need to be unique in their namespace.
+Conversely, they also specify that an list can be destructed in two ways.
+The programmer will assert which destructor is expected, and the rule fails if the destructor does not match.
+An example of this is shown later, in subsection ``Funcs''.
 
-  \subsection{Polymorphism}
-  Polymorphic data structures are supported with the \textbf{\texttt{is}} keyword.
+Additionally, constructors may be manipulated and partially applied like functions.
+This allows for greater flexibility at the cost that function and constructor names need to be unique in their namespace.
 
-  \begin{code}
-  Data "error" -> string -> failableList<'a>
-  failableList 'a is list<'a>
-  \end{code}
+\subsection{Polymorphism}
+Polymorphic data structures are supported with the \textbf{\texttt{is}} keyword.
 
-  \noindent
-  This means every constructor of the \verb|list| is also a valid constructor of \verb|failableList|, but not vice-versa.
+\begin{code}
+Data "error" -> string -> failableList<'a>
+failableList 'a is list<'a>
+\end{code}
 
-  \subsection{Funcs}
-  Func declarations specify a new function and its type.
+\noindent
+This means every constructor of the \verb|list| is also a valid constructor of \verb|failableList|, but not vice-versa.
 
-  \begin{code}
-  Func "length" -> list<'a> -> int
-  \end{code}
+\subsection{Funcs}
+Func declarations specify a new function and its type.
 
-  As with constructors, functions may be freely manipulated and partially applied, and have the restriction that their name must be unique in their namespace.
+\begin{code}
+Func "length" -> list<'a> -> int
+\end{code}
 
-  \subsection{Rules}
-  Meta-Casanova uses a syntax similar to that of natural deduction.
-  For each Func declaration, there are one or more rules that define it.
+As with constructors, functions may be freely manipulated and partially applied, and have the restriction that their name must be unique in their namespace.
 
-  \begin{code}
-  ---------------
-  length nil -> 0
+\subsection{Rules}
+Meta-Casanova uses a syntax similar to that of natural deduction.
+For each Func declaration, there are one or more rules that define it.
 
-  length xs -> res
-  ---------------------
-  length x::xs -> 1+res
-  \end{code}
-  
-  A rule is comprised of a line with below it on the left of the arrow the input, and on the right the output.
-  The statements above the horizontal line are called \textit{premises}.
-  They can be assignments like in the example above, or conditionals like \verb|a=b| or \verb|c<d|.
+\begin{code}
+---------------
+length nil -> 0
 
-  We can now call the function \verb|length| with an example list:
+length xs -> res
+---------------------
+length x::xs -> 1+res
+\end{code}
 
-  \begin{code}
-    1::(2::nil) -> x
-    length x    -> res
-  \end{code}
+A rule is comprised of a line with below it on the left of the arrow the input, and on the right the output.
+The statements above the horizontal line are called \textit{premises}\label{premises}.
+They can be assignments like in the example above, or conditionals like \verb|a==b| or \verb|c<d|.
 
-  The first premise constructs a list called ``x'', and the second statement calls length with that list.
-  The program will execute as follows:
+In the case of assignments, they create a \textit{local identifier}.
+These identifiers are local to the rule they appear in.
+The input arguments of the rule are also local identifiers.
 
-  \begin{code}
-  length 1::(2::nil)
-      #\st{nil}#
-      x::xs → 1+(length 2::nil)
-          #\st{nil}#
-          x::xs → 1+(length nil)
-              nil → 0
-              #\st{x::xs}#
-  \end{code}
+We can now call the function \verb|length| with an example list:
 
-  \noindent
-  After which the function stops calling itself and starts accumulating the result on the way down.
-  
-  \begin{code}[gobble=2]
-          1 ← 1+0
-      2 ← 1+1
-  2
-  \end{code}
+\begin{code}
+  1::(2::nil) -> x
+  length x    -> res
+\end{code}
 
-  \noindent
-  After which it tells us correctly that the length of the list 1::(2::nil) is indeed 2.
+The first premise constructs a list called ``x'', and the second statement calls length with that list.
+The program will execute as follows:
+
+\begin{code}
+length 1::(2::nil)
+    #\st{nil}#
+    x::xs → 1+(length 2::nil)
+        #\st{nil}#
+        x::xs → 1+(length nil)
+            nil → 0
+            #\st{x::xs}#
+\end{code}
+
+\noindent
+After which the function stops calling itself and starts accumulating the result on the way down.
+
+\begin{code}[gobble=2]
+        1 ← 1+0
+    2 ← 1+1
+2
+\end{code}
+
+\noindent
+After which it tells us correctly that the length of the list 1::(2::nil) is indeed 2.

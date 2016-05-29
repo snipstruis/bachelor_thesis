@@ -5,14 +5,15 @@ The fourth research question gets at the heart of the back-end.
 
 The codegen is in many ways the heart of the back end, as it is responsible for generating the C\# code.
 
-\subsubsection{Function declarations}
-Function
+\subsubsection{Functions}
+Every function was implemented as a closure.
+In C\# this means a class with a public field for each function argument and a \verb|_run| function that takes the last argument and executes the function.
 
 \begin{code}
 class #\textit{<function name>}# {
     #\textit{<function arguments>}#
     public #\textit{<return type>}# 
-    run(#\textit{<last argument>}#) {
+    _run(#\textit{<last argument>}#) {
         {
             #\textit{<rule 1 implementation>}#
             return #\textit{<local>}#;
@@ -34,11 +35,15 @@ class #\textit{<function name>}# {
 };
 \end{code}
 
+The \verb|_run| function opens a local scope followed by a goto-label for each rule in the function.
+This allows rules to easily fail by jumping ahead to the label.
+More on rules in section~\ref{codegen_rules}.
+
 \subsubsection{Data declarations}
 Data declarations are implemented with inheritance.
 The declared type is represented by an empty baseclass and all the constructors inherit from it.
 
-It is easy to see the pattern with an example.
+This is a pretty straight-forward transformation.
 
 \begin{code}
 Data string -> "," -> int -> string * int
@@ -47,7 +52,7 @@ Data "Left"  -> string -> string | float
 Data "Right" -> float  -> string | float
 \end{code}
 
-Transforms into this.
+The above MC code transforms into the following C\# code.
 
 \begin{code}
 class _star {};
@@ -58,7 +63,12 @@ class _Left :_pipe {string _arg0;};
 class _Right:_pipe {float  _arg0;};
 \end{code}
 
-\subsubsection{Rules}
+The types \verb|_star| and \verb|_pipe| can now be easily be deconstructed.
+When a premis deconstructs a datatype, it asserts that a type is constructed by a specific constructor.
+This is done by simply casting the base-class to a subclass, and checking if the cast succeeded.
+If the cast failed, the rule does not match and the rule is skipped.
+
+\subsubsection{Rules}\label{codegen_rules}
 
 Each rule defines its own name for each input argument.
 These names do not have to be the same, for example:
@@ -150,6 +160,7 @@ Then each instruction is generated.
     _skip1:
 \end{code}
 
+See the figure 1 on the next page for an overview of instruction generation.
 
 \subsubsection{Evolution}
 Before using inheritance, the plan was to use overlapping memory like C unions. 

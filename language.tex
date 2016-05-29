@@ -5,7 +5,7 @@ The first research question had the most impact on the project, and was one that
 
 This may be different than the language the code-generator is written in.
 The code-generator is written in F\#, like the rest of the compiler.
-The reason we use F\#, rather than Meta-Casanova 2, is because of the debugging capabilities.
+The reason we use F\#, rather than Meta-Casanova 2, is because Meta Casanova 2 lacks tool support, such as descriptive error messages and debuggers.
 
 \subsubsection{Unmanaged languages}
 Since speed was one of the requirements, I first looked at solutions with unmanaged parts.
@@ -24,7 +24,7 @@ There are a few systems that allow for managed and unmanaged code to communicate
 The most viable are P/invoke, C++/CLI interop, and a hosted runtime.
 
 \paragraph{P/invoke}
-Platform Invocation Services (P/invoke) allows managed code to call unmanaged functions that are implemented in a DLL.\cite{msdn_pinvoke}
+Platform Invocation Services allows managed code to call unmanaged functions that are implemented in a DLL.\cite{msdn_pinvoke}
 
 This is the most common form of inter-op, and has great documentation.
 However, there are two big disadvantages.
@@ -38,8 +38,8 @@ However, there are two big disadvantages.
 
 Because of this, P/Invoke was not chosen.
 
-\paragraph{C++/CLI interop}
-C++ for the Common Language Infrastructure (C++/CLI) is a programming language designed for interoperability with unmanaged code.\cite{msdn_c++cli}
+\paragraph{C++/CLI}
+C++ for the Common Language Infrastructure is a programming language designed for interoperability with unmanaged code.\cite{msdn_c++cli}
 
 While it seems like it does exactly what we need, it has portability issues.
 The only C++/CLI compiler runs on windows and it only compiles for processors with the x86 architecture\cite{mono_c++cli}.
@@ -56,18 +56,15 @@ However it still has two drawbacks.
 The mono runtime has a different interface than the microsoft .NET api, leading to incompatible programs \cite{mono_embedding}.
 The same large serialization overhead as P/Invoke is present\cite{msdn_hosted}.
 
-\paragraph{Unmanaged language conclusion}
+\subsubsection{.NET languages}
 None of the inter-op methods offer a satisfactory solution.
 They all have downsides that outweigh the benefits.
 It was decided to let go of the LLVM code-generation in favor of a more portable and reliable system.
 
-\subsubsection{.NET languages}
-Because of the problems with native hybrids, it was decided to choose a .NET language.
 Stability is a big advantage because everything happends inside the .NET runtime.
 This has a higher chance of working on non-native platforms than the hybrid solutions.
 
-\paragraph{F\#}
-F\# is a functional/declarative language in the .Net family\cite[fsharp].
+\paragraph{F\#} is a functional/declarative language in the .Net family\cite[fsharp].
 It would be a natural choice, since the compiler is written in it.
 However, it is quite slow\cite{fsharp_slow} and resists the imperative style of the generated code.
 The programmer has also less control of the program execution, as F\# is a more higher-level language\cite{fsharp}
@@ -77,7 +74,7 @@ A version of the code generator was made that used F\#, but it proved too cumber
 % maybe look for Mohammeds compiler written in F#?
 
 \paragraph{C\#}
-C\# is an imperative, object-oriented language\cite{csharp}.
+is an imperative, object-oriented language\cite{csharp}.
 It is the most popular .NET language\cite{Meyerovich}, so the compiler gets the most attention by Microsoft.
 It is also easy to debug, as it has the most mature debugging tools.
 
@@ -86,11 +83,11 @@ This is opposed to F\#, where I had to generate a tree-structure as an output.
 This greatly improved debugability and simplicity of implementation.
 
 \paragraph{CIL}
-CIL (Common Intermediate Language) is the bytecode that all the languages are compiled to.
+(Common Intermediate Language) is the bytecode that all the languages are compiled to.
 Since it is typed, it has the same restrictions as C\#.[source]
 As a result, it makes debugging and verification harder, with little to no gain.
 It also ommits the optimizations of the C\# compiler, such as dead-code elimination and stuff\cite{csharp_optimizations}.
 
-\paragraph{Managed language conclusion}
-The debugability together with a lot of control make C\# the best choice in this case.
+\subsubsection{Conclusion}
+The debugability together with a lot of control make C\# the best choice for code generation.
 

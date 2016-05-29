@@ -17,7 +17,7 @@ This made abstractions such as monad-transformers impossible, hampering modulari
 In this document, we will walk through the backend and examine the various parts and their design decisions.
 In this way, this document aims to be useful to the future developers of the MC compiler.
 
-\subsection{Research question}
+\subsection{Research questions}\label{research_questions}
 
 \textit{How to transform typechecked Meta-Casanova(MC) into executable code?}
 
@@ -50,20 +50,6 @@ In order to answer the research question, seven subquestions were formulated.
 \end{enumerate}
 
 These subquestions will be answered in their respective subsections in section 3.
-
-
-\subsection{Overview}
-
-To illustrate how the different parts of the back-end relate to each other, here is a diagram of the dataflow through the backend.
-
-\includegraphics[width=\columnwidth]{overview}
-
-As you can see, the front-end interface contains the IR and goes through the validator.
-From there, depending on the compiler flags, it either goes to the interpreter or the codegen.
-In case it goes to the interpreter, the program is directly executed.
-In case it goed to the codegen, it is translated to the output language.
-To translate all the identifiers, the mangler is needed.
-The debugger is optionally embedded in the executable, depending on compiler flags.
 
 \subsection{Organization}
 --- todo: describe organization ---

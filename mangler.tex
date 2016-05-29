@@ -13,8 +13,8 @@ Global identifiers have a fully-qualified name with type information, where as l
 \subsubsection{C\# identifiers}
 Since there are more valid MC identifier names than C\# identifier names, some characters have to be escaped.
 
-Valid C\# identifiers are \verb|[_A-Za-z][_A-Za-z0-9]*| \cite{msdn_identifiers}.
-The only valid non-alphanumeric character is an underscore, so that is used to escape with.
+Valid C\# identifiers must start with an alphabetic character or an underscore and the trailing characters must be alphanumeric or underscore\footnote{regex: \texttt{[\_A-Za-z][\_A-Za-z0-9]*}}\cite{msdn_identifiers}.
+The only valid non-alphanumeric character is an underscore, so using it to escape with was a logical choice.
 
 The first iteration of the code mangler just replaced all non-numeric characters with an underscore followed with the two-digit hexadecimal number.
 This generated correct identifiers but was very unreadable, \verb|>>=| would translate to \verb|_3E_3E_3D|.
