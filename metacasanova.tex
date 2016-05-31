@@ -31,16 +31,16 @@ An example of this is shown later, in subsection ``Funcs''.
 Additionally, constructors may be manipulated and partially applied like functions.
 This allows for greater flexibility at the cost that function and constructor names need to be unique in their namespace.
 
-\subsection{Polymorphism}
-Polymorphic data structures are supported with the \textbf{\texttt{is}} keyword.
-
-\begin{code}
-Data "error" -> string -> failableList<'a>
-failableList 'a is list<'a>
-\end{code}
-
-\noindent
-This means every constructor of the \verb|list| is also a valid constructor of \verb|failableList|, but not vice-versa.
+%\subsection{Polymorphism}
+%Polymorphic data structures are supported with the \textbf{\texttt{is}} keyword.
+%
+%\begin{code}
+%Data "error" -> string -> failableList<'a>
+%failableList 'a is list<'a>
+%\end{code}
+%
+%\noindent
+%This means every constructor of the \verb|list| is also a valid constructor of \verb|failableList|, but not vice-versa.
 
 \subsection{Funcs}
 Func declarations specify a new function and its type.
