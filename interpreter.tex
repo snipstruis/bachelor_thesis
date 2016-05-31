@@ -8,11 +8,21 @@ The interpreter was built to automaticly validate the codegen and later allow co
 The automatic validation would be done by comparing the results of test programs between the interpreter and the compiler.
 If they mismatch, there is either a bug in the interpreter or more likely a bug in the codegen.
 
-\subsubsection{Structure}
-The interpreter is structured in the simplest possible way to minimize the possibility of bugs.
+\subsubsection{Evolution}
+The first design for an interpreter used the continuation monad.
+This is a complex construct that allowes for arbitrary control flow.
 
-At the heart of the interpreter is a function that evaluates a single instruction.
-This function is designed so it can be used in a fold.
+The idea was that during debugging, you could change the line that was executed.
+It turned out that it was more desireable to have the debugger in the codegen instead of the interpreter\footnote{see section \ref{debugger}}, so the primary benefit of the construct was lost.
+
+The next design used explicit recursion to walk the list of instructions.
+This was a huge simplification compared to the continuation-monad, but every instruction still had to explicitly recurse.
+While all of the recursion were tail-calls, it still meant near-identical code duplication for each instruction.
+
+\subsubsection{Structure}
+The final design uses \verb|fold|.
+This eliminated the recursion, making the \verb|interpret| instruction a straight-line function that executed a single instruction.
+This interpreter was writen under 100 lines\footnote{see \texttt{interpreter.fs}}.
 
 \verb|fold| (or \verb|reduce|) is a standard function in F\# and other functional languages with the following type signature.
 
@@ -30,11 +40,10 @@ Using a fold radically simplifies the function, as all the explicit recursion be
 The function now only takes the state of the program and an instruction, and produces the new state of the program.
 
 \subsubsection{.NET instructions}
-.NET interop here.
+The interpreter has to be able to load .NET libraries on the fly, since the libraries are not known at the time the compiler is compiled.
 
-\subsubsection{Evolution}
-The first design for an interpreter used the continuation monad.
-This is a complex construct that allowes for arbitrary control flow.
-The idea was that during debugging, you could 
+In the front-end interface, the \verb|assemblies| field contains a list of strings.
+These strings are the assembly names the program is linked to.
+When a .NET function is called, the interpreter will open the assemblies one by one and search through it for a function that matches the name and signature of the one called.
+.NET datastructures and fields are handled the same way.
 
-Turned out to complicated.

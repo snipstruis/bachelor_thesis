@@ -36,8 +36,8 @@ To remedy this, every ASCII symbol gets a readable label.
 C\# allows reserved words to be used as valid identifiers if prefixed with an `\verb|@|'\cite{msdn_identifiers}.
 
 \subsubsection{Types}
-Global identifiers need type information embedded in the name since the name alone does uniquely identify it (see thingy).
-Types can be recursive (see types), so the system for embedding types must be able to represent tree structures.
+Global identifiers need type information embedded in the name since the name alone does uniquely identify it.
+Types can be recursive\footnote{see section~\ref{mcdata}}, so the system for embedding types must be able to represent tree structures.
 We use the same syntax as the front-end but with \verb|_S| as seperator, \verb|_L| for the left angle bracket and \verb|_R| for the right angle bracket.
 
 {\footnotesize
@@ -52,3 +52,4 @@ We use the same syntax as the front-end but with \verb|_S| as seperator, \verb|_
 The first iteration of the mangler just numbered every identifier.
 While this was a simple system to generate identifiers with, it was absolutely impossible to inspect the resulting code.
 Most of the mangler is the result of a desire for readable, inspectible output code.
+

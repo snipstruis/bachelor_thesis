@@ -66,10 +66,10 @@ This has a higher chance of working on non-native platforms than the hybrid solu
 
 \paragraph{F\#} is a functional/declarative language in the .Net family\cite[fsharp].
 It would be a natural choice, since the compiler is written in it.
-However, it is quite slow\cite{fsharp_slow} and resists the imperative style of the generated code.
-The programmer has also less control of the program execution, as F\# is a more higher-level language\cite{fsharp}
-
-A version of the code generator was made that used F\#, but it proved too cumbersome since there was no mechanism to simply skip rules if they failed.
+It has the advantage of supporting tail-calls, which is unsupported by C\#.
+And since F\# already supported algebraic datatypes, it seemed like a viable solution.
+%The programmer has also less control of the program execution, as F\# is a more higher-level language\cite{fsharp}
+%A version of the code generator was made that used F\#, but it proved too cumbersome since there was no mechanism to simply skip rules if they failed.
 
 % maybe look for Mohammeds compiler written in F#?
 
@@ -77,10 +77,11 @@ A version of the code generator was made that used F\#, but it proved too cumber
 is an imperative, object-oriented language\cite{csharp}.
 It is the most popular .NET language\cite{Meyerovich}, so the compiler gets the most attention by Microsoft.
 It is also easy to debug, as it has the most mature debugging tools.
+C\# too seemed like a viable option.
 
-When implementing the code-generator in this style, it was possible to write the code-generator so that the output-code is straight-line code.
-This is opposed to F\#, where I had to generate a tree-structure as an output.
-This greatly improved debugability and simplicity of implementation.
+%When implementing the code-generator in this style, it was possible to write the code-generator so that the output-code is straight-line code.
+%This is opposed to F\#, where I had to generate a tree-structure as an output.
+%This greatly improved debugability and simplicity of implementation.
 
 \paragraph{CIL}
 (Common Intermediate Language) is the bytecode that all the languages are compiled to.
@@ -89,5 +90,24 @@ As a result, it makes debugging and verification harder, with little to no gain.
 It also ommits the optimizations of the C\# compiler, such as dead-code elimination and stuff\cite{csharp_optimizations}.
 
 \subsubsection{Conclusion}
-The debugability together with a lot of control make C\# the best choice for code generation.
+The result of the research was that, C\# and F\# were both viable.
+To choose an output language, I built a code model for each language.
 
+The F\# code model mainly involved switching off indentation-based scoping for F\# and using the verbose syntax.
+Scoping was implemented by making each rule a numbered function that returned an \verb|Option<>|.
+the numbered rules were then called and appended using the \verb|>>=| of the \verb|Option| monad.
+
+While this model worked, it was cumbersome and slow.
+The code was hard to inspect, since there was no indentation.
+It was also relatively slow because\footnote{information obtained by inspecting generated CIL code of the microsoft F\# compiler \texttt{fsc.exe} version 1.0 with \texttt{+optimize}}
+
+\begin{enumerate}
+\item It had to wrap each return value in a \verb|Option|. 
+    This is particularly costly for value-types, as they have to be boxed and unboxed each time the value is used.
+\item It perform monadic operations for each rule attempt.
+    These generic functions do type resolution at run-time, each time they are called.
+\item The numbered functions were not inlined, preventing any cross-rule optimization.
+\end{enumerate}
+
+The C\# code model proved far easier to generate and inspect, as it had braces and local scopes.
+It is the model that is now used\footnote{see section~\ref{codegen}}.

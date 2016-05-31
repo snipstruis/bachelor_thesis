@@ -112,18 +112,17 @@ type rule = {
 
 The main component of rules are their premises.
 They are the instructions that make up the rule.
-The instruction set is described in section \ref{ir}.
+The instruction set is described in section~\ref{ir}.
 
 The premise list also contains line numbers for each premisse.
-This is debug information, that is used by the embedded debugger (section~\ref{debugger}).
+This is debug information, that is used by the embedded debugger\footnote{see section~\ref{debugger}}.
 
 Next are the inputs and output of the rule.
 Input and outputs consist only of local identifiers.
-This is because of \textit{normalization}.
+This is because of \textit{normalization}\footnote{see section~\ref{normalization}}.
 
 In the case that a rule-input or output has an expression instead of a local identifer,
  the expression is assigned to a new local identifier and the local identifier is substituted.
-More on normalization in section~\ref{normalization}.
 
 The typemap contains a map from the local identifiers in a rule to their types.
 This gives the back-end all the information that the typechecker has accumulated.
