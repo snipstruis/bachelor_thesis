@@ -25,10 +25,10 @@ When compiling with the debug flag set, some additions are made to target progra
 \paragraph{Local identifier table}
 After each instruction that defines named local identifiers, a new instruction is generated.
 
-\begin{code}
+\begin{CS}
     var foo = 42;
     _DBUG_symbol_table["foo"] = foo;
-\end{code}
+\end{CS}
 
 After each assignment to a named local identifier, the named identifier and the value are recorded in a key-value collection. 
 This key-value collection will be passed to the debugger when a breakpoint is hit.
@@ -38,7 +38,7 @@ A new key-value collection is defined at the start of each rule.
 When compiling with the debug-flag set, function closures will have a group of boolean arrays.
 One array for each rule in the function.
 
-\begin{code}
+\begin{CS}
     class <function name>{
         <arguments>
         static bool[] _DBUG_breakpoints_0;
@@ -47,19 +47,19 @@ One array for each rule in the function.
             <body> 
         }
     }
-\end{code}
+\end{CS}
 
 The breakpoints are generated at each line of sourcecode in the rule.
 This is different than breaking at every instruction, as normalization often splits single lines into multiple instructions.
 
-\begin{code}
+\begin{CS}
     ...
     if(_DBUG_Breakpoints_1[6]){
         _DBUG.breakpoint("filename.mc", 12, 
                          _DBUG_symbol_table);
     }
     ...
-\end{code}
+\end{CS}
 
 \subsubsection{Debug class}
 The breakpoint function is defined as a public static member of the debug class.

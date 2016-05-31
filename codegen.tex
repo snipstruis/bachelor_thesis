@@ -9,7 +9,7 @@ The codegen is in many ways the heart of the back end, as it is responsible for 
 Every function was implemented as a closure.
 In C\# this means a class with a public field for each function argument and a \verb|_run| function that takes the last argument and executes the function.
 
-\begin{code}
+\begin{CS}
 class #\textit{<function name>}# {
     #\textit{<function arguments>}#
     public #\textit{<return type>}# 
@@ -33,7 +33,7 @@ class #\textit{<function name>}# {
         throw new #\textit{<exception>}#;
     }
 };
-\end{code}
+\end{CS}
 
 The \verb|_run| function opens a local scope followed by a goto-label for each rule in the function.
 This allows rules to easily fail by jumping ahead to the label.
@@ -45,23 +45,23 @@ The declared type is represented by an empty baseclass and all the constructors 
 
 This is a pretty straight-forward transformation.
 
-\begin{code}
+\begin{MC}
 Data string -> "," -> int -> string * int
 
 Data "Left"  -> string -> string | float
 Data "Right" -> float  -> string | float
-\end{code}
+\end{MC}
 
 The above MC code transforms into the following C\# code.
 
-\begin{code}
+\begin{CS}
 class _star {};
 class _comma { string _arg0; int _arg1;}
 
 class _pipe {};
 class _Left :_pipe {string _arg0;};
 class _Right:_pipe {float  _arg0;};
-\end{code}
+\end{CS}
 
 The types \verb|_star| and \verb|_pipe| can now be easily be deconstructed.
 When a premis deconstructs a datatype, it asserts that a type is constructed by a specific constructor.
@@ -73,7 +73,7 @@ If the cast failed, the rule does not match and the rule is skipped.
 Each rule defines its own name for each input argument.
 These names do not have to be the same, for example:
 
-\begin{code}
+\begin{MC}
     Func "evenOrOdd" -> int -> string
     
     a%2 = 1
@@ -83,12 +83,12 @@ These names do not have to be the same, for example:
     b%2 = 0
     ------------------
     evenOrOdd b -> "even!"
-\end{code}
+\end{MC}
 
 Of course, by the time the code has arived by the codegen, it would already have been normalized.
 So the rules actually look more like this:
 
-\begin{code}
+\begin{MC}[escapeinside=\#\#]
     (%) -> _tmp0         #\textit{(closure)}#
     _tmp0 a -> _tmp1     #\textit{(application)}#
     2 -> _tmp2           #\textit{(literal)}#
@@ -98,9 +98,9 @@ So the rules actually look more like this:
     "even" -> _tmp5      #\textit{(literal)}#
     --------------------
     evenOrOdd a -> _tmp5
-\end{code}
+\end{MC}
 
-\begin{code}
+\begin{MC}[escapeinside=\#\#]
     (%) -> _tmp0         #\textit{(closure)}#
     _tmp0 a -> _tmp1     #\textit{(application)}#
     2 -> _tmp2           #\textit{(literal)}#
@@ -110,11 +110,11 @@ So the rules actually look more like this:
     "odd" -> _tmp5       #\textit{(literal)}#
     --------------------
     evenOrOdd a -> _tmp5
-\end{code}
+\end{MC}
 
 The first job of the rule is to translate the input arguments to their name and return the output.
 
-\begin{code}
+\begin{CS}
     {
         var a = _arg0; 
         ...
@@ -127,11 +127,11 @@ The first job of the rule is to translate the input arguments to their name and 
         return _tmp5;
     }
     _skip1:
-\end{code}
+\end{CS}
 
 Then each instruction is generated.
 
-\begin{code}
+\begin{CS}
     {
         var a = _arg0; 
         // closure
@@ -158,7 +158,7 @@ Then each instruction is generated.
         return _tmp5;
     }
     _skip1:
-\end{code}
+\end{CS}
 
 See the figure 1 on the next page for an overview of instruction generation.
 

@@ -9,17 +9,17 @@ This will continue until a rule succeeds, or no rule matches in which case the p
 \subsection{Data}\label{mcdata}
 \texttt{Data} declarations declare an algebraic union\cite{algebraic_datastructures}.
 
-\begin{code}
+\begin{MC}
 Data "nil" -> list<'a>
 Data 'a -> "::" -> list<'a> -> list<'a>
-\end{code}
+\end{MC}
 
 defines the same structure as this F\#-like pseudocode.
 
-\begin{code}
+\begin{FS}
 List<'a> = nil 
          | 'a :: List<'a>
-\end{code}
+\end{FS}
 
 In this example, the list type is declared with two constructors.
 They specify that a lists can be constructed in two ways: with \verb|nil| and with \verb|::| surrounded with a term of type \verb|'a|, and a term of type \verb|list<'a>|.
@@ -45,9 +45,9 @@ This allows for greater flexibility at the cost that function and constructor na
 \subsection{Funcs}
 Func declarations specify a new function and its type.
 
-\begin{code}
+\begin{MC}
 Func "length" -> list<'a> -> int
-\end{code}
+\end{MC}
 
 As with constructors, functions may be freely manipulated and partially applied, and have the restriction that their name must be unique in their namespace.
 
@@ -55,14 +55,14 @@ As with constructors, functions may be freely manipulated and partially applied,
 Meta-Casanova uses a syntax similar to that of natural deduction.
 For each Func declaration, there are one or more rules that define it.
 
-\begin{code}
+\begin{MC}
 ---------------
 length nil -> 0
 
 length xs -> res
 ---------------------
 length x::xs -> 1+res
-\end{code}
+\end{MC}
 
 A rule is comprised of a line with below it on the left of the arrow the input, and on the right the output.
 The statements above the horizontal line are called \textit{premises}\label{premises}.
@@ -74,15 +74,15 @@ The input arguments of the rule are also local identifiers.
 
 We can now call the function \verb|length| with an example list:
 
-\begin{code}
+\begin{MC}
   1::(2::nil) -> x
   length x    -> res
-\end{code}
+\end{MC}
 
 The first premise constructs a list called ``x'', and the second statement calls length with that list.
 The program will execute as follows:
 
-\begin{code}
+\begin{MC}[escapeinside=\#\#]
 length 1::(2::nil)
     #\st{nil}#
     x::xs → 1+(length 2::nil)
@@ -90,16 +90,14 @@ length 1::(2::nil)
         x::xs → 1+(length nil)
             nil → 0
             #\st{x::xs}#
-\end{code}
+\end{MC}
 
-\noindent
 After which the function stops calling itself and starts accumulating the result on the way down.
 
-\begin{code}[gobble=2]
-        1 ← 1+0
-    2 ← 1+1
-2
-\end{code}
+\begin{MC}[gobble=2]
+          1 ← 1+0
+      2 ← 1+1
+  2
+\end{MC}
 
-\noindent
 After which it tells us correctly that the length of the list 1::(2::nil) is indeed 2.

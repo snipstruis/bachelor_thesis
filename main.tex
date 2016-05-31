@@ -16,22 +16,52 @@
 
 \usepackage{listings} % allows code listings
 \usepackage{lstautogobble}
+
+\lstdefinelanguage{CSharp}{language=[sharp]C}
+
+\lstdefinelanguage{FSharp}
+    {morekeywords={let, new, match, with, rec, open, module, namespace, type, of, member, and, for, in, do, begin, end, fun, function, try, mutable, if, then, else},
+    sensitive=true,
+    morecomment=[l][\itshape]{///},
+    morecomment=[l][\itshape]{//},
+    morecomment=[s][\itshape]{{(*}{*)}},
+    morestring=[b]",
+    }
+
+\lstdefinelanguage{mc}
+    {morekeywords={Func,Data,TypeFunc,Module,TypeAlias,Inherit,is},
+     morestring=[b]",
+     sensitive=true,
+    }
+
 \lstset{basicstyle=\footnotesize\ttfamily,
         breaklines=true,
         keepspaces=true,
         xleftmargin=6pt,
+        keywordstyle=\bfseries,
+        stringstyle=\itshape,
         %gobble=2, % ignore first 2 spaces indents in code listings
         %frame=single,
         autogobble,
         captionpos=b,
-        morekeywords={Func,Data,TypeFunc,Module,TypeAlias,Inherit,is},
-        keywordstyle=\bfseries,
-        escapeinside=\#\# } % non ASCII-characters won't render properly. Use #\verb|contents|#
+        } % non ASCII-characters won't render properly. Use #\verb|contents|#
 
-\lstnewenvironment{code}[1][]{% make code unsplittable
+\lstnewenvironment{MC}[1][]{% make code unsplittable
    \noindent
    \minipage{\linewidth} 
-   \lstset{#1}}
+   \lstset{language=mc,#1}}
+   {\endminipage}
+
+\lstnewenvironment{FS}[1][]{% make code unsplittable
+   \noindent
+   \minipage{\linewidth} 
+   \lstset{language=FSharp,#1}}
+   {\endminipage}
+
+\lstnewenvironment{CS}[1][]{% make code unsplittable
+   \noindent
+   \minipage{\linewidth} 
+   \lstset{language=[sharp]C,#1}}
    {\endminipage}
 
 \usepackage[sorting=none,backend=biber]{biblatex} %citations
@@ -94,9 +124,12 @@ The debugger is optionally embedded in the executable, depending on compiler fla
 
 \input{conclusion}
 
+\printbibliography
+
 % appendix
 \setcounter{section}{0}
 \renewcommand\thesection{\Alph{section}}
+
 \section{Glossary}
 boilerplate code
 
@@ -104,5 +137,21 @@ boilerplate code
 
 \end{multicols}
 
-\printbibliography
+\renewcommand\thesection{\Alph{section}}
+\newpage
+
+\section{Source}
+\subsection{Common.fs} 
+\lstinputlisting[numbers=left,language=FSharp]{Common.fs}
+\subsection{CodegenInterface.fs} 
+\lstinputlisting[numbers=left,language=FSharp]{CodegenInterface.fs}
+\subsection{Codegen.fs} 
+\lstinputlisting[numbers=left,language=FSharp]{Codegen.fs}
+\subsection{Balltest.fs} 
+\lstinputlisting[numbers=left,language=FSharp]{balltest.fs}
+\subsection{Mangle.fs} 
+\lstinputlisting[numbers=left,language=FSharp]{Mangle.fs}
+\subsection{\_DBUG.cs}
+\lstinputlisting[numbers=left,language=CSharp]{_DBUG.cs}
+
 \end{document}

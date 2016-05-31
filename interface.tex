@@ -8,7 +8,7 @@ This makes testing very easy, as the rest of the backend only relies on its inpu
 
 \subsubsection{Interface}
 
-\begin{code}
+\begin{FS}
 type Interface = {
   datas      : List<Id*Data>
   funcs      : List<Id*List<rule>>
@@ -17,7 +17,7 @@ type Interface = {
   flags      : CompilerFlags
   assemblies : List<string> 
 }
-\end{code}
+\end{FS}
 
 As you can see, the interface contains the data declarations, function definitions, lambda definitions and a main function.
 
@@ -35,36 +35,36 @@ There is no performance penalty for the back-end, as no lookups by identifier ar
 \subsubsection{Data declarations}
 The data declarations are grouped with the identifier of the constructor.
 
-\begin{code}
+\begin{FS}
 datas : List<Id*Data>
-\end{code}
+\end{FS}
 
 Where \verb|Data| is simply a list of input types and output types.
 
-\begin{code}
+\begin{FS}
 type Data = {
   args       : List<Type>
   outputType : Type
 }
-\end{code}
+\end{FS}
 
 Where \verb|Type| represents a monomorphic MC type.
 
-%\begin{code}
+%\begin{FS}
 %type Type 
 %  = DotNetType      of TypeId
 %  | McType          of TypeId
 %  | TypeApplication of Type*List<Type>
 %  | Arrow           of Type*Type
-%\end{code}
+%\end{FS}
 
 To illustrate, let's define a tuple an a union in MC.
 
-\begin{code}
+\begin{MC}
 Data int -> "," -> string -> Tupple<int string>
 Data "fst" -> int    -> Union<int string>
 Data "snd" -> string -> Union<int string>
-\end{code}
+\end{MC}
 
 This will appear as the following list in the interface:
 
@@ -82,11 +82,11 @@ This will appear as the following list in the interface:
 
 Function and lambda definitions, as well as the main function contain rules.
 
-\begin{code}
+\begin{FS}
   funcs   : List<Id*List<rule>>
   lambdas : List<LambdaId*rule>
   main    : rule
-\end{code}
+\end{FS}
 
 Functions in MC can contain multiple rules that implement them.
 
@@ -99,7 +99,7 @@ This was done to make the entry-point as simple as possible.
 Functions are defined with of one or more \textit{rules}.
 This is how they are represented in the interface.
 
-\begin{code}
+\begin{FS}
 type rule = {
   premises    : List<premise*linenr>
   input       : List<local_id>
@@ -108,7 +108,7 @@ type rule = {
   declaration : Position
   definition  : Position
 }
-\end{code}
+\end{FS}
 
 The main component of rules are their premises.
 They are the instructions that make up the rule.

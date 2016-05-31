@@ -26,9 +26,9 @@ This interpreter was writen under 100 lines\footnote{see \texttt{interpreter.fs}
 
 \verb|fold| (or \verb|reduce|) is a standard function in F\# and other functional languages with the following type signature.
 
-\begin{code}
+\begin{FS}
     fold : (s->a->a) -> s -> [a] -> a
-\end{code}
+\end{FS}
 
 It applies a function for each element that takes the element and accumulator and produces a new accumulator.
 The first argument is that function, the second argument is the starting state and the last is the array.
