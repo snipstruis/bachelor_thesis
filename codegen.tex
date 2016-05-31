@@ -9,7 +9,7 @@ The codegen is in many ways the heart of the back end, as it is responsible for 
 Every function was implemented as a closure.
 In C\# this means a class with a public field for each function argument and a \verb|_run| function that takes the last argument and executes the function.
 
-\begin{CS}
+\begin{CS}[escapeinside=\#\#]
 class #\textit{<function name>}# {
     #\textit{<function arguments>}#
     public #\textit{<return type>}# 

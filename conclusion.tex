@@ -1,50 +1,8 @@
-\section{Results}
-The result is a working, reliable, performant back-end, with interpreter, validator and embedded debugger.
-
-Unfortunately, since the front-end was incomplete, it is not possible to compile source files.
-It \textit{is} however possible to write the front-end interface by hand.
-
-Two such test programs were written.
-
-\subsection{list length test}
-The first program defined a list datastructure and a program to compute its length.
-This was used since it uses each basic instruction at least once, as well as matching.
-It is equivalent to the following MC code:
-
-\begin{MC}
-Data int -> "::" -> List -> List
-Data "nil" -> List
-
-Func "length" -> List -> int
-
----------------
-length nil -> 0
-
-lengtht xs -> res
----------------------
-length x::xs -> res+1
-
---------------------------------
-main -> length (1::2::3::4::nil)
-\end{MC}
-
-Which when executed prints the following on screen.
-
-\begin{lstlisting}
-4
-\end{lstlisting}
-
-This program can also be debugged with the embedded debugger.
-
-\subsection{XNA test}
-
-The second test program was to test the .Net functionality.
-It consists of a simple program that modifies XNA datastructures, specifically the \verb|Vector2|.
-
-
 \section{Conclusions}
 --- summary here ---
+
 \subsection{Recommendations}
 --- propose optimization ---
+
 \subsection{Reflection}
 It went well.
