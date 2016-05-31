@@ -21,7 +21,7 @@ main -> 0
 \end{MC}
 
 \subsubsection{List length test}
-The first program defined a list datastructure and a program to compute its length.
+The list length program defined a list datastructure and a program to compute its length.
 This was used since it uses each basic instruction at least once, as well as matching.
 It is equivalent to the following MC code:
 
@@ -51,7 +51,26 @@ Which when executed prints the following on screen.
 This program can also be debugged with the embedded debugger.
 
 \subsubsection{XNA test}
-
 The second test program was to test the .Net functionality.
 It consists of a simple program that modifies XNA datastructures, specifically the \verb|Vector2|.
+
+\begin{MC}
+20.0 -> x1
+10.0 -> y1
+Microsoft.Xna.Framework.Vector2 x1 y1 -> a
+20.0 -> x2
+10.0 -> y2
+Microsoft.Xna.Framework.Vector2 x2 y2 -> b
+Microsoft.Xna.Framework.Vector2.+ a b -> c
+Microsoft.Xna.Framework.Vector2.Normalize c
+y2 -> v.x 
+v.x -> ret
+-------------------------------------------
+run -> ret
+\end{MC}
+
+Which returns \verb|20|.
+This is especially intresting to debug, because we can see the values change.
+
+\fbox{\includegraphics[width=\columnwidth-7pt]{debugger}}
 

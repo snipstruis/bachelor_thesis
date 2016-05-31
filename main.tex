@@ -89,6 +89,7 @@
 \setcounter{secnumdepth}{2} 
 \setcounter{tocdepth}{2}
 
+
 % start page numbers
 \setcounter{page}{1}
 \pagenumbering{arabic}
@@ -96,11 +97,13 @@
 
 \begin{multicols}{2}
 \tableofcontents
+\columnbreak
 
 \input{intro}
+\input{organization}
 \input{metacasanova}
 
-\section{Research}
+\section{Research}\label{research}
 As discussed in section~\ref{research_questions}, the main research question is split in subquestions.
 Each answer of a subquestion is proven by implementing a part of the backend. 
 
@@ -127,20 +130,24 @@ The debugger is optionally embedded in the executable, depending on compiler fla
 \input{conclusion}
 
 \printbibliography
+\end{multicols}
+\newpage
 
 % appendix
 \setcounter{section}{0}
 \renewcommand\thesection{\Alph{section}}
 
+\input{stakeholders}
+
+\begin{multicols}{2}
 \section{Glossary}
-boilerplate code
-
---- difficult words here ---
-
+\begin{description}
+    \item[boilerplate code] expl
+    \item[polymorphic] can have multiple types
+\end{description}
 \end{multicols}
-
-\renewcommand\thesection{\Alph{section}}
 \newpage
+
 
 \section{Source}
 \subsection{Common.fs} 
