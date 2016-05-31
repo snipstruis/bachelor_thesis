@@ -1,10 +1,10 @@
-C=xelatex --interaction=nonstopmode --halt-on-error
+C=xelatex --interaction=nonstopmode --halt-on-error -output-directory=build
 
-all: cover.pdf *.tex
+all: build/cover.pdf *.tex
 	$C main
-	biber   main 
+	biber main --output-directory build
 	$C main 
 	$C main 
 
-cover.pdf: cover.tex
+build/cover.pdf: cover.tex
 	$C cover.tex

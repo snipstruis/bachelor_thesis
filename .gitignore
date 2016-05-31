@@ -2,9 +2,10 @@
 !.gitignore
 !Makefile
 !*.tex
-!*.png
-!*.bib
-!*.pdf
-!*.cs
-!*.fs
+!/graphics
+!/graphics/*
+!/sourcefiles
+!/sourcefiles/*
+!/build
+!/build/main.pdf
 

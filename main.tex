@@ -9,6 +9,7 @@
 \usepackage{soul} %striketrough
 \usepackage{parskip} % newline instead of indenting
 \usepackage{graphicx} % include images
+\graphicspath{{graphics/}}
 
 \usepackage{fontspec} % allows custom fonts
 \setmainfont[BoldFont=Source Sans Pro Bold,AutoFakeSlant=0.3]{Source Serif Pro}
@@ -81,7 +82,7 @@
 \pagestyle{empty} 
 
 % cover page
-\includepdf[pages=1]{cover.pdf}
+\includepdf[pages=1]{build/cover.pdf}
 \newpage
 
 % make subsubsections unnumbered and not show up in the TOC
@@ -142,20 +143,20 @@ boilerplate code
 
 \section{Source}
 \subsection{Common.fs} 
-\lstinputlisting[numbers=left,language=FSharp]{Common.fs}
+\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/Common.fs}
 \subsection{CodegenInterface.fs} 
-\lstinputlisting[numbers=left,language=FSharp]{CodegenInterface.fs}
+\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/CodegenInterface.fs}
 \subsection{Interpreter.fs} 
-\lstinputlisting[numbers=left,language=FSharp]{Interpreter.fs}
+\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/Interpreter.fs}
 \subsection{Codegen.fs} 
-\lstinputlisting[numbers=left,language=FSharp]{Codegen.fs}
+\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/Codegen.fs}
 \subsection{Mangle.fs} 
-\lstinputlisting[numbers=left,language=FSharp]{Mangle.fs}
+\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/Mangle.fs}
 \subsection{\_DBUG.cs}
-\lstinputlisting[numbers=left,language=CSharp]{_DBUG.cs}
+\lstinputlisting[numbers=left,language=CSharp]{sourcefiles/_DBUG.cs}
 \subsection{Balltest.fs} 
-\lstinputlisting[numbers=left,language=FSharp]{balltest.fs}
+\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/balltest.fs}
 \subsection{Listtest.fs} 
-\lstinputlisting[numbers=left,language=FSharp]{listtest.fs}
+\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/listtest.fs}
 
 \end{document}
