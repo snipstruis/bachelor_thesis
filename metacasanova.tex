@@ -102,3 +102,17 @@ After which the function stops calling itself and starts accumulating the result
 \end{MC}
 
 After which it tells us correctly that the length of the list 1::(2::nil) is indeed 2.
+
+\subsection{Main}
+Each program needs an entry point.
+The entry point of an MC program is the main function.
+
+\begin{MC}
+    length 1::(2::nil) -> res
+    -------------------------
+    main -> res
+\end{MC}
+
+The results of the main function are printed on the console.
+The previous program would therefore print \verb|2| on the screen.
+
