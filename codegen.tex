@@ -162,6 +162,27 @@ Then each instruction is generated.
 
 See the figure 1 on the next page for an overview of instruction generation.
 
+\subsubsection{Main function}
+The main function is the entry point of the program.
+When the program is run, the main function is called, and prints its result to the console.
+
+The body of the rule is generated like any rule in its own function.
+This improves readability by seperating the main function specific code from the general rule code.
+
+\begin{CS}[escapeinside=\#\#]
+class _main{
+    static #\textit{<return type>}# _body(){
+        #\textit{<main rule>}#
+    }
+    static void Main(){
+        #\textit{<debugger initialization>}#
+        System.Console.WriteLine(
+            System.String.Format("{0}", 
+                                 body()));
+    }
+}
+\end{CS}
+
 \subsubsection{Evolution}
 Before using inheritance, the plan was to use overlapping memory like C unions. 
 Using \verb|System.|\verb|Runtime.|\verb|InteropServices|, it was possible to set the specific offset of struct members.

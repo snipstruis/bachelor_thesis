@@ -85,6 +85,7 @@ Straight arrays with booleans are very fast to index since it only costs one bou
 
 \paragraph{The tree representation} of the program is four levels deep.
 The first level represents the file, the second level represents the funcion, the third level represents the rule and the fourth level represents the premise.
+This tree representation is initialized in the main function, before the user code begins.
 
 \paragraph{The breakpoint table} 
 Breakpoints are realised as an array of booleans for each rule in a closure.
@@ -98,8 +99,6 @@ The first two arguments to \verb|_DBUG.breakpoint| are the filename and the line
 This is to uniquely identify the callsite.
 The third argument is the symboltable that has been accumulated so far.
 
-\subsubsection{Initialization}
-The program tree is a public field of the \verb|_DBUG| class, and is initialized by the main function.
 
 \subsubsection{Evolution}
 First own tree impl.
