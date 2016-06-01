@@ -1,10 +1,10 @@
 \section{Meta Casanova}
-It is necessary to understand a subset of Meta Casanova(MC) in order to understand the problem-space.
-This section will cover the subset of the language that is relevant for code-generation.
+It is necessary to understand a subset of Meta Casanova(MC) in order to understand the problem-space of the back-end.
+This section will cover the subset of the language that is relevant for code generation.
 
 Meta Casanova is a functional, declarative language.
 It allows for multiple implementations of functions called \textit{rules}.
-Rules may fail, in that case the next rule will be attempted.
+Rules may not match, in that case the next rule will be attempted.
 This will continue until a rule succeeds, or no rule matches in which case the program throws an exception.
 
 \subsection{Data}\label{mcdata}
@@ -25,12 +25,12 @@ List<'a> = nil
 In this example, the list type is declared with two constructors.
 They specify that a lists can be constructed in two ways: with \verb|nil| and with \verb|::| surrounded with a term of type \verb|'a|, and a term of type \verb|list<'a>|.
 
-Conversely, they also specify that an list can be destructed in two ways.
-The programmer will assert which destructor is expected, and the rule fails if the destructor does not match.
-An example of this is shown later, in subsection ``Funcs''.
+Conversely, they also specify that an list can be deconstructed in two ways.
+The programmer will assert which deconstructor is expected, and the rule doesn't match if the deconstructor does not match.
+An example of this is shown later.
 
 Additionally, constructors may be manipulated and partially applied like functions.
-This allows for greater flexibility at the cost that function and constructor names need to be unique in their namespace.
+This allows for greater flexibility, requiring only that function and constructor names need to be unique in their namespace.
 
 %\subsection{Polymorphism}
 %Polymorphic data structures are supported with the \textbf{\texttt{is}} keyword.
@@ -43,8 +43,8 @@ This allows for greater flexibility at the cost that function and constructor na
 %\noindent
 %This means every constructor of the \verb|list| is also a valid constructor of \verb|failableList|, but not vice-versa.
 
-\subsection{Funcs}
-Func declarations specify a new function and its type.
+\subsection{Functions}
+Function declarations specify a new function and its type.
 
 \begin{MC}
 Func "length" -> list<'a> -> int
@@ -53,8 +53,8 @@ Func "length" -> list<'a> -> int
 As with constructors, functions may be freely manipulated and partially applied, and have the restriction that their name must be unique in their namespace.
 
 \subsection{Rules}
-Meta-Casanova uses a syntax similar to that of natural deduction.
-For each Func declaration, there are one or more rules that define it.
+Meta Casanova uses a syntax similar to that of natural deduction.
+For each function declaration, there are one or more rules that define it.
 
 \begin{MC}
 ---------------
@@ -67,7 +67,7 @@ length x::xs -> 1+res
 
 A rule is comprised of a line with below it on the left of the arrow the input, and on the right the output.
 The statements above the horizontal line are called \textit{premises}\label{premises}.
-They can be assignments like in the example above, or conditionals like \verb|a==b| or \verb|c<d|.
+They can be assignments like \verb|length xs -> res| in the example above, or conditionals like \verb|a==b| or \verb|c<d|.
 
 In the case of assignments, they create a \textit{local identifier}.
 These identifiers are local to the rule they appear in.

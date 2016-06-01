@@ -3,7 +3,7 @@ The fourth research question gets at the heart of the back-end.
 
 \textit{How does the intermediate representation map to the output language?}
 
-The codegen is in many ways the heart of the back end, as it is responsible for generating the C\# code.
+The codegen is in many ways the heart of the back-end, as it is responsible for generating the C\# code.
 
 \subsubsection{Functions}
 Every function was implemented as a closure.
@@ -36,7 +36,7 @@ class #\textit{<function name>}# {
 \end{CS}
 
 The \verb|_run| function opens a local scope followed by a goto-label for each rule in the function.
-This allows rules to easily fail by jumping ahead to the label.
+This allows rules to easily jumping ahead to the label when they do not match.
 More on rules ahead in subsection \textit{rules}.
 
 \subsubsection{Data declarations}

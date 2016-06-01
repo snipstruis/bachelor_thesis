@@ -28,7 +28,7 @@ The Conditional, Deconstructor, Application and Call instructions belong to this
 \item[Literal] (\verb|42 -> x|) assigns a string-, boolean-, integer- or floating-point literal to a local identifier.
 \item[Conditional] (\verb|x < y|) asserts that a comparison between local identifiers is true.
     The comparisons can be \verb|<|,\verb|<=|,\verb|==|,\verb|>=|,\verb|>| or \verb|!=|.
-    If the assertion fails, the rule fails and the next rule in the function is attempted.
+    If the assertion does not match, the rule does not match and the next rule in the function is attempted.
 \item[Deconstructor] (\verb|lst -> x::xs|) disassembles a local identifier constructed by a data declaration.
 \item[Closure] (\verb|(+) -> add|) assigns a closure of a global function to a local identifier.
     The closure can hold a function, lambda or data-constructor.

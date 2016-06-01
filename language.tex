@@ -5,7 +5,7 @@ The first research question had the most impact on the project, and was one that
 
 This may be different than the language the code-generator is written in.
 The code-generator is written in F\#, like the rest of the compiler.
-The reason we use F\#, rather than Meta-Casanova 2, is because Meta Casanova 2 lacks tool support, such as descriptive error messages and debuggers.
+The reason we use F\#, rather than Meta Casanova 2, is because Meta Casanova 2 lacks tool support, such as descriptive error messages and debuggers.
 
 \subsubsection{Unmanaged languages}
 Since speed was one of the requirements, I first looked at solutions with unmanaged parts.
@@ -64,12 +64,12 @@ It was decided to let go of the LLVM code-generation in favor of a more portable
 Stability is a big advantage because everything happends inside the .NET runtime.
 This has a higher chance of working on non-native platforms than the hybrid solutions.
 
-\paragraph{F\#} is a functional/declarative language in the .Net family\cite[fsharp].
+\paragraph{F\#} is a functional/declarative language in the .NET family\cite{fsharp}.
 It would be a natural choice, since the compiler is written in it.
-It has the advantage of supporting tail-calls, which is unsupported by C\#.
-And since F\# already supported algebraic datatypes, it seemed like a viable solution.
+It has the advantage of supporting tail-calls, which is unsupported by C\#,
+  and since F\# already supported algebraic datatypes, it seemed like a viable solution.
 %The programmer has also less control of the program execution, as F\# is a more higher-level language\cite{fsharp}
-%A version of the code generator was made that used F\#, but it proved too cumbersome since there was no mechanism to simply skip rules if they failed.
+%A version of the code generator was made that used F\#, but it proved too cumbersome since there was no mechanism to simply skip rules if they did not match.
 
 % maybe look for Mohammeds compiler written in F#?
 
@@ -90,7 +90,7 @@ As a result, it makes debugging and verification harder, with little to no gain.
 It also ommits the optimizations of the C\# compiler, such as dead-code elimination and stuff\cite{csharp_optimizations}.
 
 \subsubsection{Conclusion}
-The result of the research was that, C\# and F\# were both viable.
+The result of the research was that C\# and F\# were both viable.
 To choose an output language, I built a code model for each language.
 
 The F\# code model mainly involved switching off indentation-based scoping for F\# and using the verbose syntax.
@@ -99,12 +99,12 @@ the numbered rules were then called and appended using the \verb|>>=| of the \ve
 
 While this model worked, it was cumbersome and slow.
 The code was hard to inspect, since there was no indentation.
-It was also relatively slow because\footnote{information obtained by inspecting generated CIL code of the microsoft F\# compiler \texttt{fsc.exe} version 1.0 with \texttt{+optimize}}
+It was also relatively slow because\footnote{information obtained by inspecting generated CIL code of the microsoft F\# compiler \texttt{fsc.exe} version 1.0 with \texttt{+optimize}}:
 
 \begin{enumerate}
 \item It had to wrap each return value in a \verb|Option|. 
     This is particularly costly for value-types, as they have to be boxed and unboxed each time the value is used.
-\item It perform monadic operations for each rule attempt.
+\item It performs monadic operations for each rule attempt.
     These generic functions do type resolution at run-time, each time they are called.
 \item The numbered functions were not inlined, preventing any cross-rule optimization.
 \end{enumerate}
