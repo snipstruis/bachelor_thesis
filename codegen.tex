@@ -162,6 +162,7 @@ Then each instruction is generated.
 
 See the figure 1 on the next page for an overview of instruction generation.
 
+
 \subsubsection{Main function}
 The main function is the entry point of the program.
 When the program is run, the main function is called, and prints its result to the console.
@@ -183,6 +184,8 @@ class _main{
 }
 \end{CS}
 
+\input{codegentable} % double width and page-breaking
+
 \subsubsection{Evolution}
 Before using inheritance, the plan was to use overlapping memory like C unions. 
 Using \verb|System.|\verb|Runtime.|\verb|InteropServices|, it was possible to set the specific offset of struct members.
@@ -191,4 +194,3 @@ While this was multiplatform and worked well, it only worked with structs.
 This was a major limitation, because structs can only hold value-types.
 And the only value types are integers, floats, booleans and other structs.
 
-\input{codegentable} % double width and page-breaking
