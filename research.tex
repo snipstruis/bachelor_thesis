@@ -2,16 +2,7 @@
 
 The primary research question of this thesis is:
 
-\textit{How to implement a transformation from typechecked Meta-Casanova(MC) in executable code?}
-
-Where the transformation must satisfy these requirements:
-\begin{enumerate}
-    \item The backend must in no case produce an incorrect program.
-    \item The executable must be able to inter-operate with .NET.
-    \item The generated code must run on all the platforms .NET runs on.
-\end{enumerate}
-
-An additional soft requirement was that the performance of the generated program should be comparable to scripting languages.
+\input{question}
 
 The first requirement exists because the compiler must be reliable.
 Any program can at most be as reliable as the compiler used to generate it.
