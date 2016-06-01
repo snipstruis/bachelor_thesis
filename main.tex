@@ -1,5 +1,5 @@
 \documentclass[10pt,a4paper]{article}
-\usepackage[driver=xetex,a4paper,twoside,left=30mm,right=25mm,top=30mm,bottom=40mm]{geometry} % propper margins on a4 paper
+\usepackage[driver=xetex,a4paper,left=30mm,right=25mm,top=30mm,bottom=40mm]{geometry} % propper margins on a4 paper
 \usepackage{pdfpages} % to include cover
 \usepackage{url}
 \usepackage[hidelinks]{hyperref} % make contents and references clickable in pdf
@@ -103,21 +103,7 @@
 \input{organization}
 \input{metacasanova}
 
-\section{Research}\label{research}
-As discussed in section~\ref{research_questions}, the main research question is split in subquestions.
-Each answer of a subquestion is proven by implementing a part of the backend. 
-
-To illustrate how the different parts of the back-end relate to each other, here is a diagram of the dataflow through the backend.
-
-\includegraphics[width=\columnwidth]{overview}
-
-As you can see, the front-end interface contains the IR and goes through the validator.
-From there, depending on the compiler flags, it either goes to the interpreter or the codegen.
-In case it goes to the interpreter, the program is directly executed.
-In case it goes to the codegen, it is translated to the output language.
-To translate all the identifiers, the mangler is needed.
-The debugger is optionally embedded in the executable, depending on compiler flags.
-
+\input{research}
 \input{language}
 \input{interface}
 \input{ir}
@@ -128,6 +114,9 @@ The debugger is optionally embedded in the executable, depending on compiler fla
 
 \input{results}
 \input{conclusion}
+\input{recommendations}
+\input{reflection}
+
 
 \printbibliography
 \end{multicols}

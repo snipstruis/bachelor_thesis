@@ -165,6 +165,7 @@ See the figure 1 on the next page for an overview of instruction generation.
 \subsubsection{Evolution}
 Before using inheritance, the plan was to use overlapping memory like C unions. 
 Using \verb|System.|\verb|Runtime.|\verb|InteropServices|, it was possible to set the specific offset of struct members.
+By overlaping fields in memory, we could achieve the same effect as C union.
 While this was multiplatform and worked well, it only worked with structs.
 This was a major limitation, because structs can only hold value-types.
 And the only value types are integers, floats, booleans and other structs.

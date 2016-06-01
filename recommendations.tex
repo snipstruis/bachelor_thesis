@@ -1,0 +1,32 @@
+\section{Recommendations}
+The back-end is in a functional state, but it could use more features.
+Most of the features are optimizations.
+Optimizations generally have a relatively small effect, but often take up a lot of development time.
+
+\subsubsection{Inlining}
+The most important optimization is inlining\cite{inlining}.
+Inlining is the process of replacing a function call with the function body.
+While this saves a function call, the greatest benefit is that it enables other optimizations.
+
+When the function body is copied in the larger context of the callsite, some input values may be identified as compile-time constants, enabeling a whole array of optimizations. 
+
+Inlining is not always desireable.
+If a large function is called from many different places, the size of the program increases, increasing the cache-misses on the instruction cache, reducing performance.
+
+The choice for inlining a call should consider:
+\begin{enumerate}
+    \item If the function recurses in any way, even indirect recursion.
+        This makes inlining impossible.
+    \item The size of the function.
+        The smaller the function, the greater the inlining benefit.
+    \item The ammount of times the function is called.
+        If the function is only called once, inlining has no disadvantages.
+        For each additional time, the size of the program increases.
+\end{enumerate}
+
+\subsubsection{Tail call optimization}
+--- use gotos ---
+
+\subsubsection{Constant folding}
+--- C\# does this a bit (see \url{http://stackoverflow.com/a/5669035}) ---
+
