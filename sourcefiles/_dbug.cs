@@ -1,4 +1,4 @@
-﻿struct _DBUG {
+﻿struct _dbug {
   public static System.Windows.Forms.TreeView program_tree = new System.Windows.Forms.TreeView();
   public static bool[][][][] breakpoints;
   public static void breakpoint(string filename, int line, System.Collections.Generic.Dictionary<string, object> stab) {
