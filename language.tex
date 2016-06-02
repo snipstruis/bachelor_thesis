@@ -10,10 +10,10 @@ The reason we use F\#, rather than Meta Casanova 2, is because Meta Casanova 2 l
 \subsubsection{Unmanaged languages}
 Since speed was one of the requirements, I first looked at solutions with unmanaged parts.
 Unmanaged code is code that is not interpreted by a runtime, but is instead executed directly.
-%It is also much less restrictive than the .NET runtime because the .NET bytecode is strongly typed.\cite{ecma335}
+%It is also much less restrictive than the .NET runtime because the .NET bytecode is strongly typed~\cite{ecma335}.
 
 The main advantage of unmanaged code is that the fast LLVM code generator can be used.
-LLVM is a ``collection of modular and reusable compiler and toolchain technologies.''\cite{llvm}
+LLVM is a ``collection of modular and reusable compiler and toolchain technologies.''~\cite{llvm}
 Specifically, the LLVM optimizer is valuable.
 It is used in the Clang, a C/C++ compiler on par with gcc, and with little effort can be use it to optimize our generated code.
 This would mean we get all the optimisations of LLVM with relative ease.
@@ -24,7 +24,7 @@ There are a few systems that allow for managed and unmanaged code to communicate
 The most viable are P/invoke, C++/CLI interop, and a hosted runtime.
 
 \paragraph{P/invoke}
-Platform Invocation Services allows managed code to call unmanaged functions that are implemented in a DLL.\cite{msdn_pinvoke}
+Platform Invocation Services allows managed code to call unmanaged functions that are implemented in a DLL~\cite{msdn_pinvoke}.
 
 This is the most common form of inter-op, and has great documentation.
 However, there are two big disadvantages.
@@ -32,18 +32,18 @@ However, there are two big disadvantages.
 \begin{enumerate}
     \item .NET can only call native functions, not the other way around.
         This means that the bulk of the control flow happens inside .NET, minimizing the fast native code.
-    \item Transfering data between .NET and native code has a high performance cost\cite{msdn_interop_performance}, since it has to be serialized.
+    \item Transfering data between .NET and native code has a high performance cost~\cite{msdn_interop_performance}, since it has to be serialized.
         This overhead is so large that we expect it to negate any performance benefit from using native code.
 \end{enumerate}
 
 Because of this, P/Invoke was not chosen.
 
 \paragraph{C++/CLI}
-C++ for the Common Language Infrastructure is a programming language designed for interoperability with unmanaged code.\cite{msdn_c++cli}
+C++ for the Common Language Infrastructure is a programming language designed for interoperability with unmanaged code~\cite{msdn_c++cli}.
 
 While it seems like it does exactly what we need, it has portability issues.
-The only C++/CLI compiler runs on windows and it only compiles for processors with the x86 architecture\cite{mono_c++cli}.
-Besides that, non-typesafe operations (the main advantage of C++/CLI) are only allowed on windows.\cite{mono_c++cli}
+The only C++/CLI compiler runs on windows and it only compiles for processors with the x86 architecture~\cite{mono_c++cli}.
+Besides that, non-typesafe operations (the main advantage of C++/CLI) are only allowed on windows~\cite{mono_c++cli}.
 
 This means C++/CLI is not cross-platform enough.
 
@@ -53,8 +53,8 @@ This would make it so the control flow takes place inside the native part.
 
 This seems like the best solution out of the native hybrids.
 However it still has two drawbacks.
-The mono runtime has a different interface than the microsoft .NET api, leading to incompatible programs \cite{mono_embedding}.
-The same large serialization overhead as P/Invoke is present\cite{msdn_hosted}.
+The mono runtime has a different interface than the microsoft .NET api, leading to incompatible programs ~\cite{mono_embedding}.
+The same large serialization overhead as P/Invoke is present~\cite{msdn_hosted}.
 
 \subsubsection{.NET languages}
 None of the inter-op methods offer a satisfactory solution.
@@ -64,18 +64,18 @@ It was decided to let go of the LLVM code-generation in favor of a more portable
 Stability is a big advantage because everything happends inside the .NET runtime.
 This has a higher chance of working on non-native platforms than the hybrid solutions.
 
-\paragraph{F\#} is a functional/declarative language in the .NET family\cite{fsharp}.
+\paragraph{F\#} is a functional/declarative language in the .NET family~\cite{fsharp}.
 It would be a natural choice, since the compiler is written in it.
 It has the advantage of supporting tail-calls, which is unsupported by C\#,
   and since F\# already supported algebraic datatypes, it seemed like a viable solution.
-%The programmer has also less control of the program execution, as F\# is a more higher-level language\cite{fsharp}
+%The programmer has also less control of the program execution, as F\# is a more higher-level language~\cite{fsharp}
 %A version of the code generator was made that used F\#, but it proved too cumbersome since there was no mechanism to simply skip rules if they did not match.
 
 % maybe look for Mohammeds compiler written in F#?
 
 \paragraph{C\#}
-is an imperative, object-oriented language\cite{csharp}.
-It is the most popular .NET language\cite{Meyerovich}, so the compiler gets the most attention by Microsoft.
+is an imperative, object-oriented language~\cite{csharp}.
+It is the most popular .NET language~\cite{Meyerovich}, so the compiler gets the most attention by Microsoft.
 It is also easy to debug, as it has the most mature debugging tools.
 C\# too seemed like a viable option.
 
@@ -85,9 +85,9 @@ C\# too seemed like a viable option.
 
 \paragraph{CIL}
 (Common Intermediate Language) is the bytecode that all the languages are compiled to.
-Since it is typed, it has the same restrictions as C\#.[source]
+Since it is typed, it has the same restrictions as C\#~\cite{source}.
 As a result, it makes debugging and verification harder, with little to no gain.
-It also ommits the optimizations of the C\# compiler, such as dead-code elimination and stuff\cite{csharp_optimizations}.
+It also omits the optimizations of the C\# compiler, such as dead-code elimination and stuff~\cite{csharp_optimizations}.
 
 \subsubsection{Conclusion}
 The result of the research was that C\# and F\# were both viable.

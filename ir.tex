@@ -1,5 +1,5 @@
 \subsection[Intermediate Representation]{Intermediate\\Representation}\label{ir}
-While the intermediate representation(IR) of the functions is part of the interface, it is complex enough to have its own research question.
+While the intermediate representation (IR) of the functions is part of the interface, it is complex enough to have its own research question.
 
 \textit{What should the intermediate representation of the functions be?}
 
@@ -15,14 +15,14 @@ The instruction set exists in two parts: the base instructions and the .NET exte
 The instruction set was designed to minimize the number of representations of the same program.
 This happens to coincide with a small orthogonal instruction set.
 
-The instruction set is in \textit{static single assignment} (SSA) form.
+The instruction set is in \textit{static single assignment} (SSA) form~\cite{leestatic}.
 This means the local identifiers are constant and can not be redefined.
 
 Base instructions fall in one of two groups.
 The first maps a global identifier to a local identifier.
-This are the Literal and Closure instructions.
+These are the \textit{Literal} and \textit{Closure} instructions.
 The second operates on local identifiers.
-The Conditional, Deconstructor, Application and Call instructions belong to this group.
+The \textit{Conditional}, \textit{Deconstructor}, \textit{Application} and \textit{Call} instructions belong to this group.
 
 \begin{description}
 \item[Literal] (\verb|42 -> x|) assigns a string-, boolean-, integer- or floating-point literal to a local identifier.
@@ -34,13 +34,13 @@ The Conditional, Deconstructor, Application and Call instructions belong to this
     The closure can hold a function, lambda or data-constructor.
 \item[Application] (\verb|add a -> inc|) applies a local identifier to a closure in another local identifier.
 \item[Call] (\verb|inc b -> c|) applies a local identifier and calls the closure.
-    All closures need to be called eventually to be usefull.
+    All closures need to be called eventually to be useful.
     The exception is data-constructors. 
     They do not have to be called as they insert their elements in the datastructure as they are applied.
 \end{description}
 
 \subsubsection{.NET extentions}
-A seperate set of instructions are needed to inter-operate with .NET.
+A separate set of instructions are needed to inter-operate with .NET.
 This is because unlike MC, .NET objects are mutable, and the functions can be overloaded on the number and types of arguments.
 
 \begin{tabular}{ll}

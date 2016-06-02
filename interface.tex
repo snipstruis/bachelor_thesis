@@ -29,7 +29,7 @@ This makes testing easier and minimizes bugs that appear only in certain represe
 All the symbols in the descriptions are provided with monomorphic types by the front-end.
 Functions with generic types are made concrete by the front-end.
 
-The reason that datas, funcs and lambdas are defined as a list of key-value pairs instead of as a Map, is that the keys are not guaranteed to be unique.
+The reason that \texttt{datas}, \texttt{funcs} and \texttt{lambdas} are defined as a list of key-value pairs instead of as a Map, is that the keys are not guaranteed to be unique.
 Since MC allows polymorphic types, one indentifier may be defined multiple times: once for each type.
 There is no performance penalty for the back-end, as no lookups by identifier are performed.
 
@@ -59,7 +59,7 @@ Where \verb|Type| represents a monomorphic MC type.
 %  | Arrow           of Type*Type
 %\end{FS}
 
-To illustrate, let's define a tuple an a union in MC.
+We can illustrate this by defining a tuple an a union in MC.
 
 \begin{MC}
 Data int -> "," -> string -> Tupple<int string>
@@ -111,8 +111,8 @@ type rule = {
 }
 \end{FS}
 
-The main component of rules are their premises.
-They are the instructions that make up the rule.
+The main component of rules is its premises.
+These are the instructions that make up the rule.
 The instruction set is described in section~\ref{ir}.
 
 The premise list also contains line numbers for each premisse.
@@ -128,8 +128,8 @@ In the case that a rule-input or output has an expression instead of a local ide
 The typemap contains a map from the local identifiers in a rule to their types.
 This gives the back-end all the information that the typechecker has accumulated.
 
-The last two members are \verb|declartion| and \verb|definition|.
-These represent the position that the function was declared and the position that it was defined.
+The last two members are \verb|declaration| and \verb|definition|.
+These represent the position that the function was declared at and the position that it was defined at.
 This information is used by the debugger.
 
 \subsubsection{Validator}

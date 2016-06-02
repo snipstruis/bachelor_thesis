@@ -36,8 +36,8 @@ class #\textit{<function name>}# {
 \end{CS}
 
 The \verb|_run| function opens a local scope followed by a goto-label for each rule in the function.
-This allows rules to easily jumping ahead to the label when they do not match.
-More on rules ahead in subsection \textit{rules}.
+This allows rules to easily jump ahead to the label when they do not match.
+More on rules in subsection \textit{rules}.
 
 \subsubsection{Data declarations}
 Data declarations are implemented with inheritance.
@@ -46,24 +46,24 @@ The declared type is represented by an empty baseclass and all the constructors 
 This is a pretty straight-forward transformation.
 
 \begin{MC}
-Data string -> "," -> int -> string * int
+Data string -> "," -> int -> Tuple
 
-Data "Left"  -> string -> string | float
-Data "Right" -> float  -> string | float
+Data "Left"  -> string -> Union
+Data "Right" -> float  -> Union
 \end{MC}
 
 The above MC code transforms into the following C\# code.
 
 \begin{CS}
-class _star {};
+class Tuple{}
 class _comma { string _arg0; int _arg1;}
 
-class _pipe {};
-class _Left :_pipe {string _arg0;};
-class _Right:_pipe {float  _arg0;};
+class Union{}
+class _Left :_pipe {string _arg0;}
+class _Right:_pipe {float  _arg0;}
 \end{CS}
 
-The types \verb|_star| and \verb|_pipe| can now be easily be deconstructed.
+The types \verb|Tuple| and \verb|Union| can now be easily be deconstructed.
 When a premis deconstructs a datatype, it asserts that a type is constructed by a specific constructor.
 This is done by simply casting the base-class to a subclass, and checking if the cast succeeded.
 If the cast failed, the rule does not match and the rule is skipped.
@@ -85,7 +85,7 @@ These names do not have to be the same, for example:
     evenOrOdd b -> "even!"
 \end{MC}
 
-Of course, by the time the code has arived by the codegen, it would already have been normalized.
+Of course, by the time the code has reached by the codegen, it would already have been normalized.
 So the rules actually look more like this:
 
 \begin{MC}[escapeinside=\#\#]
@@ -168,7 +168,7 @@ The main function is the entry point of the program.
 When the program is run, the main function is called, and prints its result to the console.
 
 The body of the rule is generated like any rule in its own function.
-This improves readability by seperating the main function specific code from the general rule code.
+This improves readability by seperating the main function-specific code from the general rule code.
 
 \begin{CS}[escapeinside=\#\#]
 class _main{

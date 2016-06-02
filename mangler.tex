@@ -13,7 +13,7 @@ Global identifiers have a fully-qualified name with type information, where as l
 \subsubsection{C\# identifiers}
 Since there are more valid MC identifier names than C\# identifier names, some characters have to be escaped.
 
-Valid C\# identifiers must start with an alphabetic character or an underscore and the trailing characters must be alphanumeric or underscore\footnote{regex: \texttt{[\_A-Za-z][\_A-Za-z0-9]*}}\cite{msdn_identifiers}.
+Valid C\# identifiers must start with an alphabetic character or an underscore and the trailing characters must be alphanumeric or underscore\footnote{regex: \texttt{[\_A-Za-z][\_A-Za-z0-9]*}}~\cite{msdn_identifiers}.
 The only valid non-alphanumeric character is an underscore, so using it to escape with was a logical choice.
 
 The first iteration of the code mangler just replaced all non-numeric characters with an underscore followed with the two-digit hexadecimal number.
@@ -33,7 +33,7 @@ To remedy this, every ASCII symbol gets a readable label.
 \end{tabular}
 
 \subsubsection{Reserved words}
-C\# allows reserved words to be used as valid identifiers if prefixed with an `\verb|@|'\cite{msdn_identifiers}.
+C\# allows reserved words to be used as valid identifiers if prefixed with an `\verb|@|'~\cite{msdn_identifiers}.
 
 \subsubsection{Types}
 Global identifiers need type information embedded in the name since the name alone does uniquely identify it.
