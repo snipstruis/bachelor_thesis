@@ -4,16 +4,13 @@ The primary research question of this thesis is:
 
 \input{question}
 
-The first requirement exists because the compiler must be reliable.
+The correctness requirement exists because the compiler must be reliable.
 Any program can at most be as reliable as the compiler used to generate it.
-
 \label{whydotnet}
-The second requirement existed because of the need for a large library and inter-operability with Unity game engine.
+The .NET requirement exists because of the need for a large library and inter-operability with Unity game engine.
 This is because the main area of research of the organization is game-related\footnote{see section~\ref{motive}}.
-
-The third requirement is because the games must be cross platform.
-
-The performance requirement is there because games have to be performant.
+The multiplatform requirement is because the games are produced for any platform.
+The performance requirement is there because games have to be fast.
 
 In order to answer the research question, seven subquestions were formulated.
 
@@ -27,8 +24,8 @@ In order to answer the research question, seven subquestions were formulated.
     \item How to validate the test programs?
 \end{enumerate}
 
-%As discussed in section~\ref{research_questions}, the main research question is split in subquestions.
 Each answer of a subquestion is proven by implementing a part of the backend. 
+This in turn will provide evidence to answer the main research question.
 
 To illustrate how the different parts of the back-end relate to each other, here is a diagram of the dataflow through the backend.
 

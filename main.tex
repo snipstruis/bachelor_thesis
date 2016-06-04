@@ -2,7 +2,7 @@
 \usepackage[driver=xetex,a4paper,left=30mm,right=25mm,top=30mm,bottom=40mm]{geometry} % propper margins on a4 paper
 \usepackage{pdfpages} % to include cover
 \usepackage{url}
-\usepackage[hidelinks]{hyperref} % make contents and references clickable in pdf
+%\usepackage[hidelinks]{hyperref} % make contents and references clickable in pdf
 \usepackage{multicol} % allows multiple colums
 \usepackage{titlesec} % adjust whitespace around headings and improves placing
 \usepackage{microtype} % adjusts kerning and letterspacing
@@ -18,7 +18,13 @@
 \usepackage{listings} % allows code listings
 \usepackage{lstautogobble}
 
-\lstdefinelanguage{CSharp}{language=[sharp]C}
+\makeatletter
+\newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark}
+\makeatother
+
+\lstdefinelanguage{CSharp}
+    {language=[sharp]C,
+     morekeywords={var}}
 
 \lstdefinelanguage{FSharp}
     {morekeywords={let, new, match, with, rec, open, module, namespace, type, of, member, and, for, in, do, begin, end, fun, function, try, mutable, if, then, else},
@@ -115,7 +121,7 @@
 \input{results}
 \input{conclusion}
 \input{recommendations}
-\input{reflection}
+\input{evaluation}
 
 
 \printbibliography
