@@ -1,7 +1,7 @@
-\section{Recommendations}
+\section{Further work}\label{recommendations}
 The back-end is in a functional state, but it could use more features.
 Most of the features are optimizations.
-Optimizations generally have a relatively small effect, but often take up a lot of development time.
+Because the performance requirement was already met, the implementation of these optimizations was not necessary.
 
 \subsubsection{Inlining}
 The most important optimization is inlining~\cite{inlining}.
@@ -25,8 +25,26 @@ The choice for inlining a call should consider:
 \end{enumerate}
 
 \subsubsection{Tail call optimization}
---- use gotos ---
+Some recursive functions can be transformed into loops.
+This has the advantage that no new stackframes will be allocated, preventing stack-overflows and increasing performance.
+
+If the function returns right after the recursive call, there is no need to save the state of the function, since it will be thrown away right after the call returns.
+In these cases, it is safe to replace the recursion with a modification of the input arguments and a jump to the top of the function.
+
+These constructs can be implemented in C# using \verb|goto|.
+Alternatively, the \verb|tail call| CIL instruction can be generated.
 
 \subsubsection{Constant folding}
---- C\# does this a bit (see \url{http://stackoverflow.com/a/5669035}) ---
+Constant folding is done when the an expression involving constants can be computed to another constant.
+For example the expression \verb|3+5| has only constants in it and can on compile-time be substituted with \verb|8|. 
+
+C\# does constant folding in very limited conditions.
+The C\# language specification\footnote{second bullet point of section 11.1.4, page 110 of~\cite{csharp_spec}} states that this is only done on \textit{simple type constants}.
+Simple types are types like \verb|int|, \verb|float|, \verb|bool|, \verb|byte| and the like.
+Simple types do not include any compound types like structs or classes.
+The constant expression can also only be with operators defined by the simple types.
+No user-defined function can therefore be constant folded.
+
+The MC compiler could constant fold a lot more.
+Everything in a rule that is not related to its inputs can be constant folded.
 

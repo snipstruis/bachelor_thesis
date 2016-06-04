@@ -1,7 +1,8 @@
-\section{Introduction}
+\section*{abstract}
 This project is about the development of the back-end of the bootstrap compiler for the Meta Casanova 3 language.
-The back-end is responsible for generating an executable after receiving the type-checked information from the front-end.
+The back-end is responsible for generating an executable after receiving the type-checked program representation from the front-end.
 
+\section{Introduction}
 Compilers are complex programs that have to operate on a wide range of inputs.
 Since compilers have such a large input-space, the chance of a bug hiding somewhere is substantial. 
 But for al their complexity, compilers also have to be bug-free since every program can only be as bug-free as its compiler.
@@ -14,25 +15,21 @@ After a rewrite in MC it was 000 lines~\cite{maggiore}.
 The primary reason for this was the lack of higher-order type operators.
 This made abstractions such as monad-transformers impossible, hampering modularity and resulted in a lot of boilerplate code.
 
+\subsubsection{structure}
+
 In this thesis, we will walk through the backend and examine the various parts and their design decisions.
 In this way, this document aims to be useful to the future developers of the MC compiler.
 
-We will first discuss the context of the assignment.
-Then we will give a short overview of Meta Casanova.
+We will first discuss the context of the assignment in section~\ref{context}.
+Then we will give a short overview of Meta Casanova in section~\ref{metacasanova}.
 
-Research, The main part of is thesis, is next.
+Section~\ref{research}, the main part of is thesis, is next.
 It presents the main research question and splits it in subquestions.
-Each subquestion is answered in each subsection.
+Each subquestion is then answered in each subsection.
 
-The Results presents the proof that the requirements of the main research question have been met.
-This is followed by the conclusions that summarize the results.
-After the thesis proper, We give recommendations for the future development of the backend.
-The reflection is the last part of the thesis, and shows that the dublin descriptors have been met.
+Section~\ref{results} presents the evidence that the requirements of the main research question have been met.
+This is followed by the conclusions in section~\ref{conclusions} that summarize the results.
+After the thesis proper, We give recommendations for the future development of the backend in section~\ref{recommendations}.
+Section~\ref{reflection} is the last part of the thesis, and shows that the dublin descriptors have been met.
 
 The apendices contain the contact details of the stakeholders, a glossary and the full source code of the backend.
-
-
-%\subsection{Research questions}\label{research_questions}
-
-%These subquestions will be answered in their respective subsections in section \ref{research}.
-
