@@ -93,23 +93,23 @@ So the rules actually look more like this:
     _tmp0 a -> _tmp1     #\textit{(application)}#
     2 -> _tmp2           #\textit{(literal)}#
     _tmp1 _tmp2 -> _tmp3 #\textit{(call)}#
-    0 -> _tmp4           #\textit{(literal)}#
+    1 -> _tmp4           #\textit{(literal)}#
     tmp4 = tmp0          #\textit{(conditional)}#
-    "even" -> _tmp5      #\textit{(literal)}#
+    "odd!" -> _tmp5      #\textit{(literal)}#
     --------------------
     evenOrOdd a -> _tmp5
 \end{MC}
 
 \begin{MC}[escapeinside=\#\#]
     (%) -> _tmp0         #\textit{(closure)}#
-    _tmp0 a -> _tmp1     #\textit{(application)}#
+    _tmp0 b -> _tmp1     #\textit{(application)}#
     2 -> _tmp2           #\textit{(literal)}#
     _tmp1 _tmp2 -> _tmp3 #\textit{(call)}#
-    1 -> _tmp4           #\textit{(literal)}#
+    0 -> _tmp4           #\textit{(literal)}#
     tmp4 = tmp0          #\textit{(conditional)}#
-    "odd" -> _tmp5       #\textit{(literal)}#
+    "even!" -> _tmp5     #\textit{(literal)}#
     --------------------
-    evenOrOdd a -> _tmp5
+    evenOrOdd b -> _tmp5
 \end{MC}
 
 The first job of the rule is to translate the input arguments to their name and return the output.
@@ -131,7 +131,7 @@ The first job of the rule is to translate the input arguments to their name and 
 
 Then each instruction is generated.
 
-\begin{CS}
+\begin{CS}[escapeinside=\#\#]
     {
         var a = _arg0; 
         // closure
@@ -154,7 +154,7 @@ Then each instruction is generated.
     _skip0:
     {
         var b = _arg0;
-        ...
+        #\textit{<omitted for brevity>}#
         return _tmp5;
     }
     _skip1:
@@ -191,6 +191,7 @@ Before using inheritance, the plan was to use overlapping memory like C unions.
 Using \verb|System.|\verb|Runtime.|\verb|InteropServices|, it was possible to set the specific offset of struct members.
 By overlaping fields in memory, we could achieve the same effect as C union.
 While this was multiplatform and worked well, it only worked with structs.
-This was a major limitation, because structs can only hold value-types.
-And the only value types are integers, floats, booleans and other structs.
+This was a major limitation, because structs can only hold \textit{value types}.
+And the only value types are other structs and \textit{simple types} like integers, floats, and booleans.
+This was a problem since most of the .Net objects are classes, and only a few of the .Net objects are value-types.
 

@@ -148,3 +148,27 @@ The validator was initially only for validating hand-written interfaces,
 but it proved to be very good in catching errors that slipped through the front-end.
 The validator now always checks the interface before it is handed to the codegen.
 
+\subsubsection{Evolution}
+The front end interface went through a lot of itterations, often to simplify and sometimes to add features.
+
+The biggest simplification of the interface was the decision to stop using recursive datastructures.
+Recursive datastructures such as trees are more difficult to traverse and modify than lists.
+The interface used to be defined in by a list of \textit{Scopes}.
+Each scope would have  a list of functions, data declarations and lambdas.
+The scope would also have a name and a list of scopes that were beneath the current scope in the hierarchy.
+In this way, it formed a tree of scopes that represented the program structure.
+
+\begin{FS}
+type Scope = {
+  Name          : String
+  Children      : List<Id*Scope>
+  FuncDecls     : Map<Id,SymbolDeclaration*Type>
+  TypeFuncDecls : Map<Id,SymbolDeclaration*Type>
+  DataDecls     : Map<Id,SymbolDeclaration*Type>
+  TypeFuncRules : Map<Id,List<Rule>>
+  FuncRules     : Map<Id,List<Rule>>
+}
+\end{FS}
+
+This evolved to a \verb|Map<List<Id>,scope>|, transfering the nesting of the scope to a list describing the address.
+Eventually, the contents of the scope were given a global identifier, got put in a single datastructure, and was renamed to be the interface we have now.
