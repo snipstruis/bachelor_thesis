@@ -1,4 +1,4 @@
-\subsection[Intermediate Representation]{Intermediate\\Representation}\label{ir}
+\subsection{Intermediate Representation}\label{ir}
 While the intermediate representation (IR) of the functions is part of the interface, it is complex enough to have its own research question.
 
 \textit{What should the intermediate representation of the functions be?}
@@ -66,19 +66,22 @@ This is because unlike MC, .NET objects are mutable, and the functions can be ov
 \end{tabular}
 
 \subsubsection{Evolution}
-It was briefly considered to use an existing intermediate representation, like CIL or LLVM-IR.
+The IR changed a lot during development.
+Each iteration it got simpler.
+
+\paragraph{Exising IR's}It was briefly considered to use an existing intermediate representation, like CIL or LLVM-IR.
 However, it would mean over 100 instructions and the front-end would do most of the work.
 It would also mean the front-end needed its own codegen to generate the CIL instructions.
 
-Call did not used to apply an argument, but it caused inconsistencies in the type-checker.
+\paragraph{Call} Call did not used to apply an argument, but it caused inconsistencies in the type-checker.
 There would be not difference in the type of the uncalled closure and the called closure, resulting in an extra bit of information being required with the type.
 This caused special-cases all over the codebase, so it was decided to make application take an argument, like in lambda-calculus.
 
-Application used to also take the position of the argument that was applied.
+\paragraph{Application} Application used to also take the position of the argument that was applied.
 This was because the backend did not care in what order the closures were applied.
 But since the MC language only allows for in-order closure application, the decision was made to make the position of the argument implicit to limit the program representations.
 
-Comparisons could first only take a boolean local identifier.
+\paragraph{Comparisons} Comparisons could first only take a boolean local identifier.
 It was changed to a predefined set of comparisons because of two reasons.
 Firstly, it makes the language-agnostic base instructions depend on .NET Booleans.
 Secondly, by restricting the inputs to only a predefined set of comparisons, we restrict the number of representations for the same program.

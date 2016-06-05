@@ -165,10 +165,10 @@ See the figure 1 on the next page for an overview of instruction generation.
 
 \subsubsection{Main function}
 The main function is the entry point of the program.
-When the program is run, the main function is called, and prints its result to the console.
+When the program is run, the main function is called and the result is printed.
 
 The body of the rule is generated like any rule in its own function.
-This improves readability by seperating the main function-specific code from the general rule code.
+This improves readability by seperating the main function specific code from the general rule code.
 
 \begin{CS}[escapeinside=\#\#]
 class _main{
@@ -187,11 +187,29 @@ class _main{
 \input{codegentable} % double width and page-breaking
 
 \subsubsection{Evolution}
+The code generator changed little because the code model was developed in the early stages to research if C\# was viable.
+There were only two instances where the code generator changed during development.
+
 Before using inheritance, the plan was to use overlapping memory like C unions. 
 Using \verb|System.|\verb|Runtime.|\verb|InteropServices|, it was possible to set the specific offset of struct members.
 By overlaping fields in memory, we could achieve the same effect as C union.
 While this was multiplatform and worked well, it only worked with structs.
-This was a major limitation, because structs can only hold \textit{value types}.
-And the only value types are other structs and \textit{simple types} like integers, floats, and booleans.
+This was a major limitation, because structs can only hold \textit{value types} and the only value types are other structs and \textit{simple types} like integers, floats, and booleans.
 This was a problem since most of the .Net objects are classes, and only a few of the .Net objects are value-types.
+
+The second change was a simplification that made it much easier to have breakpoints for the embedded debugger.
+The code generator used to produce a nested structure before we used \verb|goto|.
+The if-statements were nested for the rest of the rule, for example:
+
+\begin{CS}
+    if(x>10){
+        var foo = 20;    
+        if(x<100){
+            return foo;
+        }
+    }
+\end{CS}
+
+It took a lot more work to traverse this tree-like structure in order to insert breakpoints at the appropiate places, particularly because these breakpoints added a another if-statement and thus another layer of nesting.
+The size of the code shrunk a lot when the decision was made to use \verb|goto|s, and the code became a lot more readable.
 

@@ -38,18 +38,18 @@ A new key-value collection is defined at the start of each rule.
 When compiling with the debug-flag set, function closures will have a group of boolean arrays.
 One array for each rule in the function.
 
-\begin{CS}
-    class <function name>{
-        <arguments>
+\begin{CS}[escapeinside=\#\#]
+    class #\textit{<function name>}#{
+        #\textit{<arguments>}#
         static bool[] _DBUG_breakpoints_0;
         static bool[] _DBUG_breakpoints_1;
-        <return value> _run(<last argument>){
-            <body> 
+        #\textit{<return value>}# _run(#\textit{<last argument>}#){
+            #\textit{<body>}#
         }
     }
 \end{CS}
 
-The breakpoints are generated at each line of sourcecode in the rule.
+The breakpoints are generated at each line of source code in the rule.
 This is different than breaking at every instruction, as normalization often splits single lines into multiple instructions.
 
 \begin{CS}
@@ -64,7 +64,7 @@ This is different than breaking at every instruction, as normalization often spl
 \subsubsection{Debug class}
 The breakpoint function is defined as a public static member of the debug class.
 
-The debugger is defined in a seperate file, \verb|_DBUG.cs|, which is imported by the target executable.
+The debugger is defined in a separate file, \verb|_DBUG.cs|, which is imported by the target executable.
 This is done to keep the program-specific code out of \verb|_DBUG.cs|.
 
 \verb|_DBUG.cs| contains the class \verb|_DBUG|.
@@ -82,6 +82,7 @@ The breakpoint function is called when the program hits a break-point.
 
 This was chosen because breakpoint checks happen every few instructions, so they have a huge effect on debug performace.
 Straight arrays with booleans are very fast to index since it only costs one bounds-check, one addition and one dereference.
+The dereference can even be done speculatively, due to branch prediction~\cite{branchprediction}.
 
 \paragraph{The tree representation} of the program is four levels deep.
 The first level represents the file, the second level represents the funcion, the third level represents the rule and the fourth level represents the premise.

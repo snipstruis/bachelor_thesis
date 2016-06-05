@@ -3,10 +3,10 @@ The sixth research question lead to the implementation of an interpreter.
 
 \textit{How to validate the code generator?}
 
-The interpreter was built to automaticly validate the codegen and later allow constant-folding as an compiler optimization.
+The interpreter was built to automatically validate the codegen and later allow constant-folding as a compiler optimization.
 
 The automatic validation would be done by comparing the results of test programs between the interpreter and the compiler.
-If they mismatch, there is either a bug in the interpreter or more likely a bug in the codegen.
+If they mismatch, there is either a bug in the interpreter or (more likely) a bug in the codegen.
 
 \subsubsection{Evolution}
 The first design for an interpreter used the continuation monad.
@@ -17,14 +17,14 @@ It turned out that it was more desireable to have the debugger in the codegen in
 
 The next design used explicit recursion to walk the list of instructions.
 This was a huge simplification compared to the continuation-monad, but every instruction still had to explicitly recurse.
-While all of the recursion were tail-calls, it still meant near-identical code duplication for each instruction.
+While all of the recursive calls were tail-calls\cite{tailcalls}, it still meant near-identical code duplication for each instruction.
 
 \subsubsection{Structure}
-The final design uses \verb|fold|.
-This eliminated the recursion, making the \verb|interpret| instruction a straight-line function that executed a single instruction.
-This interpreter was writen under 100 lines\footnote{see \texttt{interpreter.fs}}.
+The final design uses \verb|fold|, a specialization of a catamorphism for lists\cite{catamorphism}.
+This eliminated the recursion, making \verb|interpret| a straight-line function that executed a single instruction.
+This interpreter was written in under 100 lines\footnote{see \texttt{interpreter.fs}}.
 
-\verb|fold| (or \verb|reduce|) is a standard function in F\# and other functional languages with the following type signature.
+\verb|fold| (or \verb|reduce|) is a standard function in F\# and other functional languages with the following type signature:
 
 \begin{FS}
     fold : (s->a->a) -> s -> [a] -> a
@@ -34,7 +34,7 @@ It applies a function for each element that takes the element and accumulator an
 The first argument is that function, the second argument is the starting state and the last is the array.
 ~\cite{realworldhaskellch4}.
 
-example: \texttt{fold (+) 0 [1 2 3 4]} evaluates to 10 and \texttt{fold (*) 1 [1 2 3 4]} evaluates to 24.
+For example: \texttt{fold (+) 0 [1 2 3 4]} evaluates to 10 and \texttt{fold (*) 1 [1 2 3 4]} evaluates to 24.
 
 Using a fold radically simplifies the function, as all the explicit recursion becomes implicit.
 The function now only takes the state of the program and an instruction, and produces the new state of the program.

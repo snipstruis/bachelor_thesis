@@ -1,11 +1,15 @@
 \subsection{Mangler}
-The Mangler could be seen as part of the code-gen, but the decisions are intresting enough to get its own research question.
+C\# has far more limited set of identifiers than MC.
+Still, each MC identifier must map to a valid C\# identifier.
+
+This leads to our fifth sub-question:
 
 \textit{How to generate the identifiers so they comply with the output language?}
 
-The mangler is responsible for generating a unique C\# identifier for every instance of an MC identifier.
-The mangler is designed to be simple, and produce readable output.
-Readable output makes it easy to verify both the mangler and the generated code.
+The mangler is responsible for generating a unique C\# identifier for every MC identifier.
+The mangler is designed to be simple, and produces readable output.
+Readable output allows reflection and makes it easy to use MC functions and datastructures from C\#.
+Readability also eases the verification of both the mangler and the generated code.
 
 There are two kinds of identifier: global identifiers and local identifiers.
 Global identifiers have a fully-qualified name with type information, where as local identifiers only have the simple name.
@@ -23,7 +27,7 @@ To remedy this, every ASCII symbol gets a readable label.
 \begin{tabular}{ll|ll|ll}
 \verb0!0 & \verb0_bang0  & \verb0-0 & \verb0_dash0  & \verb0=0 & \verb0_equal0 \\
 \verb0#0 & \verb0_hash0  & \verb0.0 & \verb0_dot0   & \verb0?0 & \verb0_quest0 \\
-\verb0$0 & \verb0_cash0  & \verb0/0 & \verb0_slash0 & \verb0@0 & \verb0_at0    \\ %$
+\verb0$0 & \verb0_cash0  & \verb0/0 & \verb0_slash0 & \verb0@0 & \verb0_at0    \\
 \verb0%0 & \verb0_perc0  & \verb0\0 & \verb0_back0  & \verb0^0 & \verb0_caret0 \\
 \verb0&0 & \verb0_amp0   & \verb0:0 & \verb0_colon0 & \verb0_0 & \verb0_under0 \\
 \verb0'0 & \verb0_prime0 & \verb0;0 & \verb0_semi0  & \verb0`0 & \verb0_tick0  \\
