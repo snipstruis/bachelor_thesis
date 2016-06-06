@@ -7,9 +7,9 @@ The most important optimization is inlining~\cite{inlining}.
 Inlining is the process of replacing a function call with the function body.
 While this saves a function call, the greatest benefit is that it enables other optimizations.
 
-When the function body is copied in the larger context of the callsite, some input values may be identified as compile-time constants, enabeling a whole array of optimizations. 
+When the function body is copied in the larger context of the call site, some input values may be identified as compile-time constants, enabling a whole array of optimizations. 
 
-Inlining is not always desireable.
+Inlining is not always desirable.
 If a large function is called from many different places, the size of the program increases, increasing the cache-misses on the instruction cache, reducing performance.
 
 The choice for inlining a call should consider:
@@ -18,14 +18,14 @@ The choice for inlining a call should consider:
         This makes inlining impossible.
     \item The size of the function.
         The smaller the function, the greater the inlining benefit.
-    \item The ammount of times the function is called.
+    \item The amount of times the function is called.
         If the function is only called once, inlining has no disadvantages.
         For each additional time, the size of the program increases.
 \end{enumerate}
 
 \subsubsection{Tail call optimization}
 Some recursive functions can be transformed into loops.
-This has the advantage that no new stackframes will be allocated, preventing stack-overflows and increasing performance.
+This has the advantage that no new stack frames will be allocated, preventing stack-overflows and increasing performance.
 
 If the function returns right after the recursive call, there is no need to save the state of the function, since it will be thrown away right after the call returns.
 In these cases, it is safe to replace the recursion with a modification of the input arguments and a jump to the top of the function.
@@ -34,7 +34,7 @@ These constructs can be implemented in C\# using \verb|goto|.
 Alternatively, the \verb|tail call| CIL instruction can be generated.
 
 \subsubsection{Constant folding}
-Constant folding is done when the an expression involving constants can be computed to another constant.
+Constant folding is done when an expression involving constants can be computed to another constant.
 For example the expression \verb|3+5| has only constants in it and can on compile-time be substituted with \verb|8|. 
 
 C\# does constant folding in very limited conditions.

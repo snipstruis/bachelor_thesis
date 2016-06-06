@@ -3,11 +3,11 @@ The second research question is about the specification of the front-end interfa
 
 \textit{What should the interface between the front-end and the back-end be?}
 
-The front-end interface contains all the input for the backend.
-This makes testing very easy, as the rest of the backend only relies on its input.
+The front-end interface contains all the input for the back-end.
+This makes testing very easy, as the rest of the back-end only relies on its input.
 
 \subsubsection{Interface}
-The interface is all contained in a single datastructure.
+The interface is all contained in a single data structure.
 
 \begin{FS}
 type Interface = {
@@ -30,7 +30,7 @@ All the symbols in the descriptions are provided with monomorphic types by the f
 Functions with generic types are made concrete by the front-end.
 
 The reason that \texttt{datas}, \texttt{funcs} and \texttt{lambdas} are defined as a list of key-value pairs instead of as a Map, is that the keys are not guaranteed to be unique.
-Since MC allows polymorphic types, one indentifier may be defined multiple times: once for each type.
+Since MC allows polymorphic types, one identifier may be defined multiple times: once for each type.
 There is no performance penalty for the back-end, as no lookups by identifier are performed.
 
 \subsubsection{Data declarations}
@@ -59,7 +59,7 @@ Where \verb|Type| represents a monomorphic MC type.
 %  | Arrow           of Type*Type
 %\end{FS}
 
-We can illustrate this by defining a tuple an a union in MC.
+We can illustrate this by defining a tuple and a union in MC.
 
 \begin{MC}
 Data int -> "," -> string -> Tupple<int string>
@@ -115,44 +115,44 @@ The main component of rules is its premises.
 These are the instructions that make up the rule.
 The instruction set is described in section~\ref{ir}.
 
-The premise list also contains line numbers for each premisse.
+The premise list also contains line numbers for each premise.
 This is debug information, that is used by the embedded debugger\footnote{see section~\ref{debugger}}.
 
 Next are the inputs and output of the rule.
 Input and outputs consist only of local identifiers.
 This is because of \textit{normalization}\footnote{see section~\ref{normalization}}.
 
-In the case that a rule-input or output has an expression instead of a local identifer,
+In the case that a rule-input or output has an expression instead of a local identifier,
  the expression is assigned to a new local identifier and the local identifier is substituted.
 
-The typemap contains a map from the local identifiers in a rule to their types.
-This gives the back-end all the information that the typechecker has accumulated.
+The \texttt{typemap} contains a map from the local identifiers in a rule to their types.
+This gives the back-end all the information that the type checker has accumulated.
 
 The last two members are \verb|declaration| and \verb|definition|.
 These represent the position that the function was declared at and the position that it was defined at.
 This information is used by the debugger.
 
 \subsubsection{Validator}
-The first versions of the backend had no working front-end to test with.
-Early testing was done by writing the interface datastructure by hand.
+The first versions of the back-end had no working front-end to test with.
+Early testing was done by writing the interface data structure by hand.
 Because that was error-prone, I implemented an automatic checker for the interface to check the invariants.
 
 The validator asserts the following:
 \begin{itemize}
 \item Each local identifier is defined only once.
-\item Each local identifier has a type in the typemap.
+\item Each local identifier has a type in the \texttt{typemap}.
 \item Each function has at least one rule.
 \end{itemize}
 
 The validator was initially only for validating hand-written interfaces,
 but it proved to be very good in catching errors that slipped through the front-end.
-The validator now always checks the interface before it is handed to the codegen.
+The validator now always checks the interface before it is handed to the code generator.
 
 \subsubsection{Evolution}
 The front end interface went through a lot of iterations, often to simplify and sometimes to add features.
 
-The biggest simplification of the interface was the decision to stop using recursive datastructures.
-Recursive datastructures such as trees are more difficult to traverse and modify than lists.
+The biggest simplification of the interface was the decision to stop using recursive data structures.
+Recursive data structures such as trees are more difficult to traverse and modify than lists.
 The interface used to be defined in by a list of \textit{Scopes}.
 Each scope would have  a list of functions, data declarations and lambdas.
 The scope would also have a name and a list of scopes that were beneath the current scope in the hierarchy.
@@ -170,5 +170,5 @@ type Scope = {
 }
 \end{FS}
 
-This evolved to a \verb|Map<List<Id>,scope>|, transfering the nesting of the scope to a list describing the address.
-Eventually, the contents of the scope were given a global identifier, got put in a single datastructure, and was renamed to be the interface we have now.
+This evolved to a \verb|Map<List<Id>,scope>|, transferring the nesting of the scope to a list describing the address.
+Eventually, the contents of the scope were given a global identifier, got put in a single data structure, and was renamed to be the interface we have now.

@@ -15,13 +15,13 @@ Unmanaged code is code that is not interpreted by a runtime, but is instead exec
 The main advantage of unmanaged code is that the fast LLVM code generator can be used.
 LLVM is a ``collection of modular and reusable compiler and toolchain technologies.''~\cite{llvm}
 Specifically, the LLVM optimizer is valuable.
-It is used in the Clang, a C/C++ compiler on par with gcc, and with little effort can be use it to optimize our generated code.
+It is used in the Clang, a C/C++ compiler on par with GCC, and with little effort can be use it to optimize our generated code.
 This would mean we get all the optimisations of LLVM with relative ease.
 It would however mean that we had to implement a garbage collector, as LLVM does not come with one.
  
 .NET compatibility is also required, as explained in section \ref{whydotnet}.
 There are a few systems that allow for managed and unmanaged code to communicate.
-The most viable are P/invoke, C++/CLI interop, and a hosted runtime.
+The most viable are P/invoke, C++/CLI inter-op, and a hosted runtime.
 
 \paragraph{P/invoke}
 Platform Invocation Services allows managed code to call unmanaged functions that are implemented in a DLL~\cite{msdn_pinvoke}.
@@ -32,7 +32,7 @@ However, there are two big disadvantages.
 \begin{enumerate}
     \item .NET can only call native functions, not the other way around.
         This means that the bulk of the control flow happens inside .NET, minimizing the fast native code.
-    \item Transfering data between .NET and native code has a high performance cost~\cite{msdn_interop_performance}, since it has to be serialized.
+    \item Transferring data between .NET and native code has a high performance cost~\cite{msdn_interop_performance}, since it has to be serialized.
         This overhead is so large that we expect it to negate any performance benefit from using native code.
 \end{enumerate}
 
@@ -43,7 +43,7 @@ C++ for the Common Language Infrastructure is a programming language designed fo
 
 While it seems like it does exactly what we need, it has portability issues.
 The only C++/CLI compiler runs on windows and it only compiles for processors with the x86 architecture~\cite{mono_c++cli}.
-Besides that, non-typesafe operations (the main advantage of C++/CLI) are only allowed on windows~\cite{mono_c++cli}.
+Besides that, non-type-safe operations (the main advantage of C++/CLI) are only allowed on windows~\cite{mono_c++cli}.
 
 This means C++/CLI is not cross-platform enough.
 
@@ -53,7 +53,7 @@ This would make it so the control flow takes place inside the native part.
 
 This seems like the best solution out of the native hybrids.
 However it still has two drawbacks.
-The mono runtime has a different interface than the microsoft .NET api, leading to incompatible programs ~\cite{mono_embedding}.
+The mono runtime has a different interface than the Microsoft .NET API, leading to incompatible programs ~\cite{mono_embedding}.
 The same large serialization overhead as P/Invoke is present~\cite{msdn_hosted}.
 
 \subsubsection{.NET languages}

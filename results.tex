@@ -1,5 +1,5 @@
 \section{Results}\label{results}
-After answering all the subquestions, one thing is left: proving the main research question.
+After answering all the sub-questions, one thing is left: proving the main research question.
 The main research question and its requirements were:
 
 \input{question}
@@ -12,7 +12,7 @@ It \textit{is} however possible to write the front-end interface by hand.
 
 \subsubsection{Data test}
 The first test was developed to test the Data declarations.
-It is equivalent to the following mc code.
+It is equivalent to the following MC code.
 
 \begin{MC}
 Data int -> "::" -> List -> List
@@ -23,7 +23,7 @@ main -> 0
 \end{MC}
 
 \subsubsection{List length test}
-The list length program defined a list datastructure and a program to compute its length.
+The list length program defined a list data structure and a program to compute its length.
 This was used since it uses each basic instruction at least once, as well as matching.
 It is equivalent to the following MC code:
 
@@ -36,7 +36,7 @@ Func "length" -> List -> int
 ---------------
 length nil -> 0
 
-lengtht xs -> res
+length xs -> res
 ---------------------
 length x::xs -> res+1
 
@@ -54,7 +54,7 @@ This program can also be debugged with the embedded debugger.
 
 \subsubsection{XNA test}
 The second test program was to test the .NET functionality.
-It consists of a simple program that modifies XNA datastructures, specifically the \verb|Vector2|.
+It consists of a simple program that modifies XNA data structures, specifically the \verb|Vector2|.
 
 \begin{MC}
 20.0 -> x1
@@ -72,7 +72,7 @@ run -> ret
 \end{MC}
 
 Which returns \verb|20|.
-This is especially intresting to debug, because we can see the values change.
+This is especially interesting to debug, because we can see the values change.
 
 \fbox{\includegraphics[width=\columnwidth-7pt]{debugger}}
 

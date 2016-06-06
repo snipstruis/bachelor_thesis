@@ -1,14 +1,14 @@
 \section*{Abstract}
 This project is about the development of the back-end of the bootstrap compiler for the Meta Casanova 3 language.
 The back-end is responsible for generating an executable after receiving the type-checked program representation from the front-end.
-In this thesis, we will walk through the backend and examine the various parts and their design decisions.
+In this thesis, we will walk through the back-end and examine the various parts and their design decisions.
 In this way, this document aims to be useful to the future developers of the MC compiler.
 
 \section{Introduction}
 Games are complex programs that have to do a lot of things in a small timespan.
 To make writing games easier, a new language was developed: Casanova.
 
-Implementing the casanova compiler proved difficult.
+Implementing the Casanova compiler proved difficult.
 Compilers are complex programs that have to operate on a wide range of inputs.
 Since compilers have such a large input-space, the chance of a bug hiding somewhere is substantial. 
 But for al their complexity, compilers also have to be bug-free since every program can only be as bug-free as its compiler.
@@ -26,12 +26,12 @@ We will first discuss the context of the assignment in section~\ref{context}.
 Then we will give a short overview of Meta Casanova in section~\ref{metacasanova}.
 
 Section~\ref{research}, the main part of is thesis, is next.
-It presents the main research question and splits it in subquestions.
-Each subquestion is then answered in each subsection.
+It presents the main research question and splits it in sub-questions.
+Each sub-question is then answered in each subsection.
 
 Section~\ref{results} presents the evidence that the requirements of the main research question have been met.
 This is followed by conclusions in section~\ref{conclusions} that summarize the results.
-After the thesis proper, we give recommendations for the future development of the backend in section~\ref{recommendations}.
-Section~\ref{evaluation} is the last part of the thesis, and shows that the dublin descriptors have been met.
+After the thesis proper, we give recommendations for the future development of the back-end in section~\ref{recommendations}.
+Section~\ref{evaluation} is the last part of the thesis, and shows that the Dublin descriptors have been met.
 
-The appendices contain the contact details of the stakeholders, a glossary and the full source code of the backend.
+The appendices contain the contact details of the stakeholders, a glossary and the full source code of the back-end.

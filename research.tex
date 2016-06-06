@@ -12,7 +12,7 @@ This is because the main area of research of the organization is game-related\fo
 The multiplatform requirement is because the games are produced for any platform.
 The performance requirement is there because games have to be fast.
 
-In order to answer the research question, seven subquestions were formulated.
+In order to answer the research question, seven sub-questions were formulated.
 
 \begin{enumerate}
     \item In what language should the code generator produce its output?
@@ -24,17 +24,17 @@ In order to answer the research question, seven subquestions were formulated.
     \item How to validate the test programs?
 \end{enumerate}
 
-Each answer of a subquestion is provided evidence by implementing a part of the backend. 
+Each answer of a sub-question is provided evidence by implementing a part of the back-end. 
 This will in turn provide evidence to answer the main research question.
 
-To illustrate how the different parts of the back-end relate to each other, here is a diagram of the dataflow through the backend.
+To illustrate how the different parts of the back-end relate to each other, here is a diagram of the data flow through the back-end.
 
 \includegraphics[width=\columnwidth]{overview}
 
 As you can see, the front-end interface contains the Intermediate Representation (IR) and goes through the validator.
-From there, depending on the compiler flags, it either goes to the interpreter or the codegen.
+From there, depending on the compiler flags, it either goes to the interpreter or the code generator.
 In case it goes to the interpreter, the program is directly executed.
-In case it goes to the codegen, it is translated to the output language.
+In case it goes to the code generator, it is translated to the output language.
 To translate all the identifiers, the mangler is needed.
 The debugger is optionally embedded in the executable, depending on compiler flags.
 

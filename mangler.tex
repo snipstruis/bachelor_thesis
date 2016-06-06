@@ -8,7 +8,7 @@ This leads to our fifth sub-question:
 
 The mangler is responsible for generating a unique C\# identifier for every MC identifier.
 The mangler is designed to be simple, and produces readable output.
-Readable output allows reflection and makes it easy to use MC functions and datastructures from C\#.
+Readable output allows reflection and makes it easy to use MC functions and data structures from C\#.
 Readability also eases the verification of both the mangler and the generated code.
 
 There are two kinds of identifier: global identifiers and local identifiers.
@@ -42,7 +42,7 @@ C\# allows reserved words to be used as valid identifiers if prefixed with an `\
 \subsubsection{Types}
 Global identifiers need type information embedded in the name since the name alone does uniquely identify it.
 Types can be recursive\footnote{see section~\ref{mcdata}}, so the system for embedding types must be able to represent tree structures.
-We use the same syntax as the front-end but with \verb|_S| as seperator, \verb|_L| for the left angle bracket and \verb|_R| for the right angle bracket.
+We use the same syntax as the front-end but with \verb|_S| as separator, \verb|_L| for the left angle bracket and \verb|_R| for the right angle bracket.
 
 {\footnotesize
 \begin{tabular}{ll}
@@ -55,5 +55,5 @@ We use the same syntax as the front-end but with \verb|_S| as seperator, \verb|_
 \subsubsection{Evolution}
 The first iteration of the mangler just numbered every identifier.
 While this was a simple system to generate identifiers with, it was absolutely impossible to inspect the resulting code.
-Most of the mangler is the result of a desire for readable, inspectible output code.
+Most of the mangler is the result of a desire for readable, inspectable output code.
 

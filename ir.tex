@@ -9,7 +9,7 @@ These premises represent the executable code in each rule.
 To minimize the number of representations of the same program, all compound premises are split into multiple premises that do only one operation each.
 This process is called \textit{normalization}\label{normalization}.
 
-The instruction set exists in two parts: the base instructions and the .NET extentions.
+The instruction set exists in two parts: the base instructions and the .NET extensions.
 
 \subsubsection{Base instructions}
 The instruction set was designed to minimize the number of representations of the same program.
@@ -36,10 +36,10 @@ The \textit{Conditional}, \textit{Deconstructor}, \textit{Application} and \text
 \item[Call] (\verb|inc b -> c|) applies a local identifier and calls the closure.
     All closures need to be called eventually to be useful.
     The exception is data-constructors. 
-    They do not have to be called as they insert their elements in the datastructure as they are applied.
+    They do not have to be called as they insert their elements in the data structure as they are applied.
 \end{description}
 
-\subsubsection{.NET extentions}
+\subsubsection{.NET extensions}
 A separate set of instructions are needed to inter-operate with .NET.
 This is because unlike MC, .NET objects are mutable, and the functions can be overloaded on the number and types of arguments.
 
@@ -69,16 +69,16 @@ This is because unlike MC, .NET objects are mutable, and the functions can be ov
 The IR changed a lot during development.
 Each iteration it got simpler.
 
-\paragraph{Exising IR's}It was briefly considered to use an existing intermediate representation, like CIL or LLVM-IR.
+\paragraph{Existing IR} It was briefly considered to use an existing intermediate representation, like CIL or LLVM-IR.
 However, it would mean over 100 instructions and the front-end would do most of the work.
-It would also mean the front-end needed its own codegen to generate the CIL instructions.
+It would also mean the front-end needed its own code generator to generate the CIL instructions.
 
 \paragraph{Call} Call did not used to apply an argument, but it caused inconsistencies in the type-checker.
 There would be not difference in the type of the uncalled closure and the called closure, resulting in an extra bit of information being required with the type.
 This caused special-cases all over the codebase, so it was decided to make application take an argument, like in lambda-calculus.
 
 \paragraph{Application} Application used to also take the position of the argument that was applied.
-This was because the backend did not care in what order the closures were applied.
+This was because the back-end did not care in what order the closures were applied.
 But since the MC language only allows for in-order closure application, the decision was made to make the position of the argument implicit to limit the program representations.
 
 \paragraph{Comparisons} Comparisons could first only take a boolean local identifier.
