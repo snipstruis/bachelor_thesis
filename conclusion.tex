@@ -1,7 +1,16 @@
 \section{Conclusions}\label{conclusions}
+In this thesis, we have shown how typechecked metacasanova can be transformed into an executable program.
+We did this by first finding that C\# was the output language of choice.
+We then showed a simple interface with an orthogonal IR.
+After that, we showed how to map the IR to C\# statements with correctly generated identifiers.
+To validate the code generator, a simple interpreter was written, and finally we have shown how to embed a debugger in the executable.
+
+When the back-end was finished, we checked our requirements to see if they have been met.
+We showed that the back-end generates correct code and inter-operates with .NET by using test programs that use every IR instruction, including the .NET instructions.
+We also showed that the back-end runs on multiple platforms, and that the performance of MC is greater that that of Python with benchmarks.
+
 The result is a working, reliable, performant back-end, with interpreter, validator and embedded debugger.
 All finished within the time frame of the internship.
 
-To prove it works, three test programs were written.
-All are correctly generated, all run in the interpreter, and all can be debugged.
-
+This program, along with the documentation, will help the research group with their implementation of Casanova and the evolution of Meta Casanova.
+These technologies can then be applied in the virtual reality and video game development.
