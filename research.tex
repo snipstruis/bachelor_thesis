@@ -14,15 +14,15 @@ The performance requirement is there because games have to be fast.
 
 In order to answer the research question, seven sub-questions were formulated.
 
-\begin{enumerate}
-    \item In what language should the code generator produce its output?
-    \item What should the interface be between the front-end and the back-end?
-    \item What should the intermediate representation of the functions be?
-    \item How does the interface map to the output language?
-    \item How to generate names so that they comply with the output language?
-    \item How to validate the code-generator?
-    \item How to validate the test programs?
-\end{enumerate}
+\begin{description}
+    \item[The language question:] In what language should the code generator produce its output?
+    \item[The interface question:] What should the interface be between the front-end and the back-end?
+    \item[The IR question:] What should the intermediate representation of the functions be?
+    \item[The codegen question:] How does the interface map to the output language?
+    \item[The mangle question:] How to generate names so that they comply with the output language?
+    \item[The validation question:] How to validate the code-generator?
+    \item[The debug question:] How to validate the test programs?
+\end{description}
 
 Each answer of a sub-question is provided evidence by implementing a part of the back-end. 
 This will in turn provide evidence to answer the main research question.

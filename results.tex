@@ -114,10 +114,28 @@ Both programs were executed $10^3$ times, the results below is the minimum, maxi
 \begin{tabular}{l|lll}
 & Python & MC & Python/MC \\
 \hline
-min &   3442$\mu$s & 22.82$\mu$s & $151\times$ \\
-max &   3627$\mu$s & 49.79$\mu$s & $72.8\times$ \\
-avg &   3534$\mu$s & 36.30$\mu$s & $97.3\times$ \\
+min & 3442$\mu$s & 22.82$\mu$s & 151  \\
+max & 3627$\mu$s & 49.79$\mu$s & 72.8 \\
+avg & 3534$\mu$s & 36.30$\mu$s & 97.3 \\
 \end{tabular}
 
 The mesurements show that MC is two orders of magnitude faster than the equivalent python code.
+This illustrates the strength of the MC language, the user-defined data structures are very fast.
 
+Even if we compare it to the built-in python \texttt{List.count}, the naïvely implemented list outperforms it.
+
+\begin{lstlisting}[language=python]
+lst = [1]*1000000
+
+length=lst.count(1)
+\end{lstlisting}
+
+\begin{tabular}{l|lll}
+& Python & MC & Python/MC \\
+\hline
+min & 39.00$\mu$s & 22.82$\mu$s & 1.71 \\
+max & 52.86$\mu$s & 49.79$\mu$s & 1.06 \\
+avg & 41.95$\mu$s & 36.30$\mu$s & 1.16 \\
+\end{tabular}
+
+This shows that the performance requirement has been met. 

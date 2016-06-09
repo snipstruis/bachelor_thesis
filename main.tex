@@ -132,7 +132,7 @@
 \setcounter{section}{0}
 \renewcommand\thesection{\Alph{section}}
 
-\input{stakeholders}
+%\input{stakeholders}
 
 \begin{multicols*}{2}
 \section{Glossary}
@@ -143,23 +143,30 @@
 \end{multicols*}
 \newpage
 
+\section{Benchmarks}
+\subsection{list.cs}
+\lstinputlisting[numbers=left,language=CSharp]{sourcefiles/list.cs}
+\subsection{list.py}
+\lstinputlisting[numbers=left,language=Python]{sourcefiles/list.py}
+\subsection{native.py}
+\lstinputlisting[numbers=left,language=Python]{sourcefiles/native.py}
 
-\section{Source code}
-\subsection{Common.fs} 
-\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/Common.fs}
-\subsection{CodegenInterface.fs} 
-\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/CodegenInterface.fs}
-\subsection{Interpreter.fs} 
-\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/Interpreter.fs}
-\subsection{Codegen.fs} 
-\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/Codegen.fs}
-\subsection{Mangle.fs} 
-\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/Mangle.fs}
-\subsection{\_dbug.cs}
-\lstinputlisting[numbers=left,language=CSharp]{sourcefiles/_dbug.cs}
-\subsection{Listtest.fs} 
-\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/listtest.fs}
-\subsection{Balltest.fs} 
-\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/balltest.fs}
+%\section{Source code}
+%\subsection{Common.fs} 
+%\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/Common.fs}
+%\subsection{CodegenInterface.fs} 
+%\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/CodegenInterface.fs}
+%\subsection{Interpreter.fs} 
+%\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/Interpreter.fs}
+%\subsection{Codegen.fs} 
+%\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/Codegen.fs}
+%\subsection{Mangle.fs} 
+%\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/Mangle.fs}
+%\subsection{\_dbug.cs}
+%\lstinputlisting[numbers=left,language=CSharp]{sourcefiles/_dbug.cs}
+%\subsection{Listtest.fs} 
+%\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/listtest.fs}
+%\subsection{Balltest.fs} 
+%\lstinputlisting[numbers=left,language=FSharp]{sourcefiles/balltest.fs}
 
 \end{document}
