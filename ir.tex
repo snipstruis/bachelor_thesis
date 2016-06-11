@@ -15,8 +15,8 @@ The instruction set exists in two parts: the base instructions and the .NET exte
 The instruction set was designed to minimize the number of representations of the same program.
 This happens to coincide with a small orthogonal instruction set.
 
-The instruction set is in \textit{static single assignment} (SSA) form~\cite{leestatic}.
-This means the local identifiers are constant and can not be redefined.
+The instruction set is in \textit{static single assignment} (SSA) form.
+This means the local identifiers are constant and can not be redefined~\cite{leestatic}.
 
 Base instructions fall in one of two groups.
 The first maps a global identifier to a local identifier.
@@ -35,7 +35,7 @@ The \textit{Conditional}, \textit{Deconstructor}, \textit{Application} and \text
 \item[Application] (\verb|add a -> inc|) applies a local identifier to a closure in another local identifier.
 \item[Call] (\verb|inc b -> c|) applies a local identifier and calls the closure.
     All closures need to be called eventually to be useful.
-    The exception is data-constructors. 
+    The exceptions are data-constructors. 
     They do not have to be called as they insert their elements in the data structure as they are applied.
 \end{description}
 
@@ -67,7 +67,7 @@ This is because unlike MC, .NET objects are mutable, and the functions can be ov
 
 \subsubsection{Evolution}
 The IR changed a lot during development.
-Each iteration it got simpler.
+It got simpler with each iteration.
 
 \paragraph{Existing IR} It was briefly considered to use an existing intermediate representation, like CIL or LLVM-IR.
 However, it would mean over 100 instructions and the front-end would do most of the work.

@@ -17,9 +17,9 @@ LLVM is a ``collection of modular and reusable compiler and toolchain technologi
 Specifically, the LLVM optimizer is valuable.
 It is used in the Clang, a C/C++ compiler on par with GCC, and with little effort can be use it to optimize our generated code.
 This would mean we get all the optimisations of LLVM with relative ease.
-It would however mean that we had to implement a garbage collector, as LLVM does not come with one.
+It would however mean that we had to implement a garbage collector, as LLVM does not come with one~\cite{llvmgc}.
  
-.NET compatibility is also required, as explained in section \ref{whydotnet}.
+.NET compatibility is also required, as explained in section~\ref{whydotnet}.
 There are a few systems that allow for managed and unmanaged code to communicate.
 The most viable are P/invoke, C++/CLI inter-op, and a hosted runtime.
 
@@ -39,7 +39,7 @@ However, there are two big disadvantages.
 Because of this, P/Invoke was not chosen.
 
 \paragraph{C++/CLI}
-C++ for the Common Language Infrastructure is a programming language designed for interoperability with unmanaged code~\cite{msdn_c++cli}.
+C++ for the Common Language Infrastructure is a programming language designed for interoperability with unmanaged code~\cite{ecma372}.
 
 While it seems like it does exactly what we need, it has portability issues.
 The only C++/CLI compiler runs on windows and it only compiles for processors with the x86 architecture~\cite{mono_c++cli}.
@@ -64,7 +64,7 @@ It was decided to let go of the LLVM code-generation in favor of a more portable
 Stability is a big advantage because everything happends inside the .NET runtime.
 This has a higher chance of working on non-native platforms than the hybrid solutions.
 
-\paragraph{F\#} is a functional/declarative language in the .NET family~\cite{fsharp}.
+\paragraph{F\#} is a functional/declarative language in the .NET family~\cite{smith}.
 It would be a natural choice, since the compiler is written in it.
 It has the advantage of supporting tail-calls, which is unsupported by C\#,
   and since F\# already supported algebraic datatypes, it seemed like a viable solution.
@@ -74,7 +74,7 @@ It has the advantage of supporting tail-calls, which is unsupported by C\#,
 % maybe look for Mohammeds compiler written in F#?
 
 \paragraph{C\#}
-is an imperative, object-oriented language~\cite{csharp}.
+is an imperative, object-oriented language~\cite{ecma334}.
 It is the most popular .NET language~\cite{Meyerovich}, so the compiler gets the most attention by Microsoft.
 It is also easy to debug, as it has the most mature debugging tools.
 C\# too seemed like a viable option.
@@ -87,27 +87,27 @@ C\# too seemed like a viable option.
 (Common Intermediate Language) is the bytecode that all the languages are compiled to.
 Since it is typed, it has the same restrictions as C\#~\cite{ecma335}.
 As a result, it makes debugging and verification harder, with little to no gain.
-It also omits the optimizations of the C\# compiler, such as dead-code elimination and stuff\footnote{see section~\ref{recommendations}}.
+It also omits the optimizations of the C\# compiler, such as dead-code elimination\footnote{see section~\ref{recommendations}}.
 
 \subsubsection{Conclusion}
 The result of the research was that C\# and F\# were both viable.
 To choose an output language, I built a code model for each language.
 
-The F\# code model mainly involved switching off indentation-based scoping for F\# and using the verbose syntax.
+The F\# code model mainly involved switching off indentation-based scoping and using the verbose syntax.
 Scoping was implemented by making each rule a numbered function that returned an \verb|Option<>|.
 the numbered rules were then called and appended using the \verb|>>=| of the \verb|Option| monad.
 
 While this model worked, it was cumbersome and slow.
 The code was hard to inspect, since there was no indentation.
-It was also relatively slow because\footnote{information obtained by inspecting generated CIL code of the microsoft F\# compiler \texttt{fsc.exe} version 1.0 with \texttt{+optimize}}:
+It was also relatively slow because:
 
 \begin{enumerate}
 \item It had to wrap each return value in a \verb|Option|. 
-    This is particularly costly for value-types, as they have to be boxed and unboxed each time the value is used.
+    This is particularly costly for value-types, as they have to be boxed and unboxed each time the value is used~\cite{cisternino}.
 \item It performs monadic operations for each rule attempt.
-    These generic functions do type resolution at run-time, each time they are called.
-\item The numbered functions were not inlined, preventing any cross-rule optimization.
+    These generic functions do type resolution at run-time, each time they are called~\cite{cisternino}.
+\item The numbered functions were not inlined, preventing any cross-rule optimization\footnote{information obtained by inspecting generated CIL code of the microsoft F\# compiler \texttt{fsc.exe} version 1.0 with \texttt{+optimize}}.
 \end{enumerate}
 
 The C\# code model proved far easier to generate and inspect, as it had braces and local scopes.
-It is the model that is now used\footnote{see section~\ref{codegen}}.
+It is the model that is now used. The C\# code model is explained in detail in section~\ref{codegen}.

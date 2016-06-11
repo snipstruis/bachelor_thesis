@@ -18,7 +18,7 @@ The left pane shows a four level deep tree which sorts the program on file name,
 
 The right pane shows a table with the name and value of the local identifiers defined up to the current breakpoint.
 
-\subsubsection{Program changes}
+\subsubsection{Output program changes}
 When compiling with the debug flag set, some additions are made to target program.
 
 \paragraph{Local identifier table}
@@ -102,6 +102,6 @@ The third argument is the symbol table that has been accumulated so far.
 
 \subsubsection{Evolution}
 The debugger has changed little, since it is a relatively simple construct.
-The only significant changes were the decision to go from a single boolean array per closure to one per rule.
+The only significant changes were the decision to go from a single boolean array per closure to a bollean array per rule.
 The book-keeping involved in having the boolean arrays packed was inelegant, because there was now a dependency between the rules: the latter breakpoint number depends on the breakpoints in the former rule.
 

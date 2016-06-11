@@ -36,8 +36,7 @@ class #\textit{<function name>}# {
 \end{CS}
 
 The \verb|_run| function opens a local scope followed by a goto-label for each rule in the function.
-This allows rules to easily jump ahead to the label when they do not match.
-More on rules in subsection \textit{rules}.
+This allows rules to easily jump ahead to the label when they do not match\footnote{See subsection \textit{Rules}.}
 
 \subsubsection{Data declarations}
 Data declarations are implemented with inheritance.
@@ -209,6 +208,15 @@ The if-statements were nested for the rest of the rule, for example:
     }
 \end{CS}
 
-It took a lot more work to traverse this tree-like structure in order to insert breakpoints at the appropriate places, particularly because these breakpoints added a another if-statement and thus another layer of nesting.
+As opposed to the \verb|goto| model:
+
+\begin{CS}
+    if(x>10){goto _skip0;}
+    var foo = 20;    
+    if(x<100){goto _skip0;}
+    return foo;
+\end{CS}
+
+It took a lot more work to traverse this tree-like structure in order to insert breakpoints at the appropriate places, particularly because these breakpoints added a another if-statement and thus another layer of nesting\footnote{see section~\ref{debugger}}.
 The size of the code shrunk a lot when the decision was made to use \verb|goto|s, and the code became a lot more readable.
 

@@ -26,12 +26,13 @@ The design principles for this interface were simplicity and minimalism.
 There should be as few ways as possible to represent the same program.
 This makes testing easier and minimizes bugs that appear only in certain representations of the same program.
 
-All the symbols in the descriptions are provided with monomorphic types by the front-end.
+All the symbols in the descriptions are provided with \textit{monomorphic} types by the front-end.
+Monomorphic types are non-generic types like \verb|int| or \verb|System|\verb|.DateTime|.
 Functions with generic types are made concrete by the front-end.
 
 The reason that \texttt{datas}, \texttt{funcs} and \texttt{lambdas} are defined as a list of key-value pairs instead of as a Map, is that the keys are not guaranteed to be unique.
 Since MC allows polymorphic types, one identifier may be defined multiple times: once for each type.
-There is no performance penalty for the back-end, as no lookups by identifier are performed.
+There is no performance penalty for the back-end for using maps, as no lookups by identifier are performed.
 
 \subsubsection{Data declarations}
 The data declarations are grouped with the identifier of the constructor.
@@ -62,7 +63,7 @@ Where \verb|Type| represents a monomorphic MC type.
 We can illustrate this by defining a tuple and a union in MC.
 
 \begin{MC}
-Data int -> "," -> string -> Tupple<int string>
+Data int -> "," -> string -> Tuple<int string>
 Data "fst" -> int    -> Union<int string>
 Data "snd" -> string -> Union<int string>
 \end{MC}
@@ -89,7 +90,7 @@ Function and lambda definitions, as well as the main function contain rules.
   main    : rule
 \end{FS}
 
-Functions in MC can contain multiple rules that implement them.
+Functions in MC can have multiple rules that implement them.
 
 The entry point of the program is defined by a single rule, here called \verb|main|.
 It is not a full function since full functions can have multiple rules.
@@ -130,7 +131,7 @@ This gives the back-end all the information that the type checker has accumulate
 
 The last two members are \verb|declaration| and \verb|definition|.
 These represent the position that the function was declared at and the position that it was defined at.
-This information is used by the debugger.
+This information is used by the debugger\footnote{see section~\ref{debugger}}.
 
 \subsubsection{Validator}
 The first versions of the back-end had no working front-end to test with.
@@ -162,13 +163,13 @@ In this way, it formed a tree of scopes that represented the program structure.
 type Scope = {
   Name          : String
   Children      : List<Id*Scope>
-  FuncDecls     : Map<Id,SymbolDeclaration*Type>
-  TypeFuncDecls : Map<Id,SymbolDeclaration*Type>
-  DataDecls     : Map<Id,SymbolDeclaration*Type>
+  FuncDecls     : Map<Id,Symbol*Type>
+  TypeFuncDecls : Map<Id,Symbol*Type>
+  DataDecls     : Map<Id,Symbol*Type>
   TypeFuncRules : Map<Id,List<Rule>>
   FuncRules     : Map<Id,List<Rule>>
 }
 \end{FS}
 
-This evolved to a \verb|Map<List<Id>,scope>|, transferring the nesting of the scope to a list describing the address.
+This evolved to a \verb|Map<List<Id>,scope>|, transforming the nesting of the scope to a list describing the address.
 Eventually, the contents of the scope were given a global identifier, got put in a single data structure, and was renamed to be the interface we have now.

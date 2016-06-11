@@ -1,5 +1,5 @@
 \subsection{Mangler}
-C\# has far more limited set of identifiers than MC.
+C\# has far more limited set of valid identifiers than MC has.
 Still, each MC identifier must map to a valid C\# identifier.
 
 This leads to our fifth sub-question:
@@ -36,7 +36,7 @@ To remedy this, every ASCII symbol gets a readable label.
 \verb0,0 & \verb0_comma0 \\
 \end{tabular}
 
-\subsubsection{Reserved words}
+Reserved words like \verb|if| and \verb|for| are not valid identifiers and also have to be escaped.  
 C\# allows reserved words to be used as valid identifiers if prefixed with an `\verb|@|'~\cite{msdn_identifiers}.
 
 \subsubsection{Types}
@@ -56,4 +56,5 @@ We use the same syntax as the front-end but with \verb|_S| as separator, \verb|_
 The first iteration of the mangler just numbered every identifier.
 While this was a simple system to generate identifiers with, it was absolutely impossible to inspect the resulting code.
 Most of the mangler is the result of a desire for readable, inspectable output code.
+An added benefit of the readability is that it make linking with MC libraries from C\# easier.
 

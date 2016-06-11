@@ -2,7 +2,7 @@
 This project is about the development of the back-end of the bootstrap compiler for the Meta Casanova 3 language.
 The back-end is responsible for generating an executable after receiving the type-checked program representation from the front-end.
 In this thesis, we will walk through the back-end and examine the various parts and their design decisions.
-In this way, this document aims to be useful to the future developers of the MC compiler.
+In this way, this document aims to be useful to the future developers of the back-end.
 
 \section{Introduction}
 Games are difficult to develop~\cite{blow}.
@@ -11,7 +11,7 @@ To make writing games easier, a new language was developed: Casanova.
 Implementing the Casanova compiler proved difficult.
 Compilers are complex programs that have to operate on a wide range of inputs.
 Since compilers have such a large input-space, the chance of a bug hiding somewhere is substantial. 
-But for al their complexity, compilers also have to be bug-free since every program can only be as bug-free as its compiler.
+But for al their complexity, compilers also have to be bug-free since every program can only be as bug-free as its compiler~\cite{tompson}.
 
 Abstractions can help in this regard.
 The limits of which were observed when implementing the compiler for the Casanova language in F\#.
@@ -19,7 +19,7 @@ The compiler was 1480 lines long, and became unmaintainable.
 After a rewrite in MC it was 300 lines~\cite{maggiore}.
 
 The primary reason for this was the lack of higher-order type operators.
-Higher-order type operators made abstractions such as monad-transformers impossible, hampering modularity and resulted in a lot of non-reusable boilerplate code.
+Higher-order type operators made abstractions such as monad-transformers impossible, hampering modularity and resulted in a lot of non-reusable boilerplate code~\cite{pierce}.
 
 \subsubsection{Structure}
 We will first discuss the context of the assignment in section~\ref{context}.

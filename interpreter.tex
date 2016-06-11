@@ -8,19 +8,8 @@ The interpreter was built to automatically validate the code generator and later
 The automatic validation would be done by comparing the results of test programs between the interpreter and the compiler.
 If they mismatch, there is either a bug in the interpreter or (more likely) a bug in the code generator.
 
-\subsubsection{Evolution}
-The first design for an interpreter used the continuation monad.
-This is a complex construct that allows for arbitrary control flow.
-
-The idea was that during debugging, you could change the line that was executed.
-It turned out that it was more desirable to have the debugger in the code generator instead of the interpreter\footnote{see section \ref{debugger}}, so the primary benefit of the construct was lost.
-
-The next design used explicit recursion to walk the list of instructions.
-This was a huge simplification compared to the continuation-monad, but every instruction still had to explicitly recurse over the instruction list.
-While all of the recursive calls were tail-calls\cite{tailcalls}, it still meant near-identical code duplication for each instruction.
-
 \subsubsection{Structure}
-The final design uses \verb|fold|, a specialization of a catamorphism for lists\cite{catamorphism}.
+The interpreter is built around using \verb|fold|, a specialization of a catamorphism for lists\cite{gibbons}.
 This eliminated the recursion, making \verb|interpret| a straight-line function that executed a single instruction.
 This interpreter was written in under 100 lines\footnote{see \texttt{interpreter.fs}}.
 
@@ -31,8 +20,7 @@ This interpreter was written in under 100 lines\footnote{see \texttt{interpreter
 \end{FS}
 
 It applies a function for each element that takes the element and accumulator and produces a new accumulator.
-The first argument is that function, the second argument is the starting state and the last is the array.
-~\cite{realworldhaskellch4}.
+The first argument is that function, the second argument is the starting state and the last is the array~\cite{realworldhaskell}.
 
 For example: \texttt{fold (+) 0 [1 2 3 4]} evaluates to 10 and \texttt{fold (*) 1 [1 2 3 4]} evaluates to 24.
 
@@ -46,4 +34,15 @@ In the front-end interface, the \verb|assemblies| field contains a list of strin
 These strings are the assembly names the program is linked to.
 When a .NET function is called, the interpreter will open the assemblies one by one and search through it for a function that matches the name and signature of the one called.
 .NET data structures and fields are handled the same way.
+
+\subsubsection{Evolution}
+The first design for an interpreter used the continuation monad.
+This is a complex construct that allows for arbitrary control flow.
+
+The idea was that during debugging, you could change the line that was executed.
+It turned out that it was more desirable to have the debugger in the code generator instead of the interpreter\footnote{see section \ref{debugger}}, so the primary benefit of the construct was lost.
+
+The next design used explicit recursion to walk the list of instructions.
+This was a huge simplification compared to the continuation-monad, but every instruction still had to explicitly recurse over the instruction list.
+While all of the recursive calls were tail-calls\cite{tailcalls}, it still meant near-identical code duplication for each instruction.
 
