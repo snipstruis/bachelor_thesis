@@ -2,17 +2,26 @@
 In this section I will show that I have the competences associated with computer science according to Rotterdam University of applied sciences.
 
 \subsubsection{Administering} 
-I initiated the move away from SVN to Git, to make us more productive.
+I used Visual Studio 2015 on windows, even though my primary development environment is on linux.
+This was primarily so that the project kept working well with the other members of the research group.
+During this, I initiated the move away from SVN to Git, to make us more productive.
+To make it easy for everyone on the research group, I made sure Visual Studio had a Git plugin.
 
 \subsubsection{Analyzing}
-I have split the back-end problem up in managable chunks.
+I have split the back-end problem up in managable, testable chunks.
+I researched compiler architectures like the LLVM framework, which inspired the early normalization (called cannonicallization in LLVM).
+It also inspired the SSA form and the inclusion of type-information.
 
 \subsubsection{Advising}
-This thesis also serves as a documentation of the back-end.
+This thesis also serves as a documentation of the back-end to the stakeholders.
+It contains a `future work' section that contain advice on how to improve the back-end.
 
 \subsubsection{Designing}
 The parts of the back-end are modular and communicate with each other through well-defined interfaces.
 This made it easy to respond to changes in the language, as changes in one part have no effect on the other parts.
+It was also easy to test and debug the seperate parts because they only depend on their explicit inputs.
 
 \subsubsection{Realizing}
 I managed to to realize a working compiler back-end within the allocated time.
+It comes with this thesis as documentation so the future developers of the back-end can easily get started.
+
