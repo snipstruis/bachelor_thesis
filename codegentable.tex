@@ -84,23 +84,23 @@ figure 1: \textit{an overview of instruction generation.}\\
 
     \hline
     static get & \begin{lstlisting}
-        date.DayOfWeek -> day
+        System.DateTime.Today -> day
     \end{lstlisting} & \begin{lstlisting}
-        var day = date.DayOfWeek;
+        var day = System.DateTime.Today;
     \end{lstlisting} \\
 
     \hline
     set & \begin{lstlisting}
-        hr -> System.DateTime.hour
+        hr -> foo.hour
     \end{lstlisting} & \begin{lstlisting}
-        System.DateTime.hour = hr;
+        foo.hour = hr;
     \end{lstlisting} \\
 
     \hline
     static set & \begin{lstlisting}
-        hr -> System.DateTime.hour
+        hr -> System.DateTime.LocalTime
     \end{lstlisting} & \begin{lstlisting}
-        System.DateTime.hour = hr;
+        System.DateTime.LocalTime = hr;
     \end{lstlisting} \\
     \hline
 \end{tabular}

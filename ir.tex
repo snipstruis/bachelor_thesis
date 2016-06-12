@@ -46,23 +46,28 @@ This is because unlike MC, .NET objects are mutable, and the functions can be ov
 \begin{tabular}{ll}
     \textbf{instruction} & \textbf{MC example}\\
     call & \begin{lstlisting}
-        System.DateTime d m y -> date
+        date.toString format -> str
     \end{lstlisting}\\
+
     static call & \begin{lstlisting}
-        System.DateTime d m y -> date
+        System.DateTime.parse str -> date
     \end{lstlisting}\\
+
     get & \begin{lstlisting}
-        System.DateTime d m y -> date
+        date.DayOfWeek -> day
     \end{lstlisting}\\
+
     static get & \begin{lstlisting}
-        System.DateTime d m y -> date
+        System.DateTime.Today -> day
     \end{lstlisting}\\
+
     set & \begin{lstlisting}
-        System.DateTime d m y -> date
+        hr -> foo.hour
     \end{lstlisting}\\
+
     static set & \begin{lstlisting}
-        System.DateTime d m y -> date
-    \end{lstlisting}\\
+        hr -> System.DateTime.LocalTime
+    \end{lstlisting}\\ 
 \end{tabular}
 
 \subsubsection{Evolution}

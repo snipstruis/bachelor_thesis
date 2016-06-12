@@ -106,6 +106,7 @@ It was also relatively slow because:
     This is particularly costly for value-types, as they have to be boxed and unboxed each time the value is used~\cite{cisternino}.
 \item It performs monadic operations for each rule attempt.
     These generic functions do type resolution at run-time, each time they are called~\cite{cisternino}.
+\pagebreak
 \item The numbered functions were not inlined, preventing any cross-rule optimization\footnote{information obtained by inspecting generated CIL code of the microsoft F\# compiler \texttt{fsc.exe} version 1.0 with \texttt{+optimize}}.
 \end{enumerate}
 
