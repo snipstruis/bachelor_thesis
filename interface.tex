@@ -34,6 +34,8 @@ The reason that \texttt{datas}, \texttt{funcs} and \texttt{lambdas} are defined 
 Since MC allows polymorphic types, one identifier may be defined multiple times: once for each type.
 There is no performance penalty for the back-end for using maps, as no lookups by identifier are performed.
 
+The \verb|flags| contain the compiler-flags and \verb|assemblies| contain the names of the libraries that are linked against.
+
 \subsubsection{Data declarations}
 The data declarations are grouped with the identifier of the constructor.
 
@@ -63,12 +65,12 @@ Where \verb|Type| represents a monomorphic MC type.
 We can illustrate this by defining a tuple and a union in MC.
 
 \begin{MC}
-Data int ->","-> string ->Tuple<int string>
-Data "fst" -> int    -> Union<int string>
-Data "snd" -> string -> Union<int string>
+Data 'a ->","-> 'b ->Tuple<'a 'b>
+Data "fst" -> 'a -> Union<'a 'b>
+Data "snd" -> 'b -> Union<'a 'b>
 \end{MC}
 
-This will appear as the following list in the interface:
+If these generic types are instantiated with an \verb|int| and a \verb|string|, they will appear as following the interface:
 
 {\footnotesize
 \begin{tabular}{lll}
