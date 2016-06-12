@@ -61,13 +61,13 @@ None of the inter-op methods offer a satisfactory solution.
 They all have downsides that outweigh the benefits.
 It was decided to let go of the LLVM code-generation in favor of a more portable and reliable system.
 
-Stability is a big advantage because everything happends inside the .NET runtime.
+Stability is a big advantage because everything happens inside the .NET runtime.
 This has a higher chance of working on non-native platforms than the hybrid solutions.
 
 \paragraph{F\#} is a functional/declarative language in the .NET family~\cite{smith}.
 It would be a natural choice, since the compiler is written in it.
 It has the advantage of supporting tail-calls, which is unsupported by C\#,
-  and since F\# already supported algebraic datatypes, it seemed like a viable solution.
+  and since F\# already supported algebraic data types, it seemed like a viable solution.
 %The programmer has also less control of the program execution, as F\# is a more higher-level language~\cite{fsharp}
 %A version of the code generator was made that used F\#, but it proved too cumbersome since there was no mechanism to simply skip rules if they did not match.
 
@@ -95,7 +95,7 @@ To choose an output language, I built a code model for each language.
 
 The F\# code model mainly involved switching off indentation-based scoping and using the verbose syntax.
 Scoping was implemented by making each rule a numbered function that returned an \verb|Option<>|.
-the numbered rules were then called and appended using the \verb|>>=| of the \verb|Option| monad.
+The numbered rules were then called and appended using the \verb|>>=| of the \verb|Option| monad.
 
 While this model worked, it was cumbersome and slow.
 The code was hard to inspect, since there was no indentation.
@@ -107,7 +107,7 @@ It was also relatively slow because:
 \item It performs monadic operations for each rule attempt.
     These generic functions do type resolution at run-time, each time they are called~\cite{cisternino}.
 \pagebreak
-\item The numbered functions were not inlined, preventing any cross-rule optimization\footnote{information obtained by inspecting generated CIL code of the microsoft F\# compiler \texttt{fsc.exe} version 1.0 with \texttt{+optimize}}.
+\item The numbered functions were not inlined, preventing any cross-rule optimization\footnote{information obtained by inspecting generated CIL code of the Microsoft F\# compiler \texttt{fsc.exe} version 1.0 with \texttt{+optimize}}.
 \end{enumerate}
 
 The C\# code model proved far easier to generate and inspect, as it had braces and local scopes.

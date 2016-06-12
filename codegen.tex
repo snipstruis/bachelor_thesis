@@ -36,7 +36,7 @@ class #\textit{<function name>}# {
 \end{CS}
 
 The \verb|_run| function opens a local scope followed by a goto-label for each rule in the function.
-This allows rules to easily jump ahead to the label when they do not match\footnote{See subsection \textit{Rules}.}
+This allows rules to easily jump ahead to the label when they do not match\footnote{see subsection \textit{Rules}.}
 
 \subsubsection{Data declarations}
 Data declarations are implemented with inheritance.
@@ -93,7 +93,7 @@ So the rules actually look more like this:
     2 -> _tmp2           #\textit{(literal)}#
     _tmp1 _tmp2 -> _tmp3 #\textit{(call)}#
     1 -> _tmp4           #\textit{(literal)}#
-    tmp4 = tmp0          #\textit{(conditional)}#
+    _tmp4 = _tmp0        #\textit{(conditional)}#
     "odd!" -> _tmp5      #\textit{(literal)}#
     --------------------
     evenOrOdd a -> _tmp5
@@ -105,7 +105,7 @@ So the rules actually look more like this:
     2 -> _tmp2           #\textit{(literal)}#
     _tmp1 _tmp2 -> _tmp3 #\textit{(call)}#
     0 -> _tmp4           #\textit{(literal)}#
-    tmp4 = tmp0          #\textit{(conditional)}#
+    _tmp4 = _tmp0        #\textit{(conditional)}#
     "even!" -> _tmp5     #\textit{(literal)}#
     --------------------
     evenOrOdd b -> _tmp5
@@ -177,7 +177,7 @@ class _main{
         #\textit{<debugger initialization>}#
         System.Console.WriteLine(
             System.String.Format("{0}", 
-                                 body()));
+                                 _body()));
     }
 }
 \end{CS}

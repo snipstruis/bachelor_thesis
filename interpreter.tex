@@ -9,7 +9,7 @@ The automatic validation would be done by comparing the results of test programs
 If they mismatch, there is either a bug in the interpreter or (more likely) a bug in the code generator.
 
 \subsubsection{Structure}
-The interpreter is built around using \verb|fold|, a specialization of a catamorphism for lists\cite{gibbons}.
+The interpreter is built around using \verb|fold|, a specialization of a catamorphism for lists~\cite{gibbons}.
 This eliminated the recursion, making \verb|interpret| a straight-line function that executed a single instruction.
 This interpreter was written in under 100 lines\footnote{see \texttt{interpreter.fs}}.
 
@@ -44,5 +44,5 @@ It turned out that it was more desirable to have the debugger in the code genera
 
 The next design used explicit recursion to walk the list of instructions.
 This was a huge simplification compared to the continuation-monad, but every instruction still had to explicitly recurse over the instruction list.
-While all of the recursive calls were tail-calls\cite{tailcalls}, it still meant near-identical code duplication for each instruction.
+While all of the recursive calls were tail-calls~\cite{tailcalls}, it still meant near-identical code duplication for each instruction.
 
